@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &103406
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 415208}
+  - 114: {fileID: 11472260}
+  m_Layer: 0
+  m_Name: InstanceSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &415208
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103406}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10, y: 1, z: 15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11472260
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e1aca886a78a34e955d3a63c74db30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tama1:
+  - {fileID: 105932, guid: 0f1075ea88aa65e4191c487fbf3b845b, type: 2}
+  - {fileID: 181722, guid: 6e230d2d39005674c966a87305942cc6, type: 2}
+  - {fileID: 115412, guid: f309c91b4c6e2cf468f8160c51817690, type: 2}
+  - {fileID: 174440, guid: 0a5faf41e08592242a358c480700a4e1, type: 2}
+  - {fileID: 193340, guid: 647b602f1286eeb4080fc15ce7342748, type: 2}
+  - {fileID: 126716, guid: be21b70dca35be9408c0b758d9c85a8a, type: 2}
+  - {fileID: 134026, guid: 0322257578df48948b9bfc0238eb9b30, type: 2}
+  - {fileID: 154102, guid: 023295eebf9140f4d90062ac45af1892, type: 2}
+  - {fileID: 190282, guid: c3b32ae4847be114ea93b7e89624b418, type: 2}
+  - {fileID: 171146, guid: 82b34d72d30272b4d8afa6984656b115, type: 2}
+  - {fileID: 151980, guid: d672eef4d2927ff4fb0b68abf6a0f35f, type: 2}
+  - {fileID: 194118, guid: 7dfa30117557b7c4fac826d5eaa5a913, type: 2}
+  - {fileID: 129464, guid: ea4ade0760cb2b34da401aecfc7cf425, type: 2}
+  - {fileID: 172256, guid: bc46ad1fbcf92fb45b675aed53748deb, type: 2}
+  - {fileID: 145986, guid: 47ca04e12624fbe4ea3a11f5fc64946b, type: 2}
+  - {fileID: 181610, guid: fca5963c7a1780742adccf6386114214, type: 2}
+  - {fileID: 181610, guid: fca5963c7a1780742adccf6386114214, type: 2}
+  - {fileID: 134890, guid: 0ab9de36de07af04bb768308c7ca7add, type: 2}
+  - {fileID: 109946, guid: 68b592b65cd882143aaef9c544b7d25a, type: 2}
+  - {fileID: 132106, guid: 5218022c1f4b3a045b1b8853e35eab0f, type: 2}
+  EfectTypes:
+  - {fileID: 134526, guid: 7a53bad907ffac54da6296adee365f3b, type: 2}
+  - {fileID: 184088, guid: 0b9ad45f5df998f4fa4e3bb974273f9d, type: 2}
+  - {fileID: 126780, guid: fdc56f33543a4184ebe6099652a5b37f, type: 2}
+  - {fileID: 177212, guid: a8f8517676a9abf47b4873f5693535ea, type: 2}
+  - {fileID: 177212, guid: a8f8517676a9abf47b4873f5693535ea, type: 2}
+  - {fileID: 194084, guid: 3a7492fd56d3afb46a0ae974ab445e51, type: 2}
+  - {fileID: 157600, guid: 30c942b13dbf268408176d58c40569fc, type: 2}
+  - {fileID: 186708, guid: 409b8d24e8721064bae41bd7e081a61d, type: 2}
+  - {fileID: 169470, guid: 62af285ee1c5f2641980b38d70904805, type: 2}
+  - {fileID: 169470, guid: 62af285ee1c5f2641980b38d70904805, type: 2}
+  - {fileID: 115388, guid: 704f1a8777e9e5845ba990de51630ae3, type: 2}
+  - {fileID: 132326, guid: 36369b04265b6514dbfd9e37dcb5a2d5, type: 2}
+  canvas: {fileID: 0}
+  text: {fileID: 11452774, guid: eab8599a22fb54f42b29ea1f4e0269b5, type: 2}
+  image: {fileID: 11424460, guid: c165ef8c42489d04e9178da13424873c, type: 2}
+  m_getpos: {x: 0, y: 0, z: 0}
+  Poison: {fileID: 11412162, guid: 821b381d92d61c8429b7f72ce50b1996, type: 2}
+  Parasite: {fileID: 11426408, guid: 260eb4603b81bf84e95b9cbf779d6afc, type: 2}
+  Interference: {fileID: 11482330, guid: f354dc3cce1c77247912ff94c08dcc92, type: 2}
+  Smoke: {fileID: 11472720, guid: c4ce1325a93d2aa489ff2e21ab28d88d, type: 2}
+  Festival: {fileID: 11497254, guid: 533d64499089909448dc5ae030c27172, type: 2}
+  sprite:
+  - {fileID: 0}
+  - {fileID: 21300000, guid: ac0cf6414662af441902806e09923e4c, type: 3}
+  - {fileID: 21300000, guid: 902f3a00b93b0954bbd46a2a8a916b45, type: 3}
+  - {fileID: 21300000, guid: efe0a073fbfbed442bc5d36761c687fa, type: 3}
+  - {fileID: 21300000, guid: 8716299f6eba99749819dcad84c011e1, type: 3}
+  - {fileID: 21300000, guid: e23cd0673a6cd3045b82433c8d16ef91, type: 3}
+  State_turns: {fileID: 11498620, guid: 6258905c6bb125b49a34b95c1c8b431a, type: 2}
+  State_NodeHindrance: {fileID: 11452524, guid: f45b7b910db008945ba60ccfade44fb7,
+    type: 2}
+  shotSound: {fileID: 8300000, guid: 261de188c97e1b643808ed1b72085727, type: 3}
+  Seisei: 0
+  m_Seisei: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  m_TextFlag: 0
+  m_Type: 0
+  m_Shape: 0
+  m_kazu: 300
+  m_MoveType: 0
+  m_TamaType: 
+  m_time: 0.25
+  m_get_kazu: 0
+  Oldturn: 0
+  turn: 0
+  Old_NodeHindrance_turn: 0
+  NodeHindrance_turn: 0
+  TimeCount: 0
+  TimeOk: 0
+  m_count: 0
+  isEnd: 0
+  targetPosition: {x: 0, y: 0, z: 0}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 103406}
+  m_IsPrefabParent: 1
