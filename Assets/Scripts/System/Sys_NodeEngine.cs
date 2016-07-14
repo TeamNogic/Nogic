@@ -457,17 +457,20 @@ public class Sys_NodeEngine : MonoBehaviour
                 tmp.transform.SetParent(nodeEditor.transform, false);
             }
 
-            //一定確率で紙吹雪妨害
+            //紙吹雪妨害
             if (Sys_Status.Player[Sys_Status.activePlayer].State_NodeHindrance == 2)
             {
                 //一定確率で楽譜妨害
-                if (Random.Range(0, 45) == 0)
+                if (Random.Range(0, 30) == 0)
                 {
-                    Image tmpM = Instantiate(musicalScoreImage, new Vector2(-500.0f, 0.0f), Quaternion.identity) as Image;
+                    Image tmpM = Instantiate(musicalScoreImage, new Vector2(-500.0f, 50.0f), Quaternion.identity) as Image;
                     tmpM.transform.SetParent(nodeEditor.transform, false);
                 }
 
-                Image tmp = Instantiate(confettiImage, new Vector2(Random.Range(-274.0f, -126.0f), 300.0f), Quaternion.identity) as Image;
+                Image tmp = Instantiate(confettiImage, new Vector2(Random.Range(-274.0f, -126.0f), 350.0f), Quaternion.identity) as Image;
+                tmp.transform.SetParent(nodeEditor.transform, false);
+
+                tmp = Instantiate(confettiImage, new Vector2(Random.Range(-274.0f, -126.0f), 350.0f), Quaternion.identity) as Image;
                 tmp.transform.SetParent(nodeEditor.transform, false);
             }
         }

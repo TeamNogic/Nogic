@@ -13,7 +13,7 @@ public class UI_MusicalScore : MonoBehaviour
 
     void Update()
     {
-        this.transform.position += new Vector3(3.0f, 0.0f);
+        this.transform.position += new Vector3(300.0f * Time.deltaTime, 0.0f);
 
         if (1000.0f < this.transform.position.x) Destroy(this.gameObject);
     }

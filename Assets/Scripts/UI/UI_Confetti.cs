@@ -15,12 +15,12 @@ public class UI_Confetti : MonoBehaviour
             , Random.Range(1.0f, 2.0f), false);
 
         //移動速度
-        move = Random.Range(-1.0f, 1.0f);
+        move = Random.Range(-40.0f, 40.0f);
     }
     
     void Update()
     {
-        this.transform.position += new Vector3(move, -2.0f);
+        this.transform.position += new Vector3(move, -150.0f) * Time.deltaTime;
 
         if (this.transform.position.y <= -100.0f) Destroy(this.gameObject);
     }
