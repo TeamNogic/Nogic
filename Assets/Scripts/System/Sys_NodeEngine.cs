@@ -373,6 +373,8 @@ public class Sys_NodeEngine : MonoBehaviour
 
                 //選択信号を渡す
                 Create[target].GetComponent<Sys_Node>().Enter();
+                //妨害で移動中の場合は阻止する
+                Destroy(Create[target].GetComponent<UI_Move>());
                 //選択済みリストに加える
                 selectNode.Add(Create[target]);
 
@@ -403,10 +405,53 @@ public class Sys_NodeEngine : MonoBehaviour
     {
         if (!updateFlag) return;
 
-        if (Input.GetKeyDown(KeyCode.UpArrow)) SelectNode(1);
-        else if (Input.GetKeyDown(KeyCode.LeftArrow)) SelectNode(0);
-        else if (Input.GetKeyDown(KeyCode.RightArrow)) SelectNode(3);
-        else if (Input.GetKeyDown(KeyCode.DownArrow)) SelectNode(2);
+        //選択キー反転妨害
+        if (Sys_Status.Player[Sys_Status.activePlayer].State_NodeKey == 1)
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow)) SelectNode(2);
+            else if (Input.GetKeyDown(KeyCode.LeftArrow)) SelectNode(3);
+            else if (Input.GetKeyDown(KeyCode.RightArrow)) SelectNode(0);
+            else if (Input.GetKeyDown(KeyCode.DownArrow)) SelectNode(1);
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow)) SelectNode(1);
+            else if (Input.GetKeyDown(KeyCode.LeftArrow)) SelectNode(0);
+            else if (Input.GetKeyDown(KeyCode.RightArrow)) SelectNode(3);
+            else if (Input.GetKeyDown(KeyCode.DownArrow)) SelectNode(2);
+        }
+
+        //ノード入れ替え妨害
+        if (Sys_Status.Player[Sys_Status.activePlayer].State_NodeKey == 2 && Random.Range(0, 60) == 0)
+        {
+            int moveA = 0;
+            int moveB = 0;
+
+            while ((moveA == moveB) || Create[moveA] == null || Create[moveB] == null)
+            {
+                moveA = Random.Range(0, 4);
+                moveB = Random.Range(0, 4);
+            }
+
+            Image tmp = Create[moveA];
+            Create[moveA] = Create[moveB];
+            Create[moveB] = tmp;
+
+            Vector3 tmpTarget = Create[moveA].GetComponent<UI_Move>() == null
+                ? Create[moveA].transform.position
+                : Create[moveA].GetComponent<UI_Move>().getTarget();
+
+            if (Create[moveA].GetComponent<UI_Move>() == null) Create[moveA].gameObject.AddComponent<UI_Move>();
+
+            Create[moveA].GetComponent<UI_Move>().Setup_Target(
+                Create[moveB].GetComponent<UI_Move>() == null 
+                ? Create[moveB].transform.position 
+                : Create[moveB].GetComponent<UI_Move>().getTarget());
+
+            if (Create[moveB].GetComponent<UI_Move>() == null) Create[moveB].gameObject.AddComponent<UI_Move>();
+
+            Create[moveB].GetComponent<UI_Move>().Setup_Target(tmpTarget);
+        }
 
         //デバッグ
         if (Input.GetKey(KeyCode.Q))
