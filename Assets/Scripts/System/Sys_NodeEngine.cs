@@ -334,6 +334,8 @@ public class Sys_NodeEngine : MonoBehaviour
 
         for (int i = 0; i < selectNode.Count; ++i)
         {
+            DeleteUI(selectNode[i].GetComponent<Sys_Node>().line, 1.25f);
+
             DeleteUI(selectNode[i], 1.25f);
         }
 
