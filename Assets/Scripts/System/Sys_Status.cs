@@ -38,7 +38,7 @@ public class Sys_Action_Object
 
     public int State_Tern = 0;                      //0:無し　1:ポイズン　2:パラサイト
     public int State_Status = 0;                    //0:無し　1:ウィーク　2:ダウン　3:アブソープション
-    public int State_NodeKey = 0;                   //0:無し　1:リバース　2:カオス　3:フリーズ　4:スロウ
+    public int State_NodeKey = 0;                   //0:無し　1:リバース　2:カオス　3:フリーズ　4:バレッジ
     public int State_NodeHindrance = 0;             //0:無し　1:スモーク　2:フェスティバル
     public int State_NodeEditor = 0;                //0:無し　1:シールド　2:ヘル　3:ブレイク
 }
