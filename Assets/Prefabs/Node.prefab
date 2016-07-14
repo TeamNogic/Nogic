@@ -48,6 +48,7 @@ GameObject:
   - 114: {fileID: 11415996}
   - 114: {fileID: 11454294}
   - 114: {fileID: 11470218}
+  - 114: {fileID: 11481578}
   m_Layer: 5
   m_Name: Node
   m_TagString: Untagged
@@ -214,6 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84396d4f6daa2ba4ea5ac0a4e1803788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Line: {fileID: 11496094, guid: 566332a6b3d378b4f8b4e3d2568d285c, type: 2}
   Data:
     Name: 
     Comment: 
@@ -234,6 +236,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e146966d795720e4bb0489d9ff78d84e, type: 3}
   - {fileID: 21300000, guid: 2b21b46622f817e43b09260f86407bb2, type: 3}
   - {fileID: 21300000, guid: 847f0e2e0ea33074d9f254d275194a08, type: 3}
+  line: {fileID: 0}
 --- !u!114 &11481300
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -248,6 +251,18 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!114 &11481578
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 180822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb60cb8be2e3214481596aab3a8a749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 4
 --- !u!114 &11486714
 MonoBehaviour:
   m_ObjectHideFlags: 1

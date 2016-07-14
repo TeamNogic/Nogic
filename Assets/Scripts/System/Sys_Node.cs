@@ -62,6 +62,8 @@ public class Sys_ParameterNode
 [System.Serializable]
 public class Sys_Node : MonoBehaviour
 {
+    public Image m_Line;                                                           //ライン
+
     public Sys_ParameterNode Data;                                                      //自身の管理データ
 
     public Sprite[] nodeImage = new Sprite[5];                                          //ノード画像
@@ -73,8 +75,14 @@ public class Sys_Node : MonoBehaviour
     public static Dictionary<Sys_NodeGroup, Sys_ParameterNode>
         Select = new Dictionary<Sys_NodeGroup, Sys_ParameterNode>();                    //選択済みノードリスト
 
+    public Image line;                                                                  //線
+
+    private GameObject nodeEditor;                                                       //キャンバス
+
     void Start()
     {
+        nodeEditor = GameObject.Find("NodeEditor");
+
         //全てのノード選択済み枠を見る
         for (Sys_NodeGroup i = 0; i != Sys_NodeGroup.__Size__; ++i)
         {
@@ -163,7 +171,12 @@ public class Sys_Node : MonoBehaviour
         if (this.GetComponent<UI_Scale>() == null) this.gameObject.AddComponent<UI_Scale>();
         this.GetComponent<UI_Scale>().Setup(new Vector2(0.375f, 0.15f), 2.5f, false);
 
+
         //前のノードに向けて線を引く
+        line = Instantiate(m_Line, transform.position, Quaternion.identity) as Image;
+        line.transform.SetParent(nodeEditor.transform, false);
+        line.GetComponent<Sys_Line>().SetTargetPos(transform);
+        line.GetComponent<Sys_Line>().SetStartPos(Select[Data.GroupPrev].This.transform);
 
 
         //ノード情報追加　形状名は最後に出るようにする
@@ -180,8 +193,5 @@ public class Sys_Node : MonoBehaviour
 
         //選択されたのでリストに追加
         Select[Data.Group] = Data;
-
-        //スクリプト消去
-        Destroy(this.GetComponent<Sys_Node>());
     }
 }

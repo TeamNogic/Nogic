@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 476160}
   - 114: {fileID: 11476604}
   - 82: {fileID: 8234252}
+  - 114: {fileID: 11475278}
   m_Layer: 0
   m_Name: Sound
   m_TagString: Untagged
@@ -103,6 +104,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &11475278
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb60cb8be2e3214481596aab3a8a749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 0
 --- !u!114 &11476604
 MonoBehaviour:
   m_ObjectHideFlags: 1

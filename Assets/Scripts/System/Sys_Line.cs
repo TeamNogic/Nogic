@@ -1,31 +1,61 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Sys_Line : MonoBehaviour
 {
-    LineRenderer line;          //線描画
+    [SerializeField, Tooltip("線の太さ")]
+    private int m_LineWeight = 5;
 
-    public GameObject Target;   //対象のオブジェクト
+    private Transform m_StartPos;
+    private Transform m_TargetPos;
+    private Color m_Color;
+    private RectTransform m_RectTransform;
+    private float m_ScreenRate = 0.0f;
+    private float m_Alpha = 0.0f;
 
     void Start()
     {
-        //線の初期設定
-        line = gameObject.AddComponent<LineRenderer>();
-        line.material.color = Color.yellow;
-        line.SetVertexCount(2);
+        m_RectTransform = GetComponent<RectTransform>();
+        m_Color = GetComponent<Image>().color;
     }
 
     void Update()
     {
-        //ターゲットが存在する場合は線を引く
-        if (Target != null)
+        if (m_StartPos != null && m_TargetPos != null)
         {
-            line.SetWidth(0.3f, 0.3f);
+            transform.localPosition = m_StartPos.localPosition;
 
-            line.SetPosition(0, this.transform.position);
-            line.SetPosition(1, Target.transform.position);
+            float length = Vector3.Distance(transform.localPosition, m_TargetPos.localPosition);
+            Vector3 diff = (m_TargetPos.localPosition - transform.localPosition).normalized;
+
+
+            transform.rotation = Quaternion.FromToRotation(Vector3.up, diff);
+            m_RectTransform.sizeDelta = new Vector2(m_LineWeight, length);
         }
-        //無い場合は見えないようにする
-        else line.SetWidth(0.0f, 0.0f);
     }
+
+    public void SetStartPos(Transform startPos)
+    {
+        m_StartPos = startPos;
+    }
+
+    public void SetTargetPos(Transform targetPos)
+    {
+        m_TargetPos = targetPos;
+    }
+
+    public void DeleteLine()
+    {
+        m_Alpha -= Time.deltaTime;
+
+        if (m_Alpha <= 0.0f)
+        {
+            m_Alpha = 0.0f;
+            Destroy(gameObject);
+        }
+
+        m_Color.a = m_Alpha;
+    }
+
 }
