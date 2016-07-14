@@ -36,21 +36,38 @@ public class Sys_NodeEngine : MonoBehaviour
 
     public AudioClip timeSound;                         //カウントダウン音
     public AudioClip destroySound;                      //消去時のサウンド
+    public AudioClip chaosMove;                         //カオス妨害ノード移動時
 
     void CreateNode()
     {
+        int notCreate = -1;
+
+        if (Sys_Status.Player[Sys_Status.activePlayer].State_NodeKey == 3) notCreate = Random.Range(0, 4);
+
         //各ノードを生成
-        Create[0] = Instantiate(baseNode, new Vector3(-300.0f, 40.0f), Quaternion.identity) as Image;
-        Create[0].transform.SetParent(nodeEditor.transform, false);
+        if (notCreate != 0)
+        {
+            Create[0] = Instantiate(baseNode, new Vector3(-300.0f, 40.0f), Quaternion.identity) as Image;
+            Create[0].transform.SetParent(nodeEditor.transform, false);
+        }
 
-        Create[1] = Instantiate(baseNode, new Vector3(-200.0f, 120.0f), Quaternion.identity) as Image;
-        Create[1].transform.SetParent(nodeEditor.transform, false);
+        if (notCreate != 1)
+        {
+            Create[1] = Instantiate(baseNode, new Vector3(-200.0f, 120.0f), Quaternion.identity) as Image;
+            Create[1].transform.SetParent(nodeEditor.transform, false);
+        }
 
-        Create[2] = Instantiate(baseNode, new Vector3(-200.0f, -30.0f), Quaternion.identity) as Image;
-        Create[2].transform.SetParent(nodeEditor.transform, false);
+        if (notCreate != 2)
+        {
+            Create[2] = Instantiate(baseNode, new Vector3(-200.0f, -30.0f), Quaternion.identity) as Image;
+            Create[2].transform.SetParent(nodeEditor.transform, false);
+        }
 
-        Create[3] = Instantiate(baseNode, new Vector3(-100.0f, 40.0f), Quaternion.identity) as Image;
-        Create[3].transform.SetParent(nodeEditor.transform, false);
+        if (notCreate != 3)
+        {
+            Create[3] = Instantiate(baseNode, new Vector3(-100.0f, 40.0f), Quaternion.identity) as Image;
+            Create[3].transform.SetParent(nodeEditor.transform, false);
+        }
     }
 
     void DeleteUI(Image image, float speed)
@@ -424,19 +441,23 @@ public class Sys_NodeEngine : MonoBehaviour
         //ノード入れ替え妨害
         if (Sys_Status.Player[Sys_Status.activePlayer].State_NodeKey == 2 && Random.Range(0, 60) == 0)
         {
+            //移動対象を選択
             int moveA = 0;
             int moveB = 0;
 
+            //別のノードになるまでランダムループ
             while ((moveA == moveB) || Create[moveA] == null || Create[moveB] == null)
             {
                 moveA = Random.Range(0, 4);
                 moveB = Random.Range(0, 4);
             }
 
+            //データ位置の移動
             Image tmp = Create[moveA];
             Create[moveA] = Create[moveB];
             Create[moveB] = tmp;
 
+            //座標の移動
             Vector3 tmpTarget = Create[moveA].GetComponent<UI_Move>() == null
                 ? Create[moveA].transform.position
                 : Create[moveA].GetComponent<UI_Move>().getTarget();
@@ -444,13 +465,16 @@ public class Sys_NodeEngine : MonoBehaviour
             if (Create[moveA].GetComponent<UI_Move>() == null) Create[moveA].gameObject.AddComponent<UI_Move>();
 
             Create[moveA].GetComponent<UI_Move>().Setup_Target(
-                Create[moveB].GetComponent<UI_Move>() == null 
-                ? Create[moveB].transform.position 
+                Create[moveB].GetComponent<UI_Move>() == null
+                ? Create[moveB].transform.position
                 : Create[moveB].GetComponent<UI_Move>().getTarget());
 
             if (Create[moveB].GetComponent<UI_Move>() == null) Create[moveB].gameObject.AddComponent<UI_Move>();
 
             Create[moveB].GetComponent<UI_Move>().Setup_Target(tmpTarget);
+
+            //サウンドの再生
+            Sys_Sound.Play(chaosMove);
         }
 
         //デバッグ

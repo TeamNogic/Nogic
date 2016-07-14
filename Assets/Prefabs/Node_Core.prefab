@@ -141,8 +141,13 @@ MonoBehaviour:
   decisionExcellent: {fileID: 11464932, guid: 4aba13c5e7d3a6f47ab75d964a3bb33e, type: 2}
   paletteImage: {fileID: 11434900, guid: 460d858b91102444cbbc74d120b551fe, type: 2}
   selectImage: {fileID: 11464640, guid: f291736b2c2c1804a93b49c9fce47fbc, type: 2}
+  smokeImage: {fileID: 11420264, guid: e4181a4c214fb91469cea78617d7a5ec, type: 2}
+  confettiImage: {fileID: 11449238, guid: 32050bf03701494409bdac1761fbaf6f, type: 2}
+  musicalScoreImage: {fileID: 11433374, guid: d30dd30f38e09bc4cac3ec1ea182ce5f, type: 2}
+  nodeKeyStateImage: {fileID: 11483626, guid: e75c6d9cd362a204480946786b4d9b45, type: 2}
   timeSound: {fileID: 8300000, guid: be060e6d47ae3804f87180e11567217f, type: 3}
   destroySound: {fileID: 8300000, guid: 152ddae146c0e784eb8d3c1cb669203e, type: 3}
+  chaosMove: {fileID: 8300000, guid: 99daa2f49d4383c4c9c273e97b2ce495, type: 3}
 --- !u!114 &11499828
 MonoBehaviour:
   m_ObjectHideFlags: 1
