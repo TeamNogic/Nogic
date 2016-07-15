@@ -108,6 +108,7 @@ public class Sys_Scene : MonoBehaviour
                 {
                     player[i].prefab = Instantiate(player[i].prefab, player[i].position, Quaternion.Euler(0.0f, player[i].rotationY, 0.0f)) as GameObject;
                     Sys_Status.Player.Add(new Sys_PlayerData());
+                    Sys_Status.Player[i].Weak = player[i].prefab.GetComponent<Obj_PlayerAsset>().weak;
                 }
 
                 ++sceneState;

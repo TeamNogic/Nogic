@@ -171,18 +171,21 @@ public class Sys_NodeCreate : MonoBehaviour
     void Start()
     {
         AddNode("ファイヤー", 1, Sys_NodeGroup.Type, 0, "火属性");
-        AddNode("ウォーター", 1, Sys_NodeGroup.Type, 0, "水属性");
-        AddNode("アイス", 1, Sys_NodeGroup.Type, 0, "氷属性");
-        AddNode("サンダー", 1, Sys_NodeGroup.Type, 0, "雷属性");
-        AddNode("グラス", 1, Sys_NodeGroup.Type, 0, "草属性");
-        AddNode("ウィンド", 1, Sys_NodeGroup.Type, 0, "風属性");
-        AddNode("ライト", 1, Sys_NodeGroup.Type, 0, "光属性");
         AddNode("ダークネス", 1, Sys_NodeGroup.Type, 0, "闇属性");
-        AddNode("ソイル", 1, Sys_NodeGroup.Type, 0, "土属性");
-        AddNode("ドラゴン", 1, Sys_NodeGroup.Type, 0, "竜属性");
-        AddNode("ゴッド", 1, Sys_NodeGroup.Type, 0, "神属性");
         AddNode("フィジックス", 1, Sys_NodeGroup.Type, 0, "無属性");
 
+        AddNode("ウォーター", 1, Sys_NodeGroup.Type, 0, "水属性");
+        AddNode("アイス", 1, Sys_NodeGroup.Type, 0, "氷属性");
+        AddNode("ゴッド", 1, Sys_NodeGroup.Type, 0, "神属性");
+
+        AddNode("グラス", 1, Sys_NodeGroup.Type, 0, "草属性");
+        AddNode("ウィンド", 1, Sys_NodeGroup.Type, 0, "風属性");
+        AddNode("ソイル", 1, Sys_NodeGroup.Type, 0, "土属性");
+
+        AddNode("サンダー", 1, Sys_NodeGroup.Type, 0, "雷属性");
+        AddNode("ライト", 1, Sys_NodeGroup.Type, 0, "光属性");
+        AddNode("ドラゴン", 1, Sys_NodeGroup.Type, 0, "竜属性");
+        
         //--------------------------------------------------------------------------------------------------------------------------------//
 
         AddNode("ブースト", 4, Sys_NodeGroup.TypePlus, 2, "ダメージ２倍");

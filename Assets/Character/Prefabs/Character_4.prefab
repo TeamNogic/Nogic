@@ -1240,6 +1240,10 @@ MonoBehaviour:
   nodeSound: {fileID: 0}
   attackSound: {fileID: 0}
   damageSound: {fileID: 0}
+  weak:
+  - "\u30B5\u30F3\u30C0\u30FC"
+  - "\u30E9\u30A4\u30C8"
+  - "\u30C9\u30E9\u30B4\u30F3"
 --- !u!137 &13723034
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

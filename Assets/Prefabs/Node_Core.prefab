@@ -161,6 +161,7 @@ MonoBehaviour:
   timeSound: {fileID: 8300000, guid: be060e6d47ae3804f87180e11567217f, type: 3}
   destroySound: {fileID: 8300000, guid: 152ddae146c0e784eb8d3c1cb669203e, type: 3}
   chaosMove: {fileID: 8300000, guid: 99daa2f49d4383c4c9c273e97b2ce495, type: 3}
+  holdSound: {fileID: 8300000, guid: 8f097627526ed1d42a70c23463276e42, type: 3}
 --- !u!114 &11499828
 MonoBehaviour:
   m_ObjectHideFlags: 1

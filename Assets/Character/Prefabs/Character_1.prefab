@@ -1239,6 +1239,10 @@ MonoBehaviour:
   nodeSound: {fileID: 8300000, guid: cb47c069490555c42893fb60752f6457, type: 3}
   attackSound: {fileID: 8300000, guid: 3250bf93f61e68242a73f8c3d1f8100d, type: 3}
   damageSound: {fileID: 8300000, guid: 095e895c91c7b454c9e05fea7a6a0e71, type: 3}
+  weak:
+  - "\u30D5\u30A1\u30A4\u30E4\u30FC"
+  - "\u30C0\u30FC\u30AF\u30CD\u30B9"
+  - "\u30D5\u30A3\u30B8\u30C3\u30AF\u30B9"
 --- !u!137 &13773446
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
