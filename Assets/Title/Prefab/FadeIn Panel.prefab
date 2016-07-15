@@ -1,35 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &169286
+--- !u!1 &189568
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 224: {fileID: 22442996}
-  - 222: {fileID: 22213994}
-  - 114: {fileID: 11489128}
-  - 114: {fileID: 11493900}
+  - 224: {fileID: 22424534}
+  - 222: {fileID: 22235074}
+  - 114: {fileID: 11429928}
+  - 114: {fileID: 11476730}
   m_Layer: 5
-  m_Name: FadeOut Panel
+  m_Name: FadeIn Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &11489128
+--- !u!114 &11429928
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 169286}
+  m_GameObject: {fileID: 189568}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 1a979ce174d8e464ab7f1ffd1f08bdae, type: 2}
+  m_Material: {fileID: 2100000, guid: 032dd002111e8644ca2053f40402bb7d, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 0.392}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -45,32 +45,33 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11493900
+--- !u!114 &11476730
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 169286}
+  m_GameObject: {fileID: 189568}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fb62e2dc546d0748bdf4d83c69326b2, type: 3}
+  m_Script: {fileID: 11500000, guid: a14bfbd97b8535740b4b7ac4e92e842c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FadeOut: {fileID: 2100000, guid: 1a979ce174d8e464ab7f1ffd1f08bdae, type: 2}
+  m_FadeIn: {fileID: 2100000, guid: 032dd002111e8644ca2053f40402bb7d, type: 2}
   m_FadeSpeed: 1
-  m_StartTime: 1
---- !u!222 &22213994
+  m_SceneName: Fight
+  m_IsFade: 0
+--- !u!222 &22235074
 CanvasRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 169286}
---- !u!224 &22442996
+  m_GameObject: {fileID: 189568}
+--- !u!224 &22424534
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 169286}
+  m_GameObject: {fileID: 189568}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -79,7 +80,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.000015258789}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &100100000
@@ -91,5 +92,5 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 169286}
+  m_RootGameObject: {fileID: 189568}
   m_IsPrefabParent: 1

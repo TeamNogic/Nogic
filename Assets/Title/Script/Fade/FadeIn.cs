@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class FadeIn : MonoBehaviour
 {
@@ -9,6 +9,11 @@ public class FadeIn : MonoBehaviour
     public bool m_IsFade = false;
 
     private float m_FadeCnt = 0.0f;
+    
+    void Start()
+    {
+        transform.SetSiblingIndex(50);
+    }
 
 	void Update ()
     {
@@ -18,7 +23,7 @@ public class FadeIn : MonoBehaviour
         {
             if (m_FadeCnt > 1.0f)
             {
-                Application.LoadLevel(m_SceneName);
+                SceneManager.LoadScene(m_SceneName);
             }
 
             m_FadeCnt += m_FadeSpeed * Time.deltaTime;

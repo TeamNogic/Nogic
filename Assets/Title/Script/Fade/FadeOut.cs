@@ -14,6 +14,7 @@ public class FadeOut : MonoBehaviour
     void Start()
     {
         m_FadeOut.SetFloat("_AlphaValue", 1.0f);
+        transform.SetSiblingIndex(50);
     }
 
     void Update()
