@@ -68,6 +68,7 @@ public class Sys_Scene : MonoBehaviour
     private Sys_SceneState sceneState;                  //シーンの状態
 
     public List<Sys_PlayerScene> player;                //プレイヤーデータ
+    public List<GameObject> playerObject;               //プレイヤーのオブジェクト
 
     public string nodeEditorName;                       //ノードエディタ名
 
@@ -104,6 +105,9 @@ public class Sys_Scene : MonoBehaviour
         switch (sceneState)
         {
             case Sys_SceneState.Start:
+                player[0].prefab = playerObject[Char_SelectData.player_1];
+                player[1].prefab = playerObject[Char_SelectData.player_2];
+
                 for (int i = 0; i < player.Count; ++i)
                 {
                     player[i].prefab = Instantiate(player[i].prefab, player[i].position, Quaternion.Euler(0.0f, player[i].rotationY, 0.0f)) as GameObject;

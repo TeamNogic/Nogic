@@ -580,18 +580,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeup: {fileID: 0}
   player:
-  - prefab: {fileID: 146780, guid: 205d44328946a9b4586e54f02fff79af, type: 2}
+  - prefab: {fileID: 0}
     position: {x: -10, y: 0, z: 0}
     rotationY: 45
     cameraStart: {x: -15, y: 5, z: -10}
     cameraEnd: {x: -10, y: 5, z: 10}
     thumbnailMove: {x: -250, y: 0, z: 0}
-  - prefab: {fileID: 152440, guid: d92023c5d3478cc47a513fb7385ccadc, type: 2}
+  - prefab: {fileID: 0}
     position: {x: 10, y: 0, z: 15}
     rotationY: 225
     cameraStart: {x: 5, y: 5, z: 25}
     cameraEnd: {x: 10, y: 5, z: 5}
     thumbnailMove: {x: 250, y: 0, z: 0}
+  playerObject:
+  - {fileID: 146780, guid: 205d44328946a9b4586e54f02fff79af, type: 2}
+  - {fileID: 152440, guid: d92023c5d3478cc47a513fb7385ccadc, type: 2}
+  - {fileID: 166494, guid: e2c1d4a5e38450944b108782c3d46ea2, type: 2}
+  - {fileID: 157028, guid: efde43669a3c3e9459e30a2a4a73ccb5, type: 2}
   nodeEditorName: NodeEditor
   nodeNameBase: {fileID: 11458954, guid: 31b3fa310b278ea4fbe739af111df773, type: 2}
   nodeCoreBase: {fileID: 11440796, guid: 8ae01902d9ca677428cb091facd08909, type: 2}
