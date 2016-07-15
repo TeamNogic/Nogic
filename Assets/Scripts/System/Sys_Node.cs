@@ -216,15 +216,18 @@ public class Sys_Node : MonoBehaviour
         }
 
         //ノード情報追加　形状名は最後に出るようにする
-        if (Data.Group == Sys_NodeGroup.Shape)
+        if (!Data.Penalty)
         {
-            Sys_Status.Attack_Name.Add(Data.Name);
-            Sys_Status.Attack_Comment.Add(Data.Comment);
-        }
-        else
-        {
-            Sys_Status.Attack_Name.Insert(0, Data.Name);
-            Sys_Status.Attack_Comment.Insert(0, Data.Comment);
+            if (Data.Group == Sys_NodeGroup.Shape)
+            {
+                Sys_Status.Attack_Name.Add(Data.Name);
+                Sys_Status.Attack_Comment.Add(Data.Comment);
+            }
+            else
+            {
+                Sys_Status.Attack_Name.Insert(0, Data.Name);
+                Sys_Status.Attack_Comment.Insert(0, Data.Comment);
+            }
         }
 
         //選択されたのでリストに追加
