@@ -15,7 +15,7 @@ public class Sys_PlayerData
     public int State_Status = 0;                    //0:無し　1:ウィーク　2:ダウン　3:アブソープション
     public int State_Status_Time = 0;               //状態異常ターン数
 
-    public int State_NodeKey = 0;                   //0:無し　1:リバース　2:カオス　3:フリーズ　4:スロウ
+    public int State_NodeKey = 0;                   //0:無し　1:リバース　2:カオス　3:フリーズ　4:ホールド
     public int State_NodeKey_Time = 0;              //状態異常ターン数
 
     public int State_NodeHindrance = 0;             //0:無し　1:スモーク　2:フェスティバル

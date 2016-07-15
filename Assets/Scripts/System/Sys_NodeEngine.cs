@@ -16,6 +16,8 @@ public class Sys_NodeEngine : MonoBehaviour
 
     private bool updateFlag;                            //更新を行うか
 
+    private int selectHold;                             //長押し中のノード
+
     public string nodeEditorName;                       //ノードエディタ名
 
     public Image baseNode;                              //ベースとなる画像管理オブジェクト
@@ -37,6 +39,7 @@ public class Sys_NodeEngine : MonoBehaviour
     public AudioClip timeSound;                         //カウントダウン音
     public AudioClip destroySound;                      //消去時のサウンド
     public AudioClip chaosMove;                         //カオス妨害ノード移動時
+    public AudioClip holdSound;                         //ホールド妨害ノード
 
     void CreateNode()
     {
@@ -100,9 +103,21 @@ public class Sys_NodeEngine : MonoBehaviour
 
         this.transform.SetParent(nodeEditor.transform, false);
 
-        selectTime = 10.0f;
-        soundTime = 9.0f;
+        //ノード選択時間減少状態なら減らす
+        if (Sys_Status.Player[Sys_Status.activePlayer].State_NodeEditor == 3)
+        {
+            selectTime = 8.0f;
+            soundTime = 7.0f;
+        }
+        else
+        {
+            selectTime = 10.0f;
+            soundTime = 9.0f;
+        }
+
         updateFlag = true;
+
+        selectHold = -1;
 
         Sys_Node.Select[Sys_NodeGroup.Core] = Sys_NodeCreate.AddNode("", 0, Sys_NodeGroup.Core, 0, ""); //コア
         Sys_Node.Select[Sys_NodeGroup.Core].This = this.gameObject;
@@ -139,42 +154,57 @@ public class Sys_NodeEngine : MonoBehaviour
         //ダメージ倍率
         int damageScale = 1;
 
+        //弱点ダメージボーナス無効状態異常であれば無視する
+        if (Sys_Status.Player[Sys_Status.activePlayer].State_Status != 3)
+        {
+            //相手側に全てが弱点の状態異常がある場合は弱点扱い
+            if (Sys_Status.Player[Sys_Status.targetPlayer].State_Status == 1) Sys_Status.Action_UI.isTypeWeak = true;
+
+            //弱点属性であるか判定
+            for (int i = 0; i < Sys_Status.Player[Sys_Status.targetPlayer].Weak.Count; ++i)
+            {
+                //弱点であればダメージ倍増
+                if (Sys_Status.Player[Sys_Status.targetPlayer].Weak[i] == Sys_Status.Action_Object.Type || Sys_Status.Action_UI.isTypeWeak)
+                {
+                    damageScale *= 2;
+                    Sys_Status.Action_UI.isTypeWeak = true;
+                    break;
+                }
+            }
+
+            //弱点関係でダメージ倍増
+            if (Sys_Node.Select.ContainsKey(Sys_NodeGroup.TypeCritical))
+            {
+                switch (Sys_Node.Select[Sys_NodeGroup.TypeCritical].Option)
+                {
+                    case 1: //弱点属性ダメージ２倍
+                        if (Sys_Status.Action_UI.isTypeWeak) damageScale *= 2;
+                        break;
+
+                    case 2: //弱点属性ダメージ４倍
+                        if (Sys_Status.Action_UI.isTypeWeak) damageScale *= 4;
+                        break;
+
+                    case 3: //弱点ではない属性ダメージ２倍
+                        if (!Sys_Status.Action_UI.isTypeWeak) damageScale *= 2;
+                        break;
+
+                    case 4: //弱点ではない属性ダメージ４倍
+                        if (!Sys_Status.Action_UI.isTypeWeak) damageScale *= 4;
+                        break;
+                }
+            }
+
+            //弱点ダメージボーナス半減状態異常であれば半減する
+            if (Sys_Status.Player[Sys_Status.activePlayer].State_Status == 2)
+            {
+                damageScale /= 2;
+                if (damageScale < 1) damageScale = 1;
+            }
+        }
+
         //ダメージ倍増
         if (Sys_Node.Select.ContainsKey(Sys_NodeGroup.TypePlus)) damageScale *= Sys_Node.Select[Sys_NodeGroup.TypePlus].Option;
-
-        //弱点属性であるか判定
-        for (int i = 0; i < Sys_Status.Player[Sys_Status.targetPlayer].Weak.Count; ++i)
-        {
-            //弱点であればダメージ倍増
-            if (Sys_Status.Player[Sys_Status.targetPlayer].Weak[i] == Sys_Status.Action_Object.Type)
-            {
-                damageScale *= 2;
-                Sys_Status.Action_UI.isTypeWeak = true;
-            }
-        }
-
-        //弱点関係でダメージ倍増
-        if (Sys_Node.Select.ContainsKey(Sys_NodeGroup.TypeCritical))
-        {
-            switch (Sys_Node.Select[Sys_NodeGroup.TypeCritical].Option)
-            {
-                case 1: //弱点属性ダメージ２倍
-                    if (Sys_Status.Action_UI.isTypeWeak) damageScale *= 2;
-                    break;
-
-                case 2: //弱点属性ダメージ４倍
-                    if (Sys_Status.Action_UI.isTypeWeak) damageScale *= 4;
-                    break;
-
-                case 3: //弱点ではない属性ダメージ２倍
-                    if (!Sys_Status.Action_UI.isTypeWeak) damageScale *= 2;
-                    break;
-
-                case 4: //弱点ではない属性ダメージ４倍
-                    if (!Sys_Status.Action_UI.isTypeWeak) damageScale *= 4;
-                    break;
-            }
-        }
 
         //クリティカル計算
         if (Sys_Node.Select.ContainsKey(Sys_NodeGroup.Critical))
@@ -432,6 +462,58 @@ public class Sys_NodeEngine : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.RightArrow)) SelectNode(0);
             else if (Input.GetKeyDown(KeyCode.DownArrow)) SelectNode(1);
         }
+        //長押しキー妨害
+        else if (Sys_Status.Player[Sys_Status.activePlayer].State_NodeKey == 4)
+        {
+            //長押し対象がない場合
+            if (selectHold < 0)
+            {
+                if (Input.GetKeyDown(KeyCode.UpArrow)) selectHold = 1;
+                else if (Input.GetKeyDown(KeyCode.LeftArrow)) selectHold = 0;
+                else if (Input.GetKeyDown(KeyCode.RightArrow)) selectHold = 3;
+                else if (Input.GetKeyDown(KeyCode.DownArrow)) selectHold = 2;
+
+                if (0 <= selectHold)
+                {
+                    //揺らしアニメーション追加
+                    Create[selectHold].gameObject.AddComponent<UI_Shake>();
+
+                    //ホールド音の再生
+                    Sys_Sound.Play(holdSound);
+                }
+            }
+            else
+            {
+                //長押し中のキーを調べる
+                int holdKey = -1;
+
+                if (Input.GetKey(KeyCode.UpArrow)) holdKey = 1;
+                else if (Input.GetKey(KeyCode.LeftArrow)) holdKey = 0;
+                else if (Input.GetKey(KeyCode.RightArrow)) holdKey = 3;
+                else if (Input.GetKey(KeyCode.DownArrow)) holdKey = 2;
+
+                //長押しが継続していたら
+                if (holdKey == selectHold)
+                {
+                    //揺れ演出が完了していたら
+                    if (Create[selectHold].GetComponent<UI_Shake>() == null)
+                    {
+                        //ノード選択
+                        SelectNode(selectHold);
+                        //選択無しにする
+                        selectHold = -1;
+                    }
+                }
+                else
+                {
+                    //揺れをキャンセル
+                    if (Create[selectHold].GetComponent<UI_Shake>() != null) Create[selectHold].GetComponent<UI_Shake>().End();
+
+                    //選択無しにする
+                    selectHold = -1;
+                }
+            }
+        }
         else
         {
             if (Input.GetKeyDown(KeyCode.UpArrow)) SelectNode(1);
@@ -441,7 +523,7 @@ public class Sys_NodeEngine : MonoBehaviour
         }
 
         //ノード入れ替え妨害
-        if (Sys_Status.Player[Sys_Status.activePlayer].State_NodeKey == 2 && Random.Range(0, 60) == 0)
+        if (Sys_Status.Player[Sys_Status.activePlayer].State_NodeKey == 2 && Random.Range(0, 45) == 0)
         {
             //移動対象を選択
             int moveA = 0;

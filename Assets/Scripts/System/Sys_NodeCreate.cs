@@ -216,7 +216,7 @@ public class Sys_NodeCreate : MonoBehaviour
         AddNode("ソニック", 4, Sys_NodeGroup.Shape, 85, "ダメージボーナス＋８５％");
         AddNode("レーザー", 4, Sys_NodeGroup.Shape, 90, "ダメージボーナス＋９０％");
         AddNode("ボム", 4, Sys_NodeGroup.Shape, 95, "ダメージボーナス＋９５％");
-        AddNode("メテオ", 4, Sys_NodeGroup.Shape, 100, "ダメージボーナス＋１００％");
+        AddNode("メテオ", 5, Sys_NodeGroup.Shape, 100, "ダメージボーナス＋１００％");
 
         //--------------------------------------------------------------------------------------------------------------------------------//
 
@@ -229,23 +229,23 @@ public class Sys_NodeCreate : MonoBehaviour
         AddNode("ハイパー", 3, Sys_NodeGroup.Scale, 4, "更にダメージ４倍");
         AddNode("アルティメット", 5, Sys_NodeGroup.Scale, 8, "更にダメージ８倍");
 
-        AddNode("ポイズン", 1, Sys_NodeGroup.Tern, 1, "ターンごとに定期ダメージ");
-        AddNode("パラサイト", 1, Sys_NodeGroup.Tern, 2, "ターンごとに定期ダメージ");
+        AddNode("ポイズン", 2, Sys_NodeGroup.Tern, 1, "ターンごとに定期ダメージ");
+        AddNode("パラサイト", 2, Sys_NodeGroup.Tern, 2, "ターンごとに定期ダメージ");
 
         AddNode("ウィーク", 5, Sys_NodeGroup.Status, 1, "全てが弱点");
         AddNode("ダウン", 4, Sys_NodeGroup.Status, 2, "弱点ダメージボーナス半減");
         AddNode("アブソープション", 5, Sys_NodeGroup.Status, 3, "弱点ダメージボーナス無効");
 
-        AddNode("リバース", 5, Sys_NodeGroup.NodeKey, 1, "ノード選択のキーが反転する");
+        AddNode("リバース", 3, Sys_NodeGroup.NodeKey, 1, "ノード選択のキーが反転する");
         AddNode("カオス", 4, Sys_NodeGroup.NodeKey, 2, "ノード選択のキーが時々移動する");
-        AddNode("フリーズ", 3, Sys_NodeGroup.NodeKey, 3, "ノード選択の一部のキーが封印される");
-        AddNode("バレッジ", 3, Sys_NodeGroup.NodeKey, 4, "ノード選択でキーを連打する手間が増える");
+        AddNode("フリーズ", 2, Sys_NodeGroup.NodeKey, 3, "ノード選択の一部のキーが封印される");
+        AddNode("ホールド", 5, Sys_NodeGroup.NodeKey, 4, "ノード選択でキーを長押しする手間が増える");
 
-        AddNode("スモーク", 3, Sys_NodeGroup.NodeHindrance, 1, "ノード選択画面を曇らせて妨害");
+        AddNode("スモーク", 4, Sys_NodeGroup.NodeHindrance, 1, "ノード選択画面を曇らせて妨害");
         AddNode("フェスティバル", 3, Sys_NodeGroup.NodeHindrance, 2, "ノード選択画面を音符マークで妨害");
 
-        AddNode("シールド", 4, Sys_NodeGroup.NodeEditor, 1, "サポートノード禁止");
-        AddNode("ヘル", 2, Sys_NodeGroup.NodeEditor, 2, "ペナルティノードの出現率が上昇");
+        AddNode("シールド", 3, Sys_NodeGroup.NodeEditor, 1, "サポートノード禁止");
+        AddNode("ヘル", 3, Sys_NodeGroup.NodeEditor, 2, "ペナルティノードの出現率が上昇");
         AddNode("ブレイク", 5, Sys_NodeGroup.NodeEditor, 3, "ノード選択時間が減る");
 
         AddNode("エクストラ", 1, Sys_NodeGroup.Number, 2, "攻撃個数ボーナス×２");
