@@ -17,7 +17,7 @@ public class Sys_NodeCreate : MonoBehaviour
             case Sys_NodeGroup.Core:
                 addNode.GroupNext.Add(Sys_NodeGroup.Type);
 
-                addNode.Angle = 0;
+                addNode.Potision = new Vector2(-100, -140);
                 break;
 
             case Sys_NodeGroup.Type:
@@ -28,7 +28,7 @@ public class Sys_NodeCreate : MonoBehaviour
                 addNode.GroupNext.Add(Sys_NodeGroup.TypeCritical);
                 addNode.GroupNext.Add(Sys_NodeGroup.Critical);
 
-                addNode.Angle = 0;
+                addNode.Potision = new Vector2(20, -140);
                 break;
 
             case Sys_NodeGroup.Shape:
@@ -42,19 +42,19 @@ public class Sys_NodeCreate : MonoBehaviour
                 addNode.GroupNext.Add(Sys_NodeGroup.NodeEditor);
                 addNode.GroupNext.Add(Sys_NodeGroup.Number);
 
-                addNode.Angle = 30;
+                addNode.Potision = new Vector2(124, -80);
                 break;
 
             case Sys_NodeGroup.TypePlus:
                 addNode.GroupPrev = Sys_NodeGroup.Type;
 
-                addNode.Angle = 60;
+                addNode.Potision = new Vector2(80, -36);
                 break;
 
             case Sys_NodeGroup.TypeCritical:
                 addNode.GroupPrev = Sys_NodeGroup.Type;
 
-                addNode.Angle = 90;
+                addNode.Potision = new Vector2(20, -20);
                 break;
 
             case Sys_NodeGroup.Critical:
@@ -62,13 +62,13 @@ public class Sys_NodeCreate : MonoBehaviour
 
                 addNode.GroupNext.Add(Sys_NodeGroup.CriticalOption);
 
-                addNode.Angle = 0;
+                addNode.Potision = new Vector2(140, -140);
                 break;
 
             case Sys_NodeGroup.CriticalOption:
                 addNode.GroupPrev = Sys_NodeGroup.Critical;
 
-                addNode.Angle = 0;
+                addNode.Potision = new Vector2(260, -140);
                 break;
 
             case Sys_NodeGroup.Tern:
@@ -76,31 +76,31 @@ public class Sys_NodeCreate : MonoBehaviour
 
                 addNode.GroupNext.Add(Sys_NodeGroup.TernTime);
 
-                addNode.Angle = 0;
+                addNode.Potision = new Vector2(244, -80);
                 break;
 
             case Sys_NodeGroup.TernTime:
                 addNode.GroupPrev = Sys_NodeGroup.Tern;
 
-                addNode.Angle = 0;
+                addNode.Potision = new Vector2(364, -80);
                 break;
 
             case Sys_NodeGroup.Scale:
                 addNode.GroupPrev = Sys_NodeGroup.Shape;
 
-                addNode.Angle = 15;
+                addNode.Potision = new Vector2(240, -49);
                 break;
 
             case Sys_NodeGroup.Status:
                 addNode.GroupPrev = Sys_NodeGroup.Shape;
 
-                addNode.Angle = 30;
+                addNode.Potision = new Vector2(228, -20);
                 break;
 
             case Sys_NodeGroup.NodeKey:
                 addNode.GroupPrev = Sys_NodeGroup.Shape;
 
-                addNode.Angle = 45;
+                addNode.Potision = new Vector2(209, 5);
                 break;
 
             case Sys_NodeGroup.NodeHindrance:
@@ -108,19 +108,19 @@ public class Sys_NodeCreate : MonoBehaviour
 
                 addNode.GroupNext.Add(Sys_NodeGroup.NodeHindranceTime);
 
-                addNode.Angle = 90;
+                addNode.Potision = new Vector2(124, 40);
                 break;
 
             case Sys_NodeGroup.NodeHindranceTime:
                 addNode.GroupPrev = Sys_NodeGroup.NodeHindrance;
 
-                addNode.Angle = 90;
+                addNode.Potision = new Vector2(124, 160);
                 break;
 
             case Sys_NodeGroup.NodeEditor:
                 addNode.GroupPrev = Sys_NodeGroup.Shape;
 
-                addNode.Angle = 75;
+                addNode.Potision = new Vector2(155, 36);
                 break;
 
             case Sys_NodeGroup.Number:
@@ -130,25 +130,25 @@ public class Sys_NodeCreate : MonoBehaviour
                 addNode.GroupNext.Add(Sys_NodeGroup.NumberScale);
                 addNode.GroupNext.Add(Sys_NodeGroup.Speed);
 
-                addNode.Angle = 60;
+                addNode.Potision = new Vector2(184, 24);
                 break;
 
             case Sys_NodeGroup.Move:
                 addNode.GroupPrev = Sys_NodeGroup.Number;
 
-                addNode.Angle = 0;
+                addNode.Potision = new Vector2(304, 24);
                 break;
 
             case Sys_NodeGroup.NumberScale:
                 addNode.GroupPrev = Sys_NodeGroup.Number;
 
-                addNode.Angle = 45;
+                addNode.Potision = new Vector2(269, 109);
                 break;
 
             case Sys_NodeGroup.Speed:
                 addNode.GroupPrev = Sys_NodeGroup.Number;
 
-                addNode.Angle = 90;
+                addNode.Potision = new Vector2(183, 144);
                 break;
         }
 
@@ -163,6 +163,7 @@ public class Sys_NodeCreate : MonoBehaviour
 
         addNode.Used = true;
         addNode.Penalty = false;
+        addNode.AddNode = false;
 
         Sys_Node.NodeList.Add(addNode);
         return addNode;

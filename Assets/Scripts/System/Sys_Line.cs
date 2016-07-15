@@ -18,6 +18,8 @@ public class Sys_Line : MonoBehaviour
     {
         m_RectTransform = GetComponent<RectTransform>();
         m_Color = GetComponent<Image>().color;
+
+        Update();
     }
 
     void Update()
@@ -43,6 +45,11 @@ public class Sys_Line : MonoBehaviour
     public void SetTargetPos(Transform targetPos)
     {
         m_TargetPos = targetPos;
+    }
+
+    public void HideLine()
+    {
+        m_Color.a = 0.0f;
     }
 
     public void DeleteLine()

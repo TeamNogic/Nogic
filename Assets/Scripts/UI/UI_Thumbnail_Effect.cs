@@ -24,7 +24,7 @@ public class UI_Thumbnail_Effect : MonoBehaviour
             create.transform.SetSiblingIndex(create.GetComponent<Image>().transform.GetSiblingIndex() - 1);
 
             //座標変更
-            create.GetComponent<RectTransform>().position = this.GetComponent<RectTransform>().position;
+            create.GetComponent<RectTransform>().localPosition = this.GetComponent<RectTransform>().localPosition;
 
             //削除
             Destroy(this.GetComponent<UI_Thumbnail_Effect>());

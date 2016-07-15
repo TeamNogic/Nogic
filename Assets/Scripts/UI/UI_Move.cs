@@ -8,8 +8,8 @@ public class UI_Move : MonoBehaviour
 
     public void Setup(Vector3 move)
     {
-        target = this.GetComponent<RectTransform>().position + move;
-        prev = Vector2.Distance(target, this.GetComponent<RectTransform>().position);
+        target = this.GetComponent<RectTransform>().localPosition + move;
+        prev = Vector2.Distance(target, this.GetComponent<RectTransform>().localPosition);
 
         Start();
     }
@@ -17,7 +17,7 @@ public class UI_Move : MonoBehaviour
     public void Setup_Target(Vector3 move)
     {
         target = move;
-        prev = Vector2.Distance(target, this.GetComponent<RectTransform>().position);
+        prev = Vector2.Distance(target, this.GetComponent<RectTransform>().localPosition);
 
         Start();
     }
@@ -35,17 +35,17 @@ public class UI_Move : MonoBehaviour
     void Update()
     {
         //移動
-        this.GetComponent<RectTransform>().position += (target - this.GetComponent<RectTransform>().position) * Time.deltaTime * 4.0f;
+        this.GetComponent<RectTransform>().localPosition += (target - this.GetComponent<RectTransform>().localPosition) * Time.deltaTime * 4.0f;
 
         //接近したら
-        if (prev < Vector2.Distance(target, this.GetComponent<RectTransform>().position))
+        if (prev < Vector2.Distance(target, this.GetComponent<RectTransform>().localPosition))
         {
             //ズレ防止
-            this.GetComponent<RectTransform>().position = target;
+            this.GetComponent<RectTransform>().localPosition = target;
             //移動終了
             Destroy(this.GetComponent<UI_Move>());
         }
 
-        prev = Vector2.Distance(target, this.GetComponent<RectTransform>().position);
+        prev = Vector2.Distance(target, this.GetComponent<RectTransform>().localPosition);
     }
 }

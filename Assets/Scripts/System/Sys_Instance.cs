@@ -114,7 +114,7 @@ public class Sys_Instance : MonoBehaviour
         //Debug.Log(m_get_kazu);
         if (!TimeOk && m_get_kazu == 0 && (m_Seisei[0] == 0 || m_Seisei[1] == 0 || m_Seisei[2] == 0 || m_Seisei[3] == 0 || m_Seisei[4] == 0))
         {
-            Debug.Log(m_get_kazu);
+            //Debug.Log(m_get_kazu);
             if (GameObject.Find("Poison(Clone)") != null) Destroy(GameObject.Find("Poison(Clone)"));
             if (GameObject.Find("Parasite(Clone)") != null) Destroy(GameObject.Find("Parasite(Clone)"));
             if (GameObject.Find("Interference(Clone)") != null) Destroy(GameObject.Find("Interference(Clone)"));

@@ -82,7 +82,7 @@ public class Obj_Skill_Firing : MonoBehaviour
             //Debug.Log(m_ObjEndflag);
             if (m_Type == 20)
             {
-                Debug.Log(m_ObjEndflag);
+                //Debug.Log(m_ObjEndflag);
                 transform.LookAt(new Vector3(m_mokutekipos.x, 50, m_mokutekipos.z));
                 transform.Translate(Vector3.forward * speed);
                 float Up_pos = Vector3.Distance(new Vector3(m_mokutekipos.x, 50, m_mokutekipos.z), transform.position);
@@ -98,7 +98,7 @@ public class Obj_Skill_Firing : MonoBehaviour
             }
             if (m_ObjEndflag == true)
             {
-                Debug.Log(m_ObjEndflag);
+                //Debug.Log(m_ObjEndflag);
                 if (this.GetComponent<Obj_Scale>() == null) this.gameObject.AddComponent<Obj_Scale>();
                 this.GetComponent<Obj_Scale>().Target = Vector2.zero;
                 this.GetComponent<Obj_Scale>().Speed = 5.0f;

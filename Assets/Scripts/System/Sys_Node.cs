@@ -45,7 +45,7 @@ public class Sys_ParameterNode
     public Sys_NodeGroup GroupPrev;                                     //前に必要なグループ
     public List<Sys_NodeGroup> GroupNext = new List<Sys_NodeGroup>();   //次に連動可能なグループ
 
-    public int Angle;                                                   //前のノードからどの角度でノードが進むか
+    public Vector3 Potision;                                            //移動先座標
 
     public int Option;                                                  //オプション番号
 
@@ -57,12 +57,13 @@ public class Sys_ParameterNode
 
     public bool Used;                                                   //戦闘で使用するか
     public bool Penalty;                                                //ペナルティノードになったか
+    public bool AddNode;                                                //相手側のペナルティで含まれたノードであるか
 }
 
 [System.Serializable]
 public class Sys_Node : MonoBehaviour
 {
-    public Image m_Line;                                                           //ライン
+    public Image m_Line;                                                                //ライン
 
     public Sys_ParameterNode Data;                                                      //自身の管理データ
 
@@ -77,11 +78,19 @@ public class Sys_Node : MonoBehaviour
 
     public Image line;                                                                  //線
 
-    private GameObject nodeEditor;                                                       //キャンバス
+    private GameObject nodeEditor;                                                      //キャンバス
+
+    private bool startGuard = false;                                                    //Start呼び出し防止
+    private int penaltyCount;                                                           //ペナルティ番号
+
+    void Awake()
+    {
+        nodeEditor = GameObject.Find("NodeEditor");
+    }
 
     void Start()
     {
-        nodeEditor = GameObject.Find("NodeEditor");
+        if (startGuard) return;
 
         //全てのノード選択済み枠を見る
         for (Sys_NodeGroup i = 0; i != Sys_NodeGroup.__Size__; ++i)
@@ -155,29 +164,56 @@ public class Sys_Node : MonoBehaviour
 
         //ペナルティノード変化(状態異常：ヘル　の場合は出現率が２倍)
         Data.Penalty = Random.Range(0, Sys_Status.Player[Sys_Status.activePlayer].State_NodeEditor == 2 ? 5 : 10) == 0;
+        Data.AddNode = false;
         this.transform.FindChild("Danger").GetComponent<Image>().enabled = Data.Penalty;
-        
+
+        //ランク変更と技名の設定
         this.GetComponent<Image>().sprite = nodeImage[Data.Rank - 1];
         this.transform.FindChild("Name").gameObject.GetComponent<Text>().text = Data.Name;
+    }
+
+    public void SelectEnter(int pos, int penaltyCount)
+    {
+        //Start関数を呼び出さない
+        startGuard = true;
+
+        //ノード確定
+        NodeList[pos].This = this.gameObject;
+        Data = NodeList[pos];
+
+        //ペナルティを無効化する
+        Data.Penalty = false;
+        Data.AddNode = true;
+        this.transform.FindChild("Danger").GetComponent<Image>().enabled = Data.Penalty;
+        //ペナルティカウント（何個目のペナルティか）を代入
+        this.penaltyCount = penaltyCount;
+
+        //ランク変更と技名の設定
+        this.GetComponent<Image>().sprite = nodeImage[Data.Rank - 1];
+        this.transform.FindChild("Name").gameObject.GetComponent<Text>().text = Data.Name;
+
+        //選択済みにする
+        this.Enter();
     }
 
     public void Enter()
     {
         //ノードを移動開始する
         this.gameObject.AddComponent<UI_NodeMove>();
-        this.GetComponent<UI_NodeMove>().Setup(Data.Angle, Select[Data.GroupPrev].This);
+        this.GetComponent<UI_NodeMove>().Setup_Target(Data.Potision);
 
         //サイズを調整
         if (this.GetComponent<UI_Scale>() == null) this.gameObject.AddComponent<UI_Scale>();
         this.GetComponent<UI_Scale>().Setup(new Vector2(0.375f, 0.15f), 2.5f, false);
 
-
-        //前のノードに向けて線を引く
-        line = Instantiate(m_Line, transform.position, Quaternion.identity) as Image;
-        line.transform.SetParent(nodeEditor.transform, false);
-        line.GetComponent<Sys_Line>().SetTargetPos(transform);
-        line.GetComponent<Sys_Line>().SetStartPos(Select[Data.GroupPrev].This.transform);
-
+        if (!startGuard)
+        {
+            //前のノードに向けて線を引く
+            line = Instantiate(m_Line, transform.position, Quaternion.identity) as Image;
+            line.transform.SetParent(nodeEditor.transform, false);
+            line.GetComponent<Sys_Line>().SetTargetPos(transform);
+            line.GetComponent<Sys_Line>().SetStartPos((Select[Data.GroupPrev].This).transform);
+        }
 
         //ノード情報追加　形状名は最後に出るようにする
         if (Data.Group == Sys_NodeGroup.Shape)

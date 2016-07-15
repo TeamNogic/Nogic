@@ -11,12 +11,12 @@ public class UI_Shake : MonoBehaviour
 
     void Start()
     {
-        basePos = this.GetComponent<RectTransform>().position;
+        basePos = this.GetComponent<RectTransform>().localPosition;
     }
 
     public void End()
     {
-        this.GetComponent<RectTransform>().position = basePos;
+        this.GetComponent<RectTransform>().localPosition = basePos;
         Destroy(this.GetComponent<UI_Shake>());
     }
 
@@ -27,6 +27,6 @@ public class UI_Shake : MonoBehaviour
         move = Mathf.Sin(count) * power;
 
         if (power <= 0.0f) this.End();
-        else this.GetComponent<RectTransform>().position = basePos + new Vector3(0.0f, move);
+        else this.GetComponent<RectTransform>().localPosition = basePos + new Vector3(0.0f, move);
     }
 }

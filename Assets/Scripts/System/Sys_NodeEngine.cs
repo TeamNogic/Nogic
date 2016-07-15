@@ -15,6 +15,7 @@ public class Sys_NodeEngine : MonoBehaviour
     private GameObject nodeEditor;                      //キャッチしたノードエディタ
 
     private bool updateFlag;                            //更新を行うか
+    private bool isStart;                               //スタートしたかどうか
 
     private int selectHold;                             //長押し中のノード
 
@@ -82,6 +83,7 @@ public class Sys_NodeEngine : MonoBehaviour
     void Start()
     {
         nodeEditor = GameObject.Find("NodeEditor");
+        isStart = false;
 
         Sys_Node.Select.Clear();
 
@@ -122,6 +124,27 @@ public class Sys_NodeEngine : MonoBehaviour
         Sys_Node.Select[Sys_NodeGroup.Core] = Sys_NodeCreate.AddNode("", 0, Sys_NodeGroup.Core, 0, ""); //コア
         Sys_Node.Select[Sys_NodeGroup.Core].This = this.gameObject;
 
+        //追加予定のノード名を全て見る
+        int penaltyCount = 0;
+        for (int i = 0; i < Sys_Status.Player[Sys_Status.activePlayer].AddNode.Count; ++i)
+        {
+            //ノードデッキのすべてを見る
+            for (int j = 0; j < Sys_Node.NodeList.Count; ++j)
+            {
+                //一致したノードがあれば
+                if (Sys_Node.NodeList[j].Name == Sys_Status.Player[Sys_Status.activePlayer].AddNode[i])
+                {
+                    Image tmp = Instantiate(baseNode, new Vector3(-300.0f, 40.0f), Quaternion.identity) as Image;
+                    tmp.transform.SetParent(nodeEditor.transform, false);
+                    selectNode.Add(tmp);
+                    tmp.GetComponent<Sys_Node>().SelectEnter(j, penaltyCount++);
+
+                    break;
+                }
+            }
+        }
+        Sys_Status.Player[Sys_Status.activePlayer].AddNode.Clear();
+
         CreateNode();
     }
 
@@ -135,6 +158,21 @@ public class Sys_NodeEngine : MonoBehaviour
         //全部初期化する
         Sys_Status.Action_Object = new Sys_Action_Object();
         Sys_Status.Action_UI = new Sys_Action_UI();
+
+        //ペナルティノードを相手側に送信して自身からは削除する
+        //全てのノード選択済み枠を見る
+        for (Sys_NodeGroup i = 0; i != Sys_NodeGroup.__Size__; ++i)
+        {
+            //選択済みノードが存在して、ペナルティノードであれば
+            if (Sys_Node.Select.ContainsKey(i) && Sys_Node.Select[i].Penalty)
+            {
+                //送信ノードを追加
+                Sys_Status.Player[Sys_Status.targetPlayer].AddNode.Add(Sys_Node.Select[i].Name);
+
+                //ノード内から消去する
+                Sys_Node.Select.Remove(i);
+            }
+        }
 
         //属性
         if (Sys_Node.Select.ContainsKey(Sys_NodeGroup.Type)) Sys_Status.Action_Object.Type = Sys_Node.Select[Sys_NodeGroup.Type].Name;
@@ -364,7 +402,7 @@ public class Sys_NodeEngine : MonoBehaviour
 
         for (int i = 0; i < selectNode.Count; ++i)
         {
-            DeleteUI(selectNode[i].GetComponent<Sys_Node>().line, 1.25f);
+            if (selectNode[i].GetComponent<Sys_Node>().line != null) DeleteUI(selectNode[i].GetComponent<Sys_Node>().line, 1.25f);
 
             DeleteUI(selectNode[i], 1.25f);
         }
@@ -418,7 +456,7 @@ public class Sys_NodeEngine : MonoBehaviour
                 }
 
                 tmpSelect.transform.SetParent(nodeEditor.transform, false);
-                tmpSelect.transform.position = Create[i].transform.position;
+                tmpSelect.transform.localPosition = Create[i].transform.localPosition;
 
                 //選択信号を渡す
                 Create[target].GetComponent<Sys_Node>().Enter();
@@ -440,14 +478,16 @@ public class Sys_NodeEngine : MonoBehaviour
             }
         }
 
-        if (1 == selectNode.Count)
+        if (!isStart)
         {
+            isStart = true;
+
             Image tmp = Instantiate(start, new Vector2(0.0f, 200.0f), Quaternion.identity) as Image;
             tmp.transform.SetParent(nodeEditor.transform, false);
         }
 
-        if (selectNode.Count < 18) CreateNode();
-        else AttackExport();
+        if (isPerfect()) AttackExport();
+        else CreateNode();
     }
 
     void Update()
@@ -543,14 +583,14 @@ public class Sys_NodeEngine : MonoBehaviour
 
             //座標の移動
             Vector3 tmpTarget = Create[moveA].GetComponent<UI_Move>() == null
-                ? Create[moveA].transform.position
+                ? Create[moveA].transform.localPosition
                 : Create[moveA].GetComponent<UI_Move>().getTarget();
 
             if (Create[moveA].GetComponent<UI_Move>() == null) Create[moveA].gameObject.AddComponent<UI_Move>();
 
             Create[moveA].GetComponent<UI_Move>().Setup_Target(
                 Create[moveB].GetComponent<UI_Move>() == null
-                ? Create[moveB].transform.position
+                ? Create[moveB].transform.localPosition
                 : Create[moveB].GetComponent<UI_Move>().getTarget());
 
             if (Create[moveB].GetComponent<UI_Move>() == null) Create[moveB].gameObject.AddComponent<UI_Move>();
@@ -564,13 +604,17 @@ public class Sys_NodeEngine : MonoBehaviour
         //デバッグ
         if (Input.GetKey(KeyCode.Q))
         {
-            int max = 0;
+            int max = -1;
 
             for (int i = 0; i < 4; ++i)
             {
-                if (i == max || Create[i] == null || Create[i].GetComponent<Sys_Node>().Data.Penalty) continue;
-
-                if (Create[max].GetComponent<Sys_Node>().Data.Rank < Create[i].GetComponent<Sys_Node>().Data.Rank) max = i;
+                if (Create[i] != null)
+                {
+                    if (!Create[i].GetComponent<Sys_Node>().Data.Penalty)
+                    {
+                        if (max == -1 || Create[max].GetComponent<Sys_Node>().Data.Rank < Create[i].GetComponent<Sys_Node>().Data.Rank) max = i;
+                    }
+                }
             }
 
             SelectNode(max);
@@ -584,21 +628,13 @@ public class Sys_NodeEngine : MonoBehaviour
         }
 
         //デバッグ
-        if (Input.GetKey(KeyCode.E) && 1 <= selectNode.Count)
+        if (Input.GetKey(KeyCode.E) && isStart)
         {
             selectTime = 0.0f;
         }
 
-        string attackName = "";
-
-        //全てのノード選択済み枠を見る
-        for (int i = 0; i < Sys_Status.Attack_Name.Count; ++i)
-        {
-            attackName += Sys_Status.Attack_Name[i] + " ";
-        }
-
         //ノードが１つ以上選択されていたら
-        if (0 < selectNode.Count)
+        if (isStart)
         {
             //時間を減らす
             selectTime -= Time.deltaTime;
@@ -652,6 +688,14 @@ public class Sys_NodeEngine : MonoBehaviour
         {
             selectTime = 0.0f;
             AttackExport();
+        }
+
+        string attackName = "";
+
+        //全てのノード選択済み枠を見る
+        for (int i = 0; i < Sys_Status.Attack_Name.Count; ++i)
+        {
+            attackName += Sys_Status.Attack_Name[i] + " ";
         }
 
         nodeEditor.transform.FindChild("ActionName").gameObject.GetComponent<Text>().text = attackName;
