@@ -1236,10 +1236,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thumbnail: {fileID: 21300000, guid: 338f27c2fedbdce42bac443c0ab7f900, type: 3}
-  startSound: {fileID: 0}
-  nodeSound: {fileID: 0}
-  attackSound: {fileID: 0}
-  damageSound: {fileID: 0}
+  startSound: {fileID: 8300000, guid: d48dc91c7db18c348bee4ebd2bb6cf72, type: 3}
+  nodeSound: {fileID: 8300000, guid: 6a03498bc85964b4db32ebce29ae0d5a, type: 3}
+  attackSound: {fileID: 8300000, guid: a458f707540c51f45a8b16c20e7b289d, type: 3}
+  damageSound: {fileID: 8300000, guid: cf5dcafe58800cb4e938ac5e28207edc, type: 3}
   weak:
   - "\u30B5\u30F3\u30C0\u30FC"
   - "\u30E9\u30A4\u30C8"
