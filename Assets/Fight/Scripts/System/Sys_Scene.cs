@@ -31,6 +31,16 @@ public enum Sys_SceneState
     Attack_Wait,
     MapAlpha_Show,
     MapAlpha_Show_Wait,
+    TernCount,
+    TernCount_Wait,
+    GameSet,
+    GameSet_Wait,
+    LosePlayer,
+    LosePlayer_Wait,
+    WinPlayer,
+    WinPlayer_Wait,
+    Result,
+    Result_Wait,
 }
 
 [System.Serializable]
@@ -48,6 +58,7 @@ public class Sys_PlayerScene
 public class Sys_Scene : MonoBehaviour
 {
     private float startWait;                            //最初の遅延
+    private float tern;                                 //ゲーム残りターン数
 
     private int showWait;                               //登場中のプレイヤー
 
@@ -92,6 +103,7 @@ public class Sys_Scene : MonoBehaviour
         showWait = 0;
 
         startWait = 1.0f;
+        tern = 7;
 
         nodeEditor = GameObject.Find(nodeEditorName);
 
@@ -113,6 +125,7 @@ public class Sys_Scene : MonoBehaviour
                     player[i].prefab = Instantiate(player[i].prefab, player[i].position, Quaternion.Euler(0.0f, player[i].rotationY, 0.0f)) as GameObject;
                     player[i].prefab.name = "Character_" + (i + 1).ToString() + "(Clone)";
                     Sys_Status.Player.Add(new Sys_PlayerData());
+                    Sys_Status.Player_Wait.Add(new Sys_PlayerData_TernWait());
                     Sys_Status.Player[i].Weak = player[i].prefab.GetComponent<Obj_PlayerAsset>().weak;
                 }
 
@@ -212,14 +225,6 @@ public class Sys_Scene : MonoBehaviour
                 thumbnailSingle.GetComponent<Image>().sprite = player[Sys_Status.activePlayer].prefab.GetComponent<Obj_PlayerAsset>().thumbnail;
                 thumbnailSingle.transform.SetParent(nodeEditor.transform, false);
 
-                //状態異常
-                Sys_PlayerData tmp = Sys_Status.Player[Sys_Status.activePlayer];
-                if (--tmp.State_Tern_Time <= 0) tmp.State_Tern = 0;
-                if (--tmp.State_Status_Time <= 0) tmp.State_Status = 0;
-                if (--tmp.State_NodeKey_Time <= 0) tmp.State_NodeKey = 0;
-                if (--tmp.State_NodeHindrance_Time <= 0) tmp.State_NodeHindrance = 0;
-                if (--tmp.State_NodeEditor_Time <= 0) tmp.State_NodeEditor = 0;
-                
                 startWait = 4.0f;
                 ++sceneState;
                 break;
@@ -379,8 +384,103 @@ public class Sys_Scene : MonoBehaviour
                     Sys_Status.activePlayer = (Sys_Status.activePlayer + 1) % player.Count;
                     Sys_Status.targetPlayer = (Sys_Status.targetPlayer + 1) % player.Count;
 
-                    sceneState = Sys_SceneState.ChangePlayer;
+                    //１週したらターン変更シーンへ
+                    if (Sys_Status.activePlayer <= 0) sceneState = Sys_SceneState.TernCount;
+                    //それ以外なら次のプレイヤーへ
+                    else sceneState = Sys_SceneState.ChangePlayer;
                 }
+                break;
+
+            case Sys_SceneState.TernCount:
+                //カウントの前に状態以上適用
+                for (int i = 0; i < player.Count; ++i)
+                {
+                    Sys_PlayerData data = Sys_Status.Player[i];
+                    Sys_PlayerData_TernWait wait = Sys_Status.Player_Wait[i];
+
+                    data.AddNode = wait.AddNode;
+
+                    if (wait.State_Tern != 0)
+                    {
+                        data.State_Tern = wait.State_Tern;
+                        data.State_Tern_Time = wait.State_Tern_Time;
+                    }
+
+                    if (wait.State_Status != 0)
+                    {
+                        data.State_Status = wait.State_Status;
+                        data.State_Status_Time = wait.State_Status_Time;
+                    }
+
+                    if (wait.State_NodeKey != 0)
+                    {
+                        data.State_NodeKey = wait.State_NodeKey;
+                        data.State_NodeKey_Time = wait.State_NodeKey_Time;
+                    }
+
+                    if (wait.State_NodeHindrance != 0)
+                    {
+                        data.State_NodeHindrance = wait.State_NodeHindrance;
+                        data.State_NodeHindrance_Time = wait.State_NodeHindrance_Time;
+                    }
+
+                    if (wait.State_NodeEditor != 0)
+                    {
+                        data.State_NodeEditor = wait.State_NodeEditor;
+                        data.State_NodeEditor_Time = wait.State_NodeEditor_Time;
+                    }
+
+                    wait = new Sys_PlayerData_TernWait();
+
+                    if (--data.State_Tern_Time <= 0) data.State_Tern = 0;
+                    if (--data.State_Status_Time <= 0) data.State_Status = 0;
+                    if (--data.State_NodeKey_Time <= 0) data.State_NodeKey = 0;
+                    if (--data.State_NodeHindrance_Time <= 0) data.State_NodeHindrance = 0;
+                    if (--data.State_NodeEditor_Time <= 0) data.State_NodeEditor = 0;
+                }
+
+                --tern;
+
+                ++sceneState;
+                break;
+
+            case Sys_SceneState.TernCount_Wait:
+
+                //ターンが０になったらゲーム終了
+                if (tern <= 0) sceneState = Sys_SceneState.GameSet;
+                else sceneState = Sys_SceneState.ChangePlayer;
+                break;
+
+            case Sys_SceneState.GameSet:
+                
+                break;
+
+            case Sys_SceneState.GameSet_Wait:
+
+                break;
+
+            case Sys_SceneState.LosePlayer:
+
+                break;
+
+            case Sys_SceneState.LosePlayer_Wait:
+
+                break;
+
+            case Sys_SceneState.WinPlayer:
+
+                break;
+
+            case Sys_SceneState.WinPlayer_Wait:
+
+                break;
+
+            case Sys_SceneState.Result:
+
+                break;
+
+            case Sys_SceneState.Result_Wait:
+
                 break;
 
             default:

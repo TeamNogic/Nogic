@@ -155,7 +155,6 @@ public class Sys_NodeEngine : MonoBehaviour
         //var clearMethod = logEntries.GetMethod("Clear", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
         //clearMethod.Invoke(null, null);
 
-        //全部初期化する
         Sys_Status.Action_Object = new Sys_Action_Object();
         Sys_Status.Action_UI = new Sys_Action_UI();
 
@@ -167,7 +166,7 @@ public class Sys_NodeEngine : MonoBehaviour
             if (Sys_Node.Select.ContainsKey(i) && Sys_Node.Select[i].Penalty)
             {
                 //送信ノードを追加
-                Sys_Status.Player[Sys_Status.targetPlayer].AddNode.Add(Sys_Node.Select[i].Name);
+                Sys_Status.Player_Wait[Sys_Status.targetPlayer].AddNode.Add(Sys_Node.Select[i].Name);
 
                 //ノード内から消去する
                 Sys_Node.Select.Remove(i);
@@ -289,13 +288,18 @@ public class Sys_NodeEngine : MonoBehaviour
         {
             float damage = baseDamage * Random.Range(1.0f, 1.0f + damageRate);
 
+            //ノード数でボーナス補正
+            if (damage <= 5000) damage *= selectNode.Count * 3.0f;
+            else if (damage <= 10000) damage *= selectNode.Count * 2.0f;
+            else if (damage <= 30000) damage *= selectNode.Count * 1.5f;
+            else if (damage <= 50000) damage *= selectNode.Count;
+            else if (damage <= 70000) damage *= selectNode.Count * 0.5f;
+            else if (damage <= 90000) damage *= selectNode.Count * 0.25f;
+
             //ダメージ追加
             Sys_Status.Action_UI.Damage.Add((int)damage);
             Sys_Status.Player[Sys_Status.activePlayer].TotalDamage += (int)damage;
-
-            //回復ノードが選択された場合の回復量代入
-            Sys_Status.Action_UI.Heal += (int)(damage * 0.1f);
-
+            
             //Debug.Log(Sys_Status.Action_UI.Damage[i] + "ダメージ");
         }
 
@@ -307,15 +311,15 @@ public class Sys_NodeEngine : MonoBehaviour
 
             //効果適用
             Sys_Status.Action_Object.State_Tern = Sys_Node.Select[Sys_NodeGroup.Tern].Option;
-            Sys_Status.Player[Sys_Status.targetPlayer].State_Tern = Sys_Node.Select[Sys_NodeGroup.Tern].Option;
+            Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Tern = Sys_Node.Select[Sys_NodeGroup.Tern].Option;
 
             //ターンノードがあるなら追加
             if (Sys_Node.Select.ContainsKey(Sys_NodeGroup.TernTime))
             {
                 Sys_Status.Action_UI.State_Tern_Time = Sys_Node.Select[Sys_NodeGroup.TernTime].Option;
-                Sys_Status.Player[Sys_Status.targetPlayer].State_Tern_Time = Sys_Node.Select[Sys_NodeGroup.TernTime].Option + 1;
+                Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Tern_Time = Sys_Node.Select[Sys_NodeGroup.TernTime].Option + 1;
             }
-            else Sys_Status.Player[Sys_Status.targetPlayer].State_Tern_Time = 2;
+            else Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Tern_Time = 2;
         }
 
         //ノード妨害
@@ -326,15 +330,15 @@ public class Sys_NodeEngine : MonoBehaviour
 
             //効果適用
             Sys_Status.Action_Object.State_NodeHindrance = Sys_Node.Select[Sys_NodeGroup.NodeHindrance].Option;
-            Sys_Status.Player[Sys_Status.targetPlayer].State_NodeHindrance = Sys_Node.Select[Sys_NodeGroup.NodeHindrance].Option;
+            Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeHindrance = Sys_Node.Select[Sys_NodeGroup.NodeHindrance].Option;
 
             //ターンノードがあるなら追加
             if (Sys_Node.Select.ContainsKey(Sys_NodeGroup.NodeHindranceTime))
             {
                 Sys_Status.Action_UI.State_NodeHindrance_Time = Sys_Node.Select[Sys_NodeGroup.NodeHindranceTime].Option;
-                Sys_Status.Player[Sys_Status.targetPlayer].State_NodeHindrance_Time = Sys_Node.Select[Sys_NodeGroup.NodeHindranceTime].Option + 1;
+                Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeHindrance_Time = Sys_Node.Select[Sys_NodeGroup.NodeHindranceTime].Option + 1;
             }
-            else Sys_Status.Player[Sys_Status.targetPlayer].State_NodeHindrance_Time = 2;
+            else Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeHindrance_Time = 2;
         }
 
         //ノードキー妨害
@@ -345,8 +349,8 @@ public class Sys_NodeEngine : MonoBehaviour
 
             //効果適用
             Sys_Status.Action_Object.State_NodeKey = Sys_Node.Select[Sys_NodeGroup.NodeKey].Option;
-            Sys_Status.Player[Sys_Status.targetPlayer].State_NodeKey = Sys_Node.Select[Sys_NodeGroup.NodeKey].Option;
-            Sys_Status.Player[Sys_Status.targetPlayer].State_NodeKey_Time = 2;
+            Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeKey = Sys_Node.Select[Sys_NodeGroup.NodeKey].Option;
+            Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeKey_Time = 2;
         }
 
         //ノードエディタ妨害
@@ -357,8 +361,8 @@ public class Sys_NodeEngine : MonoBehaviour
 
             //効果適用
             Sys_Status.Action_Object.State_NodeEditor = Sys_Node.Select[Sys_NodeGroup.NodeEditor].Option;
-            Sys_Status.Player[Sys_Status.targetPlayer].State_NodeEditor = Sys_Node.Select[Sys_NodeGroup.NodeEditor].Option;
-            Sys_Status.Player[Sys_Status.targetPlayer].State_NodeEditor_Time = 2;
+            Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeEditor = Sys_Node.Select[Sys_NodeGroup.NodeEditor].Option;
+            Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeEditor_Time = 2;
         }
 
         //攻撃変化
@@ -369,8 +373,8 @@ public class Sys_NodeEngine : MonoBehaviour
 
             //効果適用
             Sys_Status.Action_Object.State_Status = Sys_Node.Select[Sys_NodeGroup.Status].Option;
-            Sys_Status.Player[Sys_Status.targetPlayer].State_Status = Sys_Node.Select[Sys_NodeGroup.Status].Option;
-            Sys_Status.Player[Sys_Status.targetPlayer].State_Status_Time = 2;
+            Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Status = Sys_Node.Select[Sys_NodeGroup.Status].Option;
+            Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Status_Time = 2;
         }
 
         updateFlag = false;
