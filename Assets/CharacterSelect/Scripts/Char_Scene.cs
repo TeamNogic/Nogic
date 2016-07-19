@@ -5,37 +5,42 @@ public class Char_Scene : MonoBehaviour
 {
     public enum Char_SceneState
     {
-        WaitP1,
-        SelectP1,
-        WaitP2,
-        SelectP2,
-        SelectFinish,
-        End
+        WaitP1,         //プレイヤー１を選択中
+        SelectP1,       //プレイヤー１を選択時に一度だけ
+        WaitP2,         //プレイヤー2を選択中
+        SelectP2,       //プレイヤー2を選択時に一度だけ
+        SelectFinish,   //プレイヤー選択完了
     }
 
+    [HideInInspector]
     public Char_SceneState m_State;
-
     [HideInInspector]
     public int m_Select;
+    [HideInInspector]
+    public bool m_SelectEnd = false;
 
     [SerializeField]
-    private Canvas m_Canvas;
+    private Canvas m_Canvas;   //キャンバス
     [SerializeField]
-    private Image m_MainCursor;
+    private Image m_MainCursor;   //マウスに追従するカーソル
     [SerializeField]
-    private Sprite[] m_CursorSprite;
+    private Image[] m_CursorImage;   //選択時に表示するカーソル
     [SerializeField]
-    private Image[] m_CursorImage;
+    private Sprite[] m_CursorSprite;   //MainCursorのスプライト
     [SerializeField]
-    private Button m_ButtonOk;
+    private Button m_ButtonOk;   //決定ボタン
     [SerializeField]
-    private GameObject[] m_CharPrefab;
+    private GameObject[] m_CharPrefab;   //キャラクターモデル
     [SerializeField]
-    private GameObject[] m_Empty;
+    private GameObject[] m_Empty;   //選択したキャラクターを生成する座標
     [SerializeField]
-    private float m_WaitTime;
+    private GameObject m_FadeIn;   //フェードインパネル
+    [SerializeField]
+    private GameObject m_Smoke;   //スモークパーティクル
 
     private float m_TimeCount = 0.0f;
+    private GameObject[] m_InstantiateModel = new GameObject[2];    //選択したキャラクターモデル
+    private Image[] cursor = new Image[2]; //選択時に生成されるカーソル
 
     void Start()
     {
@@ -44,83 +49,80 @@ public class Char_Scene : MonoBehaviour
 
     void Update()
     {
-        Scene();
-    }
-
-    void Scene()
-    {
         switch (m_State)
         {
             case Char_SceneState.WaitP1:
-                //none
+                //プレイヤー１を選択中
                 break;
 
             case Char_SceneState.SelectP1:
                 Char_SelectData.player_1 = m_Select;
-                //カーソル
-                Image cursor1 = Instantiate(m_CursorImage[0],
-                    m_MainCursor.transform.localPosition,
-                    Quaternion.identity) as Image;
 
-                cursor1.transform.SetParent(m_Canvas.transform, false);
+                //クリックした場所にカーソルを表示
+                cursor[0] = Instantiate(m_CursorImage[0], m_MainCursor.transform.localPosition, Quaternion.identity) as Image;
+                cursor[0].transform.SetParent(m_Canvas.transform, false);
+
+                //カーソルの画像を変更
+                m_MainCursor.sprite = m_CursorSprite[1];
 
                 //Player1モデル
-                Instantiate(m_CharPrefab[Char_SelectData.player_1],
+                m_InstantiateModel[0] = Instantiate(
+                    m_CharPrefab[Char_SelectData.player_1],
                     m_Empty[0].transform.position,
-                    new Quaternion(0.0f, 100.0f, 0.0f, 1.0f));
+                   new Quaternion(0.0f, 100.0f, 0.0f, 1.0f)) as GameObject;
 
-                m_MainCursor.sprite = m_CursorSprite[0];
                 m_State++;
 
                 break;
 
             case Char_SceneState.WaitP2:
-                //none
+                //プレイヤー1の選択キャンセル
+                if (Input.GetMouseButtonDown(1))
+                {
+                    Instantiate(m_Smoke, m_Empty[0].transform.position, m_Smoke.transform.rotation);
+                    Destroy(m_InstantiateModel[0].gameObject);
+                    Destroy(cursor[0].gameObject);
+                    m_MainCursor.sprite = m_CursorSprite[0];
+                    m_State = Char_SceneState.WaitP1;
+                }
 
                 break;
 
             case Char_SceneState.SelectP2:
                 Char_SelectData.player_2 = m_Select;
-                //カーソル
-                Image cursor2 = Instantiate(m_CursorImage[1],
-                    m_MainCursor.transform.localPosition,
-                    Quaternion.identity) as Image;
-                    
-                cursor2.transform.SetParent(m_Canvas.transform, false);
 
-                //Player2モデル
-                Instantiate(m_CharPrefab[Char_SelectData.player_2],
+                //クリックした場所にカーソルを表示
+                cursor[1] = Instantiate(m_CursorImage[1], m_MainCursor.transform.localPosition, Quaternion.identity) as Image;
+                cursor[1].transform.SetParent(m_Canvas.transform, false);
+
+                //Player2モデルを生成
+                m_InstantiateModel[1] = Instantiate(
+                    m_CharPrefab[Char_SelectData.player_2],
                     m_Empty[1].transform.position,
-                    new Quaternion(0.0f, 100.0f, 0.0f, 1.0f));
+                    new Quaternion(0.0f, 100.0f, 0.0f, 1.0f)) as GameObject;
                 m_State++;
 
                 break;
 
             case Char_SceneState.SelectFinish:
+                //決定ボタンを表示
                 m_ButtonOk.gameObject.SetActive(true);
-                m_State++;
-                break;
 
-            case Char_SceneState.End:
-                break;
+                //プレイヤー２の選択キャンセル
+                if (Input.GetMouseButtonDown(1))
+                {
+                    Instantiate(m_Smoke, m_Empty[1].transform.position, m_Smoke.transform.rotation);
+                    Destroy(m_InstantiateModel[1].gameObject);
+                    Destroy(cursor[1].gameObject);
+                    m_ButtonOk.gameObject.SetActive(false);
+                    m_State = Char_SceneState.WaitP2;
+                }
 
-        }
-    }
-
-    void ShowCharacter()
-    {
-        switch (Char_SelectData.player_1)
-        {
-            case 0:
-                break;
-
-            case 1:
-                break;
-
-            case 2:
-                break;
-
-            case 3:
+                //選択終了
+                if (m_SelectEnd)
+                {
+                    m_FadeIn.GetComponent<FadeIn>().m_IsFade = true;
+                }
                 break;
         }
     }

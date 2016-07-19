@@ -100,6 +100,7 @@ GameObject:
   - 4: {fileID: 461468}
   - 198: {fileID: 19877534}
   - 199: {fileID: 19915868}
+  - 114: {fileID: 11444070}
   m_Layer: 0
   m_Name: Smoke
   m_TagString: Untagged
@@ -1253,6 +1254,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11444070
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ce20446c90b474e84a7f19eb406704, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11476016
 MonoBehaviour:
   m_ObjectHideFlags: 1

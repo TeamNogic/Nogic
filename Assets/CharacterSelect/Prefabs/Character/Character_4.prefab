@@ -521,6 +521,7 @@ GameObject:
   - 4: {fileID: 417176}
   - 198: {fileID: 19834922}
   - 199: {fileID: 19945146}
+  - 114: {fileID: 11499162}
   m_Layer: 0
   m_Name: Smoke
   m_TagString: Untagged
@@ -1266,6 +1267,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Speed: 20
+--- !u!114 &11499162
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 179112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ce20446c90b474e84a7f19eb406704, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!137 &13787578
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

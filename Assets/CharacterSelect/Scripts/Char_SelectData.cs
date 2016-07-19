@@ -20,7 +20,7 @@ public class Char_SelectData : MonoBehaviour
         }
     }
 
-    public static void Init()
+    public static void InitData()
     {
         m_Player_1 = 0;
         m_Player_2 = 0;
