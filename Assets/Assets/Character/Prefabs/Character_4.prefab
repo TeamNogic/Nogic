@@ -1240,6 +1240,8 @@ MonoBehaviour:
   nodeSound: {fileID: 8300000, guid: 6a03498bc85964b4db32ebce29ae0d5a, type: 3}
   attackSound: {fileID: 8300000, guid: a458f707540c51f45a8b16c20e7b289d, type: 3}
   damageSound: {fileID: 8300000, guid: cf5dcafe58800cb4e938ac5e28207edc, type: 3}
+  winSound: {fileID: 8300000, guid: 35c4dc5b22bec1b4ab9bdb349f933f47, type: 3}
+  loseSound: {fileID: 8300000, guid: a6fbb8b89264f4f43a4bd1ac39032da2, type: 3}
   weak:
   - "\u30B5\u30F3\u30C0\u30FC"
   - "\u30E9\u30A4\u30C8"

@@ -703,7 +703,7 @@ public class Sys_NodeEngine : MonoBehaviour
             attackName += Sys_Status.Attack_Name[i] + " ";
         }
 
-        nodeEditor.transform.FindChild("ActionName").gameObject.GetComponent<Text>().text = attackName;
-        nodeEditor.transform.FindChild("SelectTime").gameObject.GetComponent<Text>().text = "残り" + selectTime.ToString("00.00") + "秒";
+        nodeEditor.transform.FindChild("ActionName").GetComponent<Text>().text = attackName;
+        nodeEditor.transform.FindChild("SelectTime").GetComponent<Text>().text = "残り" + selectTime.ToString("00.00") + "秒";
     }
 }

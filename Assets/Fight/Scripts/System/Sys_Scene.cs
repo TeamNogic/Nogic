@@ -41,6 +41,8 @@ public enum Sys_SceneState
     WinPlayer_Wait,
     Result,
     Result_Wait,
+    FadeOut,
+    FadeOut_Wait,
 }
 
 [System.Serializable]
@@ -59,13 +61,15 @@ public class Sys_Scene : MonoBehaviour
 {
     private float startWait;                            //最初の遅延
     private float tern;                                 //ゲーム残りターン数
+    private int win;                                    //勝者側の番号
+    private int lose;                                   //敗者側の番号
 
     private int showWait;                               //登場中のプレイヤー
 
     private List<Image> thumbnail = new List<Image>();  //サムネイルデータ
     private Image thumbnailSingle;                      //サムネイルデータ
 
-    public Image timeup;                                //時間切れオブジェクト
+    private Image timeup;                               //時間切れオブジェクト
 
     private Image nodeCore;                             //ノード選択コア
     private Image nodeName;                             //ノード名とコメント名を表示
@@ -76,6 +80,8 @@ public class Sys_Scene : MonoBehaviour
 
     private GameObject nodeEditor;                      //キャッチしたノードエディタ
 
+    private Image ternImage;                            //ターン表示
+
     private Sys_SceneState sceneState;                  //シーンの状態
 
     public List<Sys_PlayerScene> player;                //プレイヤーデータ
@@ -84,7 +90,7 @@ public class Sys_Scene : MonoBehaviour
     public string nodeEditorName;                       //ノードエディタ名
 
     public Image totalDamage;                           //合計ダメージ表示
-
+    public Image ternBase;                              //残りターン表示
     public Image nodeNameBase;                          //ノード名とコメント名を表示するためのベース
     public Image nodeCoreBase;                          //ノード選択コア
     public Image thumbnailBase;                         //サムネイルコア
@@ -95,9 +101,12 @@ public class Sys_Scene : MonoBehaviour
 
     public GameObject cameraMoveBase;                   //移動演出オブジェクト
     public GameObject attackEngineBase;                 //攻撃生成オブジェクト
+    public GameObject winBGM;                           //勝利BGM
+    public GameObject fadeIn;                           //終了時フェードイン
 
     public AudioClip thumbnailMove;                     //サムネイル移動音
     public AudioClip changeSound;                       //チェンジ音
+    public AudioClip winSound;                          //勝利音
 
     void Start()
     {
@@ -105,7 +114,7 @@ public class Sys_Scene : MonoBehaviour
         showWait = 0;
 
         startWait = 1.0f;
-        tern = 7;
+        tern = 1;
 
         nodeEditor = GameObject.Find(nodeEditorName);
 
@@ -210,7 +219,7 @@ public class Sys_Scene : MonoBehaviour
                         thumbnail[i].gameObject.AddComponent<UI_Scale>();
                         thumbnail[i].gameObject.GetComponent<UI_Scale>().Setup(new Vector2(0.0f, 0.0f), 1.5f, true);
                     }
-                    
+
                     //カメラの回転移動を終了
                     Sys_Camera.StopMove();
 
@@ -456,46 +465,114 @@ public class Sys_Scene : MonoBehaviour
 
                 --tern;
 
-                ++sceneState;
-                break;
-
-            case Sys_SceneState.TernCount_Wait:
+                Sys_Camera.Setup(new Vector3(0.0f, 60.0f, -90.0f), new Vector3(0.0f, 25.0f, -30.0f), Vector3.zero, 30.0f);
 
                 //ターンが０になったらゲーム終了
                 if (tern <= 0) sceneState = Sys_SceneState.GameSet;
-                else sceneState = Sys_SceneState.ChangePlayer;
+                else
+                {
+                    ternImage = Instantiate(ternBase, Vector3.zero, Quaternion.identity) as Image;
+                    ternImage.transform.SetParent(nodeEditor.transform, false);
+                    ternImage.transform.FindChild("Text").GetComponent<Text>().text = "残り" + tern.ToString() + "ターン";
+
+                    sceneState = Sys_SceneState.TernCount_Wait;
+                }
+                break;
+
+            case Sys_SceneState.TernCount_Wait:
+                if (ternImage == null) sceneState = Sys_SceneState.ChangePlayer;
                 break;
 
             case Sys_SceneState.GameSet:
-                
+                GameObject.Find("BGM").AddComponent<Sys_SoundFadeOut>();
+                ++sceneState;
                 break;
 
             case Sys_SceneState.GameSet_Wait:
-
+                if (GameObject.Find("BGM") == null) ++sceneState;
                 break;
 
             case Sys_SceneState.LosePlayer:
+                if (Sys_Status.Player[0].TotalDamage < Sys_Status.Player[1].TotalDamage)
+                {
+                    win = 1;
+                    lose = 0;
+                }
+                else
+                {
+                    win = 0;
+                    lose = 1;
+                }
 
+                Sys_Camera.Setup(new Vector3(0.0f, 60.0f, -90.0f), player[lose].cameraEnd, player[lose].position, 50.0f);
+                Sys_Sound.Play(player[lose].prefab.GetComponent<Obj_PlayerAsset>().loseSound);
+
+                startWait = 2.0f;
+
+                ++sceneState;
                 break;
 
             case Sys_SceneState.LosePlayer_Wait:
+                if (!Sys_Camera.isMove())
+                {
+                    startWait -= Time.deltaTime;
+                    
+                    if (startWait <= 0.0f)
+                    {
+                        startWait = 0.0f;
+                        ++sceneState;
+                    }
 
+                    player[lose].prefab.GetComponent<Animator>().SetBool("Death", true);
+                }
                 break;
 
             case Sys_SceneState.WinPlayer:
+                cameraMove = Instantiate(cameraMoveBase, cameraMoveBase.transform.position, cameraMoveBase.transform.rotation) as GameObject;
+                cameraMove.GetComponent<Sys_Camera_Move>().lookAt = player[win].position;
 
+                Sys_Sound.Play(winSound);
+                Sys_Sound.Play(player[win].prefab.GetComponent<Obj_PlayerAsset>().winSound);
+
+                startWait = 7.0f;
+
+                ++sceneState;
                 break;
 
             case Sys_SceneState.WinPlayer_Wait:
+                startWait -= Time.deltaTime;
 
+                if (startWait <= 0.0f)
+                {
+                    startWait = 0.0f;
+                    ++sceneState;
+                }
+
+                player[win].prefab.GetComponent<Animator>().SetBool("Attack", true);
                 break;
 
             case Sys_SceneState.Result:
-
+                winBGM = Instantiate(winBGM, Vector3.zero, Quaternion.identity) as GameObject;
+                ++sceneState;
                 break;
 
             case Sys_SceneState.Result_Wait:
+                if (Input.anyKey) ++sceneState;
 
+                player[win].prefab.GetComponent<Animator>().SetBool("Attack", true);
+                break;
+
+            case Sys_SceneState.FadeOut:
+                fadeIn = Instantiate(fadeIn, Vector3.zero, Quaternion.identity) as GameObject;
+                fadeIn.transform.SetParent(nodeEditor.transform, false);
+                fadeIn.GetComponent<FadeIn>().m_IsFade = true;
+                fadeIn.GetComponent<FadeIn>().m_SceneName = "Title";
+
+                ++sceneState;
+                break;
+
+            case Sys_SceneState.FadeOut_Wait:
+                
                 break;
 
             default:
