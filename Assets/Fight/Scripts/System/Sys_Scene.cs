@@ -83,6 +83,8 @@ public class Sys_Scene : MonoBehaviour
 
     public string nodeEditorName;                       //ノードエディタ名
 
+    public Image totalDamage;                           //合計ダメージ表示
+
     public Image nodeNameBase;                          //ノード名とコメント名を表示するためのベース
     public Image nodeCoreBase;                          //ノード選択コア
     public Image thumbnailBase;                         //サムネイルコア
@@ -135,7 +137,7 @@ public class Sys_Scene : MonoBehaviour
             case Sys_SceneState.Wait:
                 startWait -= Time.deltaTime;
 
-                if (Input.anyKey) sceneState = Sys_SceneState.CreateNode;
+                if (Input.anyKey) sceneState = Sys_SceneState.VS_Wait;
 
                 if (startWait <= 0.0f)
                 {
@@ -198,12 +200,17 @@ public class Sys_Scene : MonoBehaviour
 
                 if (startWait <= 0.0f)
                 {
+                    totalDamage = Instantiate(totalDamage, totalDamage.transform.localPosition, Quaternion.identity) as Image;
+                    totalDamage.transform.SetParent(nodeEditor.transform, false);
+                    totalDamage.transform.FindChild("Thumbnail_0").GetComponent<Image>().sprite = player[0].prefab.GetComponent<Obj_PlayerAsset>().thumbnail;
+                    totalDamage.transform.FindChild("Thumbnail_1").GetComponent<Image>().sprite = player[1].prefab.GetComponent<Obj_PlayerAsset>().thumbnail;
+
                     for (int i = 0; i < thumbnail.Count; ++i)
                     {
                         thumbnail[i].gameObject.AddComponent<UI_Scale>();
                         thumbnail[i].gameObject.GetComponent<UI_Scale>().Setup(new Vector2(0.0f, 0.0f), 1.5f, true);
                     }
-
+                    
                     //カメラの回転移動を終了
                     Sys_Camera.StopMove();
 
@@ -365,8 +372,16 @@ public class Sys_Scene : MonoBehaviour
                 if (attackEngine == null) ++sceneState;
                 //ダメージサウンド
                 else if (attackEngine.GetComponent<Sys_Instance>().isEnd)
+                {
                     Sys_Sound.Play(player[Sys_Status.targetPlayer].prefab.GetComponent<Obj_PlayerAsset>().damageSound);
 
+                    Transform damage = totalDamage.transform.FindChild("Damage_" + Sys_Status.activePlayer.ToString());
+
+                    damage.GetComponent<Text>().text = Sys_Status.Player[Sys_Status.activePlayer].TotalDamage.ToString();
+                    damage.localScale = new Vector3(5.0f, 5.0f);
+                    damage.gameObject.AddComponent<UI_Scale>();
+                    damage.GetComponent<UI_Scale>().Setup(new Vector2(1.0f, 1.0f), 1.5f, false);
+                }
                 break;
 
             case Sys_SceneState.MapAlpha_Show: //マップを透明

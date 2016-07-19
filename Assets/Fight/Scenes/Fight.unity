@@ -598,6 +598,7 @@ MonoBehaviour:
   - {fileID: 166494, guid: e2c1d4a5e38450944b108782c3d46ea2, type: 2}
   - {fileID: 157028, guid: efde43669a3c3e9459e30a2a4a73ccb5, type: 2}
   nodeEditorName: NodeEditor
+  totalDamage: {fileID: 11452630, guid: 5309249dbcba23745be2e8207839a18b, type: 2}
   nodeNameBase: {fileID: 11458954, guid: 31b3fa310b278ea4fbe739af111df773, type: 2}
   nodeCoreBase: {fileID: 11440796, guid: 8ae01902d9ca677428cb091facd08909, type: 2}
   thumbnailBase: {fileID: 11439556, guid: 233ef257703aa34418b779a5eb37ebac, type: 2}

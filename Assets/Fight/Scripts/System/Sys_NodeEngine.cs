@@ -621,7 +621,8 @@ public class Sys_NodeEngine : MonoBehaviour
                 }
             }
 
-            SelectNode(max);
+            if (Create[max] != null) SelectNode(max);
+            else selectTime = 0.0f;
         }
 
         //デバッグ
