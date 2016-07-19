@@ -114,7 +114,7 @@ public class Sys_Scene : MonoBehaviour
         showWait = 0;
 
         startWait = 1.0f;
-        tern = 1;
+        tern = 7;
 
         nodeEditor = GameObject.Find(nodeEditorName);
 
