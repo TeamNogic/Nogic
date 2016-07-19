@@ -5,11 +5,9 @@ public class Cursor : MonoBehaviour
 {
     [SerializeField]
     private Canvas m_Canvas;
-    private RectTransform m_RectTransform;
 
     void Start()
     {
-        m_RectTransform = GetComponent<RectTransform>();
     }
 
     void Update()

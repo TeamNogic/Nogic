@@ -15,40 +15,51 @@ public class Char_Scene : MonoBehaviour
     [HideInInspector]
     public Char_SceneState m_State;
     [HideInInspector]
-    public int m_Select;
+    public int m_Select = -1;
     [HideInInspector]
     public bool m_SelectEnd = false;
+    [HideInInspector]
+    public bool m_SelectInvalid = false;
 
-    [SerializeField]
-    private Canvas m_Canvas;   //キャンバス
-    [SerializeField]
-    private Image m_MainCursor;   //マウスに追従するカーソル
     [SerializeField]
     private Image[] m_CursorImage;   //選択時に表示するカーソル
     [SerializeField]
     private Sprite[] m_CursorSprite;   //MainCursorのスプライト
     [SerializeField]
-    private Button m_ButtonOk;   //決定ボタン
-    [SerializeField]
     private GameObject[] m_CharPrefab;   //キャラクターモデル
     [SerializeField]
     private GameObject[] m_Empty;   //選択したキャラクターを生成する座標
+    [SerializeField]
+    private AudioClip[] m_AudioClip;   //オーディオ
+    [SerializeField]
+    private Canvas m_Canvas;   //キャンバス
+    [SerializeField]
+    private Image m_MainCursor;   //マウスに追従するカーソル
+    [SerializeField]
+    private Button m_ButtonOk;   //決定ボタン
     [SerializeField]
     private GameObject m_FadeIn;   //フェードインパネル
     [SerializeField]
     private GameObject m_Smoke;   //スモークパーティクル
 
-    private float m_TimeCount = 0.0f;
+    public GameObject m_AudioSourceObj;
+
     private GameObject[] m_InstantiateModel = new GameObject[2];    //選択したキャラクターモデル
     private Image[] cursor = new Image[2]; //選択時に生成されるカーソル
+    private AudioSource m_AudioSource;
 
     void Start()
     {
         m_ButtonOk.gameObject.SetActive(false);
+        m_AudioSource = m_AudioSourceObj.GetComponent<AudioSource>();
     }
 
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.W))
+            m_AudioSource.PlayOneShot(m_AudioClip[0]);
+
         switch (m_State)
         {
             case Char_SceneState.WaitP1:
@@ -56,7 +67,8 @@ public class Char_Scene : MonoBehaviour
                 break;
 
             case Char_SceneState.SelectP1:
-                Char_SelectData.player_1 = m_Select;
+                //決定音
+                m_AudioSource.PlayOneShot(m_AudioClip[0]);
 
                 //クリックした場所にカーソルを表示
                 cursor[0] = Instantiate(m_CursorImage[0], m_MainCursor.transform.localPosition, Quaternion.identity) as Image;
@@ -70,15 +82,25 @@ public class Char_Scene : MonoBehaviour
                     m_CharPrefab[Char_SelectData.player_1],
                     m_Empty[0].transform.position,
                    new Quaternion(0.0f, 100.0f, 0.0f, 1.0f)) as GameObject;
+                //初期化
+                m_Select = -1;
 
-                m_State++;
+                m_State = Char_SceneState.WaitP2;
 
                 break;
 
             case Char_SceneState.WaitP2:
+                
+
+
+
+
+
+
                 //プレイヤー1の選択キャンセル
                 if (Input.GetMouseButtonDown(1))
                 {
+                    m_AudioSource.PlayOneShot(m_AudioClip[1]);
                     Instantiate(m_Smoke, m_Empty[0].transform.position, m_Smoke.transform.rotation);
                     Destroy(m_InstantiateModel[0].gameObject);
                     Destroy(cursor[0].gameObject);
@@ -89,7 +111,8 @@ public class Char_Scene : MonoBehaviour
                 break;
 
             case Char_SceneState.SelectP2:
-                Char_SelectData.player_2 = m_Select;
+                //決定音
+                m_AudioSource.PlayOneShot(m_AudioClip[0]);
 
                 //クリックした場所にカーソルを表示
                 cursor[1] = Instantiate(m_CursorImage[1], m_MainCursor.transform.localPosition, Quaternion.identity) as Image;
@@ -100,7 +123,8 @@ public class Char_Scene : MonoBehaviour
                     m_CharPrefab[Char_SelectData.player_2],
                     m_Empty[1].transform.position,
                     new Quaternion(0.0f, 100.0f, 0.0f, 1.0f)) as GameObject;
-                m_State++;
+
+                m_State = Char_SceneState.SelectFinish;
 
                 break;
 
@@ -111,6 +135,7 @@ public class Char_Scene : MonoBehaviour
                 //プレイヤー２の選択キャンセル
                 if (Input.GetMouseButtonDown(1))
                 {
+                    m_AudioSource.PlayOneShot(m_AudioClip[1]);
                     Instantiate(m_Smoke, m_Empty[1].transform.position, m_Smoke.transform.rotation);
                     Destroy(m_InstantiateModel[1].gameObject);
                     Destroy(cursor[1].gameObject);

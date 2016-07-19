@@ -1,58 +1,45 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class SelectButton : MonoBehaviour
 {
+    public AudioClip m_AudioClip;   //オーディオ
+    public GameObject m_AudioSourceObj;   //オーディオオブジェクト
+
     [SerializeField]
     private Char_Scene m_CharScene;
 
-    void Update()
-    {
+    private AudioSource m_AudioSource;
 
+    void Start()
+    {
+        m_AudioSource = m_AudioSourceObj.GetComponent<AudioSource>();
     }
 
-    public void Button_1()
+    public void Button(int charNum)
     {
-        m_CharScene.m_Select = 0;
+        if (!m_CharScene.m_SelectInvalid)
+        {
+            if (m_CharScene.m_State == Char_Scene.Char_SceneState.WaitP1)
+            {
+                Char_SelectData.player_1 = charNum;
+                m_CharScene.m_State = Char_Scene.Char_SceneState.SelectP1;
+            }
 
-        if (m_CharScene.m_State == Char_Scene.Char_SceneState.WaitP1)
-            m_CharScene.m_State = Char_Scene.Char_SceneState.SelectP1;
 
-        if (m_CharScene.m_State == Char_Scene.Char_SceneState.WaitP2)
-            m_CharScene.m_State = Char_Scene.Char_SceneState.SelectP2;
-    }
+            if (m_CharScene.m_State == Char_Scene.Char_SceneState.WaitP2)
+            {
+                if (Char_SelectData.player_1 == charNum)
+                {
+                    m_AudioSource.PlayOneShot(m_AudioClip);
+                }
+                else
+                {
+                    Char_SelectData.player_2 = charNum;
+                    m_CharScene.m_State = Char_Scene.Char_SceneState.SelectP2;
+                }
+            }
 
-    public void Button_2()
-    {
-        m_CharScene.m_Select = 1;
-
-        if (m_CharScene.m_State == Char_Scene.Char_SceneState.WaitP1)
-            m_CharScene.m_State = Char_Scene.Char_SceneState.SelectP1;
-
-        if (m_CharScene.m_State == Char_Scene.Char_SceneState.WaitP2)
-            m_CharScene.m_State = Char_Scene.Char_SceneState.SelectP2;
-    }
-
-    public void Button_3()
-    {
-        m_CharScene.m_Select = 2;
-
-        if (m_CharScene.m_State == Char_Scene.Char_SceneState.WaitP1)
-            m_CharScene.m_State = Char_Scene.Char_SceneState.SelectP1;
-
-        if (m_CharScene.m_State == Char_Scene.Char_SceneState.WaitP2)
-            m_CharScene.m_State = Char_Scene.Char_SceneState.SelectP2;
-    }
-
-    public void Button_4()
-    {
-        m_CharScene.m_Select = 3;
-
-        if (m_CharScene.m_State == Char_Scene.Char_SceneState.WaitP1)
-            m_CharScene.m_State = Char_Scene.Char_SceneState.SelectP1;
-
-        if (m_CharScene.m_State == Char_Scene.Char_SceneState.WaitP2)
-            m_CharScene.m_State = Char_Scene.Char_SceneState.SelectP2;
+        }
     }
 
     public void Button_OK()

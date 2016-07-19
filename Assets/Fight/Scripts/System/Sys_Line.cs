@@ -11,7 +11,6 @@ public class Sys_Line : MonoBehaviour
     private Transform m_TargetPos;
     private Color m_Color;
     private RectTransform m_RectTransform;
-    private float m_ScreenRate = 0.0f;
     private float m_Alpha = 0.0f;
 
     void Start()
