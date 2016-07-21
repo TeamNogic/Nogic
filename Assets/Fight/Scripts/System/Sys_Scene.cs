@@ -91,6 +91,8 @@ public class Sys_Scene : MonoBehaviour
 
     public string nodeEditorName;                       //ノードエディタ名
 
+    public Material mapMaterial;
+
     public Image totalDamage;                           //合計ダメージ表示
     public Image ternBase;                              //残りターン表示
     public Image nodeNameBase;                          //ノード名とコメント名を表示するためのベース
@@ -101,8 +103,12 @@ public class Sys_Scene : MonoBehaviour
     public Image timeupBase;                            //時間切れオブジェクト
     public Image perfectBase;                           //完璧終了オブジェクト
 
+    public List<GameObject> playerState
+    = new List<GameObject>();                           //プレイヤーの状態異常
+
     public GameObject cameraMoveBase;                   //移動演出オブジェクト
     public GameObject[] stateTernBase;                  //状態異常オブジェクト
+    public GameObject[] stateNodeHindranceBase;         //状態異常オブジェクト
     public GameObject attackEngineBase;                 //攻撃生成オブジェクト
     public GameObject winBGM;                           //勝利BGM
     public GameObject fadeIn;                           //終了時フェードイン
@@ -370,6 +376,7 @@ public class Sys_Scene : MonoBehaviour
 
             case Sys_SceneState.MapAlpha_Hide: //マップを透明
                 GameObject.Find(Sys_Status.stageName).AddComponent<Obj_Alpha>();
+                GameObject.Find(Sys_Status.stageName).GetComponent<Obj_Alpha>().mat = mapMaterial;
                 GameObject.Find(Sys_Status.stageName).GetComponent<Obj_Alpha>().Setup(0.0f, 1.0f, false);
                 ++sceneState;
                 break;
@@ -414,11 +421,20 @@ public class Sys_Scene : MonoBehaviour
                     damage.localScale = new Vector3(5.0f, 5.0f);
                     damage.gameObject.AddComponent<UI_Scale>();
                     damage.GetComponent<UI_Scale>().Setup(new Vector2(1.0f, 1.0f), 1.5f, false);
+
+                    //フェスティバル or スモーク状態になったら
+                    if (Sys_Status.Player_Wait[Sys_Status.activePlayer].State_NodeHindrance != 0)
+                    {
+                        playerState[Sys_Status.activePlayer]
+                            = Instantiate(stateNodeHindranceBase[Sys_Status.Player[Sys_Status.activePlayer].State_NodeHindrance - 1]
+                        , player[Sys_Status.activePlayer].position + new Vector3(0.0f, 2.0f), Quaternion.identity) as GameObject;
+                    }
                 }
                 break;
 
             case Sys_SceneState.MapAlpha_Show: //マップを透明
                 GameObject.Find(Sys_Status.stageName).AddComponent<Obj_Alpha>();
+                GameObject.Find(Sys_Status.stageName).GetComponent<Obj_Alpha>().mat = mapMaterial;
                 GameObject.Find(Sys_Status.stageName).GetComponent<Obj_Alpha>().Setup(1.0f, 1.0f, false);
                 ++sceneState;
                 break;
@@ -485,6 +501,11 @@ public class Sys_Scene : MonoBehaviour
                     if (--data.State_NodeKey_Time <= 0) data.State_NodeKey = 0;
                     if (--data.State_NodeHindrance_Time <= 0) data.State_NodeHindrance = 0;
                     if (--data.State_NodeEditor_Time <= 0) data.State_NodeEditor = 0;
+
+                    if (Sys_Status.Player[i].State_NodeHindrance == 0)
+                    {
+                        Destroy(playerState[i]);
+                    }
                 }
 
                 --tern;

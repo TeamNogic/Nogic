@@ -13,6 +13,8 @@ public class Obj_Alpha : MonoBehaviour
     public float speed;                     //変化速度
     public bool destroyObjectFlag = false;  //オブジェクトごと削除するか
 
+    public Material mat;
+
     MeshRenderer meshRenderer;
 
     public void Setup(float _target, float _speed, bool _destryoyObjectFlag)
@@ -32,7 +34,7 @@ public class Obj_Alpha : MonoBehaviour
     void Start()
     {
         //初期値設定
-        //now = meshRenderer.materials[0].color.a;
+        now = mat.GetFloat("_AlphaValue");
 
         //進行方向確認
         move = 0.0f < target - now;
@@ -49,6 +51,8 @@ public class Obj_Alpha : MonoBehaviour
         //    , meshRenderer.materials[0].color.b
         //    , now);
 
+        mat.SetFloat("_AlphaValue", now);
+
         //目標に到達したら
         if ((move && target <= now) || (!move && now <= target))
         {
@@ -58,6 +62,8 @@ public class Obj_Alpha : MonoBehaviour
             //, meshRenderer.materials[0].color.g
             //, meshRenderer.materials[0].color.b
             //, target);
+
+            mat.SetFloat("_AlphaValue", target);
 
             //フラグで分岐消去
             if (destroyObjectFlag) Destroy(this.gameObject);

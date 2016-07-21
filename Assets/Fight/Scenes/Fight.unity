@@ -409,18 +409,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e31c9669c858074bb5f5d2925ed4a6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1034768364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1034768353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ea2c103263315d4cb8512eb6bd35347, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: {fileID: 179634, guid: d2af8e36798995847bc14c172df30371, type: 2}
 --- !u!1001 &1088049162
 Prefab:
   m_ObjectHideFlags: 0
@@ -464,76 +452,6 @@ Prefab:
     - {fileID: 11476604, guid: 1f4e1910d4a7bcb44b1db12ff5ba4905, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 1f4e1910d4a7bcb44b1db12ff5ba4905, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1095045459
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1095045462}
-  - 218: {fileID: 1095045461}
-  - 154: {fileID: 1095045460}
-  m_Layer: 0
-  m_Name: Map_2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!154 &1095045460
-TerrainCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1095045459}
-  m_Material: {fileID: 0}
-  m_Enabled: 1
-  m_TerrainData: {fileID: 15600000, guid: ca68f70d66209e0478f3ec86f888195e, type: 2}
-  m_EnableTreeColliders: 1
---- !u!218 &1095045461
-Terrain:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1095045459}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_TerrainData: {fileID: 15600000, guid: ca68f70d66209e0478f3ec86f888195e, type: 2}
-  m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
-  m_TreeCrossFadeLength: 5
-  m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
-  m_DetailObjectDensity: 1
-  m_HeightmapPixelError: 5
-  m_SplatMapDistance: 1000
-  m_HeightmapMaximumLOD: 0
-  m_CastShadows: 1
-  m_DrawHeightmap: 1
-  m_DrawTreesAndFoliage: 1
-  m_ReflectionProbeUsage: 1
-  m_MaterialType: 0
-  m_LegacySpecular:
-    serializedVersion: 2
-    rgba: 4286545791
-  m_LegacyShininess: 0.078125
-  m_MaterialTemplate: {fileID: 0}
-  m_BakeLightProbesForTrees: 1
-  m_ScaleInLightmap: 0.0512
-  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
---- !u!4 &1095045462
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1095045459}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -320, y: -20, z: -115}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
 --- !u!1 &1149767408
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,6 +616,7 @@ MonoBehaviour:
   - {fileID: 166494, guid: e2c1d4a5e38450944b108782c3d46ea2, type: 2}
   - {fileID: 157028, guid: efde43669a3c3e9459e30a2a4a73ccb5, type: 2}
   nodeEditorName: NodeEditor
+  mapMaterial: {fileID: 2100000, guid: cd755f09272c3854ca39b842f57debc5, type: 2}
   totalDamage: {fileID: 11452630, guid: 5309249dbcba23745be2e8207839a18b, type: 2}
   ternBase: {fileID: 11474316, guid: 843d4ec3996cea5429a2d6ffed27ac8f, type: 2}
   nodeNameBase: {fileID: 11458954, guid: 31b3fa310b278ea4fbe739af111df773, type: 2}
@@ -707,10 +626,16 @@ MonoBehaviour:
   Change: {fileID: 11466768, guid: e40b91b838409ce44ba4cffc081120bf, type: 2}
   timeupBase: {fileID: 11400218, guid: cc973c1dafcb2d546a513acca1891151, type: 2}
   perfectBase: {fileID: 11473406, guid: 65ff6839b1b8f0e4fa1834c9eeb1522a, type: 2}
+  playerState:
+  - {fileID: 0}
+  - {fileID: 0}
   cameraMoveBase: {fileID: 139664, guid: f78b695dcd7c238489efbaa1df8f4a02, type: 2}
   stateTernBase:
   - {fileID: 178884, guid: 24676c1553233ae45bdf2141b7515e7f, type: 2}
   - {fileID: 190672, guid: f90b698df1babcc4cb4d70fd010bb6a7, type: 2}
+  stateNodeHindranceBase:
+  - {fileID: 168122, guid: b569c561d377c73489c242dff6616ae6, type: 2}
+  - {fileID: 168122, guid: b569c561d377c73489c242dff6616ae6, type: 2}
   attackEngineBase: {fileID: 103406, guid: 152ea69843e9dcb4b82247b761e45ae9, type: 2}
   winBGM: {fileID: 166826, guid: 9ab0aee5d3fbfd14dbb1165f044e4bb0, type: 2}
   fadeIn: {fileID: 189568, guid: 1661db9da2db05c42834126ad20b7422, type: 2}
