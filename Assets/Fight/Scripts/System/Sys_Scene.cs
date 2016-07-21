@@ -75,6 +75,8 @@ public class Sys_Scene : MonoBehaviour
     private Image nodeName;                             //ノード名とコメント名を表示
     private int nodeNamePos;                            //表示位置
 
+    private GameObject stateTern;                       //状態異常オブジェクト
+
     private GameObject attackEngine;                    //攻撃生成オブジェクト
     private GameObject cameraMove;                      //移動演出オブジェクト
 
@@ -100,6 +102,7 @@ public class Sys_Scene : MonoBehaviour
     public Image perfectBase;                           //完璧終了オブジェクト
 
     public GameObject cameraMoveBase;                   //移動演出オブジェクト
+    public GameObject[] stateTernBase;                  //状態異常オブジェクト
     public GameObject attackEngineBase;                 //攻撃生成オブジェクト
     public GameObject winBGM;                           //勝利BGM
     public GameObject fadeIn;                           //終了時フェードイン
@@ -241,6 +244,8 @@ public class Sys_Scene : MonoBehaviour
                 thumbnailSingle.GetComponent<Image>().sprite = player[Sys_Status.activePlayer].prefab.GetComponent<Obj_PlayerAsset>().thumbnail;
                 thumbnailSingle.transform.SetParent(nodeEditor.transform, false);
 
+                Destroy(stateTern);
+
                 startWait = 4.0f;
                 ++sceneState;
                 break;
@@ -259,6 +264,25 @@ public class Sys_Scene : MonoBehaviour
                     thumbnailSingle.gameObject.GetComponent<UI_Scale>().Setup(new Vector2(0.0f, 0.0f), 1.5f, true);
 
                     ++sceneState;
+                }
+
+                //カメラ移動が完了して、自身がポイズン or パラサイトであれば
+                if (!Sys_Camera.isMove() && Sys_Status.Player[Sys_Status.activePlayer].State_Tern != 0 && stateTern == null)
+                {
+                    stateTern = Instantiate(stateTernBase[Sys_Status.Player[Sys_Status.activePlayer].State_Tern - 1]
+                        , player[Sys_Status.activePlayer].position + new Vector3(0.0f, 2.0f), Quaternion.identity) as GameObject;
+
+                    Sys_Status.Player[Sys_Status.targetPlayer].TotalDamage +=
+                        Sys_Status.Player[Sys_Status.targetPlayer].TotalDamage / 10;
+
+                    Transform damage = totalDamage.transform.FindChild("Damage_" + Sys_Status.targetPlayer.ToString());
+
+                    damage.GetComponent<Text>().text = Sys_Status.Player[Sys_Status.targetPlayer].TotalDamage.ToString();
+                    damage.localScale = new Vector3(5.0f, 5.0f);
+                    damage.gameObject.AddComponent<UI_Scale>();
+                    damage.GetComponent<UI_Scale>().Setup(new Vector2(1.0f, 1.0f), 1.5f, false);
+
+                    player[Sys_Status.activePlayer].prefab.GetComponent<Animator>().SetBool("Damage", true);
                 }
                 break;
 
@@ -516,7 +540,7 @@ public class Sys_Scene : MonoBehaviour
                 if (!Sys_Camera.isMove())
                 {
                     startWait -= Time.deltaTime;
-                    
+
                     if (startWait <= 0.0f)
                     {
                         startWait = 0.0f;
@@ -572,7 +596,7 @@ public class Sys_Scene : MonoBehaviour
                 break;
 
             case Sys_SceneState.FadeOut_Wait:
-                
+
                 break;
 
             default:
