@@ -6,6 +6,7 @@
 		_ToonShade("ToonShader Cubemap(RGB)", CUBE) = "" { }
 		_OutlineSize("Outline Size", Float) = 0.01
 		_OutlineColor("Outline Color", color) = (0,0,0,1)
+		_AlphaValue("Alpha Value", Float) = 1.0
 	}
 
 	CGINCLUDE
@@ -41,11 +42,14 @@
 	}
 
 	uniform float4 _OutlineColor;
+	float _AlphaValue;
 
 	//アウトラインピクセルシェーダー
 	float4 fragOutLine(v2 i) : SV_Target
 	{
-		return _OutlineColor;
+		float4 color = _OutlineColor;
+		color.a = _AlphaValue;
+		return color;
 	}
 
 	struct ToonOutput
@@ -79,6 +83,7 @@
 		float4 cube = texCUBE(_ToonShade, i.cubenormal);
 
 		color.rgb *= cube.rgb * LIGHT_ATTENUATION(i) + 0.2f;
+		color.a = _AlphaValue;
 		return color;
 	}
 
@@ -105,6 +110,7 @@
 			Cull Front
 			ZWrite On
 			ZTest LEqual
+			Blend SrcAlpha OneMinusSrcAlpha
 
 			Tags{ "LightMode" = "ForwardBase" }
 
