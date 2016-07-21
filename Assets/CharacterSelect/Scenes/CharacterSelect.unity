@@ -1084,6 +1084,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11476730, guid: 1661db9da2db05c42834126ad20b7422, type: 2}
+      propertyPath: m_SceneName
+      value: StageSelect
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1661db9da2db05c42834126ad20b7422, type: 2}
   m_IsPrefabParent: 0
@@ -2127,6 +2131,7 @@ MonoBehaviour:
   m_CursorSprite:
   - {fileID: 21300000, guid: 47b4aec1b9ab6aa49beb0926b49faecf, type: 3}
   - {fileID: 21300000, guid: 1924b37e62a4895488ad2902cf473129, type: 3}
+  - {fileID: 21300000, guid: 1b04c417d7a76bb4ea15641856d7ed95, type: 3}
   m_CharPrefab:
   - {fileID: 179818, guid: 6580b0963426ff04b8248bac5a98ace4, type: 2}
   - {fileID: 199702, guid: 62a6b386a50880a49b0b5607fa4b976b, type: 2}

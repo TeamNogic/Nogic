@@ -106,6 +106,9 @@ public class Char_Scene : MonoBehaviour
                 cursor[1] = Instantiate(m_CursorImage[1], m_MainCursor.transform.localPosition, Quaternion.identity) as Image;
                 cursor[1].transform.SetParent(m_Canvas.transform, false);
 
+                //カーソルの画像を変更
+                m_MainCursor.sprite = m_CursorSprite[2];
+
                 //Player2モデルを生成
                 m_InstantiateModel[1] = Instantiate(
                     m_CharPrefab[Char_SelectData.player_2],
@@ -125,6 +128,7 @@ public class Char_Scene : MonoBehaviour
                 if (Input.GetMouseButtonDown(1) && m_Count > 1.0f)
                 {
                     m_Count = 0.0f;
+                    m_MainCursor.sprite = m_CursorSprite[1];
                     m_AudioSource.PlayOneShot(m_AudioClip[1]);
                     Instantiate(m_Smoke, m_Empty[1].transform.position, m_Smoke.transform.rotation);
                     Destroy(m_InstantiateModel[1].gameObject);
