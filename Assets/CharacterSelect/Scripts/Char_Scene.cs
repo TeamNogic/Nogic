@@ -15,8 +15,6 @@ public class Char_Scene : MonoBehaviour
     [HideInInspector]
     public Char_SceneState m_State;
     [HideInInspector]
-    public int m_Select = -1;
-    [HideInInspector]
     public bool m_SelectEnd = false;
     [HideInInspector]
     public bool m_SelectInvalid = false;
@@ -47,6 +45,7 @@ public class Char_Scene : MonoBehaviour
     private GameObject[] m_InstantiateModel = new GameObject[2];    //選択したキャラクターモデル
     private Image[] cursor = new Image[2]; //選択時に生成されるカーソル
     private AudioSource m_AudioSource;
+    private float m_Count = 0.0f;
 
     void Start()
     {
@@ -56,10 +55,6 @@ public class Char_Scene : MonoBehaviour
 
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.W))
-            m_AudioSource.PlayOneShot(m_AudioClip[0]);
-
         switch (m_State)
         {
             case Char_SceneState.WaitP1:
@@ -82,24 +77,17 @@ public class Char_Scene : MonoBehaviour
                     m_CharPrefab[Char_SelectData.player_1],
                     m_Empty[0].transform.position,
                    new Quaternion(0.0f, 100.0f, 0.0f, 1.0f)) as GameObject;
-                //初期化
-                m_Select = -1;
 
                 m_State = Char_SceneState.WaitP2;
 
                 break;
 
             case Char_SceneState.WaitP2:
-                
-
-
-
-
-
-
+                m_Count += Time.deltaTime;
                 //プレイヤー1の選択キャンセル
-                if (Input.GetMouseButtonDown(1))
+                if (Input.GetMouseButtonDown(1) && m_Count > 1.0f)
                 {
+                    m_Count = 0.0f;
                     m_AudioSource.PlayOneShot(m_AudioClip[1]);
                     Instantiate(m_Smoke, m_Empty[0].transform.position, m_Smoke.transform.rotation);
                     Destroy(m_InstantiateModel[0].gameObject);
@@ -129,12 +117,14 @@ public class Char_Scene : MonoBehaviour
                 break;
 
             case Char_SceneState.SelectFinish:
+                m_Count += Time.deltaTime;
                 //決定ボタンを表示
                 m_ButtonOk.gameObject.SetActive(true);
 
                 //プレイヤー２の選択キャンセル
-                if (Input.GetMouseButtonDown(1))
+                if (Input.GetMouseButtonDown(1) && m_Count > 1.0f)
                 {
+                    m_Count = 0.0f;
                     m_AudioSource.PlayOneShot(m_AudioClip[1]);
                     Instantiate(m_Smoke, m_Empty[1].transform.position, m_Smoke.transform.rotation);
                     Destroy(m_InstantiateModel[1].gameObject);

@@ -2,7 +2,7 @@
 
 public class SelectButton : MonoBehaviour
 {
-    public AudioClip m_AudioClip;   //オーディオ
+    public AudioClip[] m_AudioClip;   //オーディオ
     public GameObject m_AudioSourceObj;   //オーディオオブジェクト
 
     [SerializeField]
@@ -30,7 +30,7 @@ public class SelectButton : MonoBehaviour
             {
                 if (Char_SelectData.player_1 == charNum)
                 {
-                    m_AudioSource.PlayOneShot(m_AudioClip);
+                    m_AudioSource.PlayOneShot(m_AudioClip[0]);
                 }
                 else
                 {
@@ -45,6 +45,7 @@ public class SelectButton : MonoBehaviour
     public void Button_OK()
     {
         m_CharScene.m_SelectEnd = true;
+        m_AudioSource.PlayOneShot(m_AudioClip[1]);
     }
 
 }
