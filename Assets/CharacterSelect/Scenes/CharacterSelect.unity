@@ -516,7 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2627257669a97a747a4241f61b922eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AudioClip: {fileID: 8300000, guid: e0e298def399ee747b830fe26b2b1bcd, type: 3}
+  m_AudioClip: []
   m_AudioSourceObj: {fileID: 1394093976}
   m_CharScene: {fileID: 2092985495}
 --- !u!114 &287409334
@@ -664,7 +664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2627257669a97a747a4241f61b922eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AudioClip: {fileID: 8300000, guid: e0e298def399ee747b830fe26b2b1bcd, type: 3}
+  m_AudioClip: []
   m_AudioSourceObj: {fileID: 1394093976}
   m_CharScene: {fileID: 2092985495}
 --- !u!114 &352268640
@@ -845,7 +845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2627257669a97a747a4241f61b922eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AudioClip: {fileID: 8300000, guid: e0e298def399ee747b830fe26b2b1bcd, type: 3}
+  m_AudioClip: []
   m_AudioSourceObj: {fileID: 1394093976}
   m_CharScene: {fileID: 2092985495}
 --- !u!114 &472000003
@@ -1324,7 +1324,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2627257669a97a747a4241f61b922eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AudioClip: {fileID: 8300000, guid: e0e298def399ee747b830fe26b2b1bcd, type: 3}
+  m_AudioClip:
+  - {fileID: 8300000, guid: e0e298def399ee747b830fe26b2b1bcd, type: 3}
+  - {fileID: 8300000, guid: 8f0103dd74dc2de40aebd46dc916d0ed, type: 3}
   m_AudioSourceObj: {fileID: 1394093976}
   m_CharScene: {fileID: 2092985495}
 --- !u!114 &960070256
@@ -1679,7 +1681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2627257669a97a747a4241f61b922eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AudioClip: {fileID: 8300000, guid: e0e298def399ee747b830fe26b2b1bcd, type: 3}
+  m_AudioClip: []
   m_AudioSourceObj: {fileID: 1394093976}
   m_CharScene: {fileID: 2092985495}
 --- !u!114 &1391417277
@@ -2117,7 +2119,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_State: 0
-  m_Select: 0
   m_SelectEnd: 0
   m_SelectInvalid: 0
   m_CursorImage:
