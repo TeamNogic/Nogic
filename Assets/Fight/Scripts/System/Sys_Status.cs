@@ -73,6 +73,8 @@ public class Sys_Action_UI
 
     public List<int> Damage = new List<int>();     //１つの物体が与えるダメージ（計算済み）
 
+    //消去予定
+
     public int State_Tern = 0;                     //0:無し　1:ポイズン　2:パラサイト（UIで毒や寄生虫と表示）
     public int State_Tern_Time = 1;                //ポイズン or パラサイトの効果ターン数（UIでターン数表示）
 

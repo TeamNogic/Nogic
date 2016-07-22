@@ -306,9 +306,6 @@ public class Sys_NodeEngine : MonoBehaviour
         //ポイズン or パラサイト
         if (Sys_Node.Select.ContainsKey(Sys_NodeGroup.Tern))
         {
-            //オプション追加
-            Sys_Status.Action_UI.State_Tern = Sys_Node.Select[Sys_NodeGroup.Tern].Option;
-
             //効果適用
             Sys_Status.Action_Object.State_Tern = Sys_Node.Select[Sys_NodeGroup.Tern].Option;
             Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Tern = Sys_Node.Select[Sys_NodeGroup.Tern].Option;
@@ -316,7 +313,6 @@ public class Sys_NodeEngine : MonoBehaviour
             //ターンノードがあるなら追加
             if (Sys_Node.Select.ContainsKey(Sys_NodeGroup.TernTime))
             {
-                Sys_Status.Action_UI.State_Tern_Time = Sys_Node.Select[Sys_NodeGroup.TernTime].Option;
                 Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Tern_Time = Sys_Node.Select[Sys_NodeGroup.TernTime].Option + 1;
             }
             else Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Tern_Time = 2;
@@ -325,9 +321,6 @@ public class Sys_NodeEngine : MonoBehaviour
         //ノード妨害
         if (Sys_Node.Select.ContainsKey(Sys_NodeGroup.NodeHindrance))
         {
-            //妨害フラグ
-            Sys_Status.Action_UI.State_Etc = true;
-
             //効果適用
             Sys_Status.Action_Object.State_NodeHindrance = Sys_Node.Select[Sys_NodeGroup.NodeHindrance].Option;
             Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeHindrance = Sys_Node.Select[Sys_NodeGroup.NodeHindrance].Option;
@@ -335,7 +328,6 @@ public class Sys_NodeEngine : MonoBehaviour
             //ターンノードがあるなら追加
             if (Sys_Node.Select.ContainsKey(Sys_NodeGroup.NodeHindranceTime))
             {
-                Sys_Status.Action_UI.State_NodeHindrance_Time = Sys_Node.Select[Sys_NodeGroup.NodeHindranceTime].Option;
                 Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeHindrance_Time = Sys_Node.Select[Sys_NodeGroup.NodeHindranceTime].Option + 1;
             }
             else Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeHindrance_Time = 2;
@@ -344,9 +336,6 @@ public class Sys_NodeEngine : MonoBehaviour
         //ノードキー妨害
         if (Sys_Node.Select.ContainsKey(Sys_NodeGroup.NodeKey))
         {
-            //妨害フラグ
-            Sys_Status.Action_UI.State_Etc = true;
-
             //効果適用
             Sys_Status.Action_Object.State_NodeKey = Sys_Node.Select[Sys_NodeGroup.NodeKey].Option;
             Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeKey = Sys_Node.Select[Sys_NodeGroup.NodeKey].Option;
@@ -356,9 +345,6 @@ public class Sys_NodeEngine : MonoBehaviour
         //ノードエディタ妨害
         if (Sys_Node.Select.ContainsKey(Sys_NodeGroup.NodeEditor))
         {
-            //妨害フラグ
-            Sys_Status.Action_UI.State_Etc = true;
-
             //効果適用
             Sys_Status.Action_Object.State_NodeEditor = Sys_Node.Select[Sys_NodeGroup.NodeEditor].Option;
             Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeEditor = Sys_Node.Select[Sys_NodeGroup.NodeEditor].Option;
@@ -368,9 +354,6 @@ public class Sys_NodeEngine : MonoBehaviour
         //攻撃変化
         if (Sys_Node.Select.ContainsKey(Sys_NodeGroup.Status))
         {
-            //追加
-            Sys_Status.Action_UI.State_Status = Sys_Node.Select[Sys_NodeGroup.Status].Option;
-
             //効果適用
             Sys_Status.Action_Object.State_Status = Sys_Node.Select[Sys_NodeGroup.Status].Option;
             Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Status = Sys_Node.Select[Sys_NodeGroup.Status].Option;
@@ -621,7 +604,7 @@ public class Sys_NodeEngine : MonoBehaviour
                 }
             }
 
-            if (Create[max] != null) SelectNode(max);
+            if (max != -1) SelectNode(max);
             else selectTime = 0.0f;
         }
 

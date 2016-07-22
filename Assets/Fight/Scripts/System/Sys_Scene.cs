@@ -165,7 +165,7 @@ public class Sys_Scene : MonoBehaviour
         showWait = 0;
 
         startWait = 1.0f;
-        tern = 7;
+        tern = 5;
 
         nodeEditor = GameObject.Find(nodeEditorName);
 
@@ -340,8 +340,8 @@ public class Sys_Scene : MonoBehaviour
                     stateTern = Instantiate(stateTernBase[Sys_Status.Player[Sys_Status.activePlayer].State_Tern - 1]
                         , player[Sys_Status.activePlayer].position + new Vector3(0.0f, 2.0f), Quaternion.identity) as GameObject;
 
-                    if (Sys_Status.activePlayer == 0) Sys_Status.Player[Sys_Status.targetPlayer].TotalDamage += Sys_Status.Player[Sys_Status.targetPlayer].TotalDamage / 10;
-                    else Sys_Status.Player[Sys_Status.targetPlayer].TotalDamage += prevTotalDamage / 10;
+                    if (Sys_Status.activePlayer == 0) Sys_Status.Player[1].TotalDamage += Sys_Status.Player[1].TotalDamage / 10;
+                    else Sys_Status.Player[0].TotalDamage += prevTotalDamage / 10;
 
                     this.SetTotalDamage(Sys_Status.targetPlayer);
 
@@ -454,9 +454,11 @@ public class Sys_Scene : MonoBehaviour
             //======================================================================================================================================================================================================//
 
             case Sys_SceneState.MapAlpha_Hide: //マップを透明
-                GameObject.Find(Sys_Status.stageName).AddComponent<Obj_Alpha>();
-                GameObject.Find(Sys_Status.stageName).GetComponent<Obj_Alpha>().mat = mapMaterial;
-                GameObject.Find(Sys_Status.stageName).GetComponent<Obj_Alpha>().Setup(0.0f, 1.0f, false);
+                GameObject mapHide = GameObject.Find(Sys_Status.stageName);
+
+                mapHide.AddComponent<Obj_Alpha>();
+                mapHide.GetComponent<Obj_Alpha>().mat = mapMaterial;
+                mapHide.GetComponent<Obj_Alpha>().Setup(0.0f, 2.0f, false);
                 ++sceneState;
                 break;
 
@@ -517,9 +519,11 @@ public class Sys_Scene : MonoBehaviour
             //======================================================================================================================================================================================================//
 
             case Sys_SceneState.MapAlpha_Show: //マップを透明
-                GameObject.Find(Sys_Status.stageName).AddComponent<Obj_Alpha>();
-                GameObject.Find(Sys_Status.stageName).GetComponent<Obj_Alpha>().mat = mapMaterial;
-                GameObject.Find(Sys_Status.stageName).GetComponent<Obj_Alpha>().Setup(1.0f, 1.0f, false);
+                GameObject mapShow = GameObject.Find(Sys_Status.stageName);
+
+                mapShow.AddComponent<Obj_Alpha>();
+                mapShow.GetComponent<Obj_Alpha>().mat = mapMaterial;
+                mapShow.GetComponent<Obj_Alpha>().Setup(1.0f, 2.0f, false);
                 ++sceneState;
                 break;
 
@@ -596,7 +600,7 @@ public class Sys_Scene : MonoBehaviour
                     }
                 }
 
-                prevTotalDamage = Sys_Status.Player[1].TotalDamage;
+                prevTotalDamage = Sys_Status.Player[0].TotalDamage;
 
                 --tern;
 
