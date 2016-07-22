@@ -626,9 +626,7 @@ MonoBehaviour:
   Change: {fileID: 11466768, guid: e40b91b838409ce44ba4cffc081120bf, type: 2}
   timeupBase: {fileID: 11400218, guid: cc973c1dafcb2d546a513acca1891151, type: 2}
   perfectBase: {fileID: 11473406, guid: 65ff6839b1b8f0e4fa1834c9eeb1522a, type: 2}
-  playerState:
-  - {fileID: 0}
-  - {fileID: 0}
+  playerState: []
   cameraMoveBase: {fileID: 139664, guid: f78b695dcd7c238489efbaa1df8f4a02, type: 2}
   stateTernBase:
   - {fileID: 178884, guid: 24676c1553233ae45bdf2141b7515e7f, type: 2}

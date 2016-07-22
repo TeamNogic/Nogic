@@ -66,6 +66,10 @@ public class Sys_Scene : MonoBehaviour
 
     private int showWait;                               //登場中のプレイヤー
 
+    private int prevTotalDamage;                        //前のターンのダメージ
+
+    //===================================================================================================//
+
     private List<Image> thumbnail = new List<Image>();  //サムネイルデータ
     private Image thumbnailSingle;                      //サムネイルデータ
 
@@ -74,6 +78,8 @@ public class Sys_Scene : MonoBehaviour
     private Image nodeCore;                             //ノード選択コア
     private Image nodeName;                             //ノード名とコメント名を表示
     private int nodeNamePos;                            //表示位置
+
+    //===================================================================================================//
 
     private GameObject stateTern;                       //状態異常オブジェクト
 
@@ -85,6 +91,8 @@ public class Sys_Scene : MonoBehaviour
     private Image ternImage;                            //ターン表示
 
     private Sys_SceneState sceneState;                  //シーンの状態
+
+    //===================================================================================================//
 
     public List<Sys_PlayerScene> player;                //プレイヤーデータ
     public List<GameObject> playerObject;               //プレイヤーのオブジェクト
@@ -117,6 +125,40 @@ public class Sys_Scene : MonoBehaviour
     public AudioClip changeSound;                       //チェンジ音
     public AudioClip winSound;                          //勝利音
 
+    //===================================================================================================//
+
+    void SetTotalDamage(int target)
+    {
+        Transform damage = totalDamage.transform.FindChild("Damage_" + target.ToString());
+
+        damage.GetComponent<Text>().text = Sys_Status.Player[target].TotalDamage.ToString();
+        damage.localScale = new Vector3(5.0f, 5.0f);
+        damage.gameObject.AddComponent<UI_Scale>();
+        damage.GetComponent<UI_Scale>().Setup(new Vector2(1.0f, 1.0f), 1.5f, false);
+
+        GameObject win_0 = totalDamage.transform.FindChild("Win_0").gameObject;
+        GameObject win_1 = totalDamage.transform.FindChild("Win_1").gameObject;
+
+        if (Sys_Status.Player[0].TotalDamage < Sys_Status.Player[1].TotalDamage)
+        {
+            win_0.AddComponent<UI_Scale>();
+            win_0.GetComponent<UI_Scale>().Setup(Vector3.zero, 1.5f, false);
+
+            win_1.AddComponent<UI_Scale>();
+            win_1.GetComponent<UI_Scale>().Setup(new Vector3(1.0f, 1.0f), 1.5f, false);
+        }
+        else
+        {
+            win_0.AddComponent<UI_Scale>();
+            win_0.GetComponent<UI_Scale>().Setup(new Vector3(1.0f, 1.0f), 1.5f, false);
+
+            win_1.AddComponent<UI_Scale>();
+            win_1.GetComponent<UI_Scale>().Setup(Vector3.zero, 1.5f, false);
+        }
+    }
+
+    //===================================================================================================//
+
     void Start()
     {
         sceneState = 0;
@@ -131,11 +173,15 @@ public class Sys_Scene : MonoBehaviour
         Change.transform.SetParent(nodeEditor.transform, false);
     }
 
+    //===================================================================================================//
+
     void Update()
     {
         //シーン分岐
         switch (sceneState)
         {
+            //======================================================================================================================================================================================================//
+
             case Sys_SceneState.Start:
                 player[0].prefab = playerObject[Char_SelectData.player_1];
                 player[1].prefab = playerObject[Char_SelectData.player_2];
@@ -147,10 +193,14 @@ public class Sys_Scene : MonoBehaviour
                     Sys_Status.Player.Add(new Sys_PlayerData());
                     Sys_Status.Player_Wait.Add(new Sys_PlayerData_TernWait());
                     Sys_Status.Player[i].Weak = player[i].prefab.GetComponent<Obj_PlayerAsset>().weak;
+
+                    playerState.Add(null);
                 }
 
                 ++sceneState;
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.Wait:
                 startWait -= Time.deltaTime;
@@ -163,6 +213,8 @@ public class Sys_Scene : MonoBehaviour
                     ++sceneState;
                 }
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.CreatePlayer: //最初のシーン
                 //指定した分のプレイヤーを生成
@@ -179,6 +231,8 @@ public class Sys_Scene : MonoBehaviour
                 //次のシーンへ
                 ++sceneState;
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.CreatePlayer_Wait: //プレイヤーが移動を完了するまで待機する
                 //出現が完了していれば
@@ -203,6 +257,8 @@ public class Sys_Scene : MonoBehaviour
 
                 break;
 
+            //======================================================================================================================================================================================================//
+
             case Sys_SceneState.VS: //
                 Sys_Camera.Setup_Rotate(new Vector3(0.0f, 0.0f, 7.5f), 20.0f, 10.0f, 0.2f);
                 thumbnail.Add(Instantiate(VSBase, new Vector2(0.0f, -100.0f), Quaternion.identity) as Image);
@@ -212,6 +268,8 @@ public class Sys_Scene : MonoBehaviour
 
                 ++sceneState;
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.VS_Wait: //
                 startWait -= Time.deltaTime;
@@ -237,6 +295,8 @@ public class Sys_Scene : MonoBehaviour
                 }
                 break;
 
+            //======================================================================================================================================================================================================//
+
             case Sys_SceneState.ChangePlayer: //
                 Change.gameObject.AddComponent<UI_Scale>();
                 Change.gameObject.GetComponent<UI_Scale>().Setup(new Vector2(6.8f, 2.4f), 1.5f, false);
@@ -255,6 +315,8 @@ public class Sys_Scene : MonoBehaviour
                 startWait = 4.0f;
                 ++sceneState;
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.ChangePlayer_Wait: //
                 startWait -= Time.deltaTime;
@@ -278,19 +340,16 @@ public class Sys_Scene : MonoBehaviour
                     stateTern = Instantiate(stateTernBase[Sys_Status.Player[Sys_Status.activePlayer].State_Tern - 1]
                         , player[Sys_Status.activePlayer].position + new Vector3(0.0f, 2.0f), Quaternion.identity) as GameObject;
 
-                    Sys_Status.Player[Sys_Status.targetPlayer].TotalDamage +=
-                        Sys_Status.Player[Sys_Status.targetPlayer].TotalDamage / 10;
+                    if (Sys_Status.activePlayer == 0) Sys_Status.Player[Sys_Status.targetPlayer].TotalDamage += Sys_Status.Player[Sys_Status.targetPlayer].TotalDamage / 10;
+                    else Sys_Status.Player[Sys_Status.targetPlayer].TotalDamage += prevTotalDamage / 10;
 
-                    Transform damage = totalDamage.transform.FindChild("Damage_" + Sys_Status.targetPlayer.ToString());
-
-                    damage.GetComponent<Text>().text = Sys_Status.Player[Sys_Status.targetPlayer].TotalDamage.ToString();
-                    damage.localScale = new Vector3(5.0f, 5.0f);
-                    damage.gameObject.AddComponent<UI_Scale>();
-                    damage.GetComponent<UI_Scale>().Setup(new Vector2(1.0f, 1.0f), 1.5f, false);
+                    this.SetTotalDamage(Sys_Status.targetPlayer);
 
                     player[Sys_Status.activePlayer].prefab.GetComponent<Animator>().SetBool("Damage", true);
                 }
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.CreateNode: //ノード管理の生成
                 nodeCore = Instantiate(nodeCoreBase, nodeCoreBase.transform.position, nodeCoreBase.transform.rotation) as Image;
@@ -300,6 +359,8 @@ public class Sys_Scene : MonoBehaviour
 
                 ++sceneState;
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.CreateNode_Wait: //待機
                 //ノード選択完了で次のシーンへ
@@ -312,6 +373,8 @@ public class Sys_Scene : MonoBehaviour
                 }
                 break;
 
+            //======================================================================================================================================================================================================//
+
             case Sys_SceneState.Timeup: //タイムアップ
                 timeup = Instantiate(nodeCore.GetComponent<Sys_NodeEngine>().isPerfect() ? perfectBase : timeupBase
                     , Vector2.zero, Quaternion.identity) as Image;
@@ -321,15 +384,21 @@ public class Sys_Scene : MonoBehaviour
                 ++sceneState;
                 break;
 
+            //======================================================================================================================================================================================================//
+
             case Sys_SceneState.Timeup_Wait: //待機
                 if (timeup == null) ++sceneState;
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.Node_Close: //ノード画面を閉じる
                 nodeCore.GetComponent<Sys_NodeEngine>().End();
 
                 ++sceneState;
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.Node_Close_Wait: //待機
                 if (nodeCore == null)
@@ -338,6 +407,8 @@ public class Sys_Scene : MonoBehaviour
                     ++sceneState;
                 }
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.CreateAttackName:
                 //名前とコメントの生成
@@ -350,10 +421,14 @@ public class Sys_Scene : MonoBehaviour
                 ++sceneState;
                 break;
 
+            //======================================================================================================================================================================================================//
+
             case Sys_SceneState.AttackName_Show_Wait:
                 //拡大しきったらシーンの切り替え
                 if (nodeName.GetComponent<UI_Scale>() == null) ++sceneState;
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.AttackName_Hide:
                 //縮小設定
@@ -361,6 +436,8 @@ public class Sys_Scene : MonoBehaviour
                 nodeName.GetComponent<UI_Scale>().Setup(Vector2.zero, 2.5f, true);
                 ++sceneState;
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.AttackName_Hide_Wait:
                 //縮小しきって消滅したら
@@ -374,12 +451,16 @@ public class Sys_Scene : MonoBehaviour
                 else if (Input.anyKey) ++sceneState;
                 break;
 
+            //======================================================================================================================================================================================================//
+
             case Sys_SceneState.MapAlpha_Hide: //マップを透明
                 GameObject.Find(Sys_Status.stageName).AddComponent<Obj_Alpha>();
                 GameObject.Find(Sys_Status.stageName).GetComponent<Obj_Alpha>().mat = mapMaterial;
                 GameObject.Find(Sys_Status.stageName).GetComponent<Obj_Alpha>().Setup(0.0f, 1.0f, false);
                 ++sceneState;
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.MapAlpha_Hide_Wait: //透明になるまで待機
                 //マップが完全に透明になったら
@@ -391,6 +472,8 @@ public class Sys_Scene : MonoBehaviour
                     ++sceneState;
                 }
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.Attack: //攻撃開始
                 //攻撃エンジン生成
@@ -407,6 +490,8 @@ public class Sys_Scene : MonoBehaviour
                 ++sceneState;
                 break;
 
+            //======================================================================================================================================================================================================//
+
             case Sys_SceneState.Attack_Wait: //攻撃終了まで待機
                 //次のシーンへ
                 if (attackEngine == null) ++sceneState;
@@ -415,22 +500,21 @@ public class Sys_Scene : MonoBehaviour
                 {
                     Sys_Sound.Play(player[Sys_Status.targetPlayer].prefab.GetComponent<Obj_PlayerAsset>().damageSound);
 
-                    Transform damage = totalDamage.transform.FindChild("Damage_" + Sys_Status.activePlayer.ToString());
-
-                    damage.GetComponent<Text>().text = Sys_Status.Player[Sys_Status.activePlayer].TotalDamage.ToString();
-                    damage.localScale = new Vector3(5.0f, 5.0f);
-                    damage.gameObject.AddComponent<UI_Scale>();
-                    damage.GetComponent<UI_Scale>().Setup(new Vector2(1.0f, 1.0f), 1.5f, false);
+                    this.SetTotalDamage(Sys_Status.activePlayer);
 
                     //フェスティバル or スモーク状態になったら
-                    if (Sys_Status.Player_Wait[Sys_Status.activePlayer].State_NodeHindrance != 0)
+                    int hindrance = Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeHindrance;
+                    if (hindrance != 0)
                     {
-                        playerState[Sys_Status.activePlayer]
-                            = Instantiate(stateNodeHindranceBase[Sys_Status.Player[Sys_Status.activePlayer].State_NodeHindrance - 1]
-                        , player[Sys_Status.activePlayer].position + new Vector3(0.0f, 2.0f), Quaternion.identity) as GameObject;
+                        Destroy(playerState[Sys_Status.targetPlayer]);
+
+                        playerState[Sys_Status.targetPlayer] = Instantiate(stateNodeHindranceBase[hindrance - 1]
+                        , player[Sys_Status.targetPlayer].position + new Vector3(0.0f, 2.0f), Quaternion.identity) as GameObject;
                     }
                 }
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.MapAlpha_Show: //マップを透明
                 GameObject.Find(Sys_Status.stageName).AddComponent<Obj_Alpha>();
@@ -438,6 +522,8 @@ public class Sys_Scene : MonoBehaviour
                 GameObject.Find(Sys_Status.stageName).GetComponent<Obj_Alpha>().Setup(1.0f, 1.0f, false);
                 ++sceneState;
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.MapAlpha_Show_Wait: //透明になるまで待機
                 //マップが完全に透明になったら
@@ -454,6 +540,8 @@ public class Sys_Scene : MonoBehaviour
                     else sceneState = Sys_SceneState.ChangePlayer;
                 }
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.TernCount:
                 //カウントの前に状態以上適用
@@ -508,6 +596,8 @@ public class Sys_Scene : MonoBehaviour
                     }
                 }
 
+                prevTotalDamage = Sys_Status.Player[1].TotalDamage;
+
                 --tern;
 
                 Sys_Camera.Setup(new Vector3(0.0f, 60.0f, -90.0f), new Vector3(0.0f, 25.0f, -30.0f), Vector3.zero, 30.0f);
@@ -524,18 +614,30 @@ public class Sys_Scene : MonoBehaviour
                 }
                 break;
 
+            //======================================================================================================================================================================================================//
+
             case Sys_SceneState.TernCount_Wait:
                 if (ternImage == null) sceneState = Sys_SceneState.ChangePlayer;
                 break;
 
+            //======================================================================================================================================================================================================//
+
             case Sys_SceneState.GameSet:
                 GameObject.Find("BGM").AddComponent<Sys_SoundFadeOut>();
+
+                Destroy(playerState[0]);
+                Destroy(playerState[1]);
+
                 ++sceneState;
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.GameSet_Wait:
                 if (GameObject.Find("BGM") == null) ++sceneState;
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.LosePlayer:
                 if (Sys_Status.Player[0].TotalDamage < Sys_Status.Player[1].TotalDamage)
@@ -557,6 +659,8 @@ public class Sys_Scene : MonoBehaviour
                 ++sceneState;
                 break;
 
+            //======================================================================================================================================================================================================//
+
             case Sys_SceneState.LosePlayer_Wait:
                 if (!Sys_Camera.isMove())
                 {
@@ -572,6 +676,8 @@ public class Sys_Scene : MonoBehaviour
                 }
                 break;
 
+            //======================================================================================================================================================================================================//
+
             case Sys_SceneState.WinPlayer:
                 cameraMove = Instantiate(cameraMoveBase, cameraMoveBase.transform.position, cameraMoveBase.transform.rotation) as GameObject;
                 cameraMove.GetComponent<Sys_Camera_Move>().lookAt = player[win].position;
@@ -583,6 +689,8 @@ public class Sys_Scene : MonoBehaviour
 
                 ++sceneState;
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.WinPlayer_Wait:
                 startWait -= Time.deltaTime;
@@ -596,16 +704,22 @@ public class Sys_Scene : MonoBehaviour
                 player[win].prefab.GetComponent<Animator>().SetBool("Attack", true);
                 break;
 
+            //======================================================================================================================================================================================================//
+
             case Sys_SceneState.Result:
                 winBGM = Instantiate(winBGM, Vector3.zero, Quaternion.identity) as GameObject;
                 ++sceneState;
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.Result_Wait:
                 if (Input.anyKey) ++sceneState;
 
                 player[win].prefab.GetComponent<Animator>().SetBool("Attack", true);
                 break;
+
+            //======================================================================================================================================================================================================//
 
             case Sys_SceneState.FadeOut:
                 fadeIn = Instantiate(fadeIn, Vector3.zero, Quaternion.identity) as GameObject;
@@ -616,9 +730,12 @@ public class Sys_Scene : MonoBehaviour
                 ++sceneState;
                 break;
 
-            case Sys_SceneState.FadeOut_Wait:
+            //======================================================================================================================================================================================================//
 
+            case Sys_SceneState.FadeOut_Wait:
                 break;
+
+            //======================================================================================================================================================================================================//
 
             default:
                 Debug.Log("Sys_Scene -> StateError");

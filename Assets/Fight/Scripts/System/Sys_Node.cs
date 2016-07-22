@@ -81,7 +81,7 @@ public class Sys_Node : MonoBehaviour
     private GameObject nodeEditor;                                                      //キャンバス
 
     private bool startGuard = false;                                                    //Start呼び出し防止
-    private int penaltyCount;                                                           //ペナルティ番号
+    private int penaltyCount = 0;                                                       //ペナルティ番号
 
     void Awake()
     {
