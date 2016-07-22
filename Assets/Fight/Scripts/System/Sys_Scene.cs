@@ -705,7 +705,7 @@ public class Sys_Scene : MonoBehaviour
                     ++sceneState;
                 }
 
-                player[win].prefab.GetComponent<Animator>().SetBool("Attack", true);
+                player[win].prefab.GetComponent<Animator>().SetBool("Win", true);
                 break;
 
             //======================================================================================================================================================================================================//
@@ -720,7 +720,7 @@ public class Sys_Scene : MonoBehaviour
             case Sys_SceneState.Result_Wait:
                 if (Input.anyKey) ++sceneState;
 
-                player[win].prefab.GetComponent<Animator>().SetBool("Attack", true);
+                player[win].prefab.GetComponent<Animator>().SetBool("Win", true);
                 break;
 
             //======================================================================================================================================================================================================//

@@ -136,6 +136,10 @@ Material:
         second: 0
       data:
         first:
+          name: _AlphaValue
+        second: 0
+      data:
+        first:
           name: _Stencil
         second: 0
       data:
@@ -158,10 +162,6 @@ Material:
         first:
           name: _ColorMask
         second: 15
-      data:
-        first:
-          name: _AlphaValue
-        second: 1.010066
     m_Colors:
       data:
         first:
