@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-using System.Collections.Generic;
-
 public class Sys_Instance : MonoBehaviour
 {
     public GameObject[] tama1 = new GameObject[20];//形状
     public GameObject[] EfectTypes = new GameObject[12];//属性
+    public GameObject[] AddEfectList = new GameObject[6];//追加属性
     public GameObject canvas;
+    ///public GameObject Sys_CurrentObject;
     public Text text;
     public Image image;
     public Vector3 m_getpos;
@@ -48,9 +48,15 @@ public class Sys_Instance : MonoBehaviour
     public bool isEnd;
     public Vector3 targetPosition;
 
+    public int Nodeselect;
+    public int[] hozonRan = new int[6];
+    public int m_nowkazu_ran;
+    public bool FF;
+
     Image images;
     void Start()
     {
+        FF = false;
         TimeOk = false;
         isEnd = false;
 
@@ -66,40 +72,74 @@ public class Sys_Instance : MonoBehaviour
         m_kazu = Sys_Status.Action_Object.Number;
         m_get_kazu = Sys_Status.Action_Object.Number;
         m_MoveType = Sys_Status.Action_Object.Move;
-        turn = Sys_Status.Action_UI.State_Tern_Time;
-        NodeHindrance_turn = Sys_Status.Action_UI.State_NodeHindrance_Time;
+        for (int pi = 0; pi < 2; pi++)
+        {
+            //turn = Sys_Status.Action_UI.State_Tern_Time;
+            turn = Sys_Status.Player[pi].State_Tern_Time;
+            NodeHindrance_turn = Sys_Status.Player[pi].State_NodeHindrance_Time;
+            //NodeHindrance_turn = Sys_Status.Action_UI.State_NodeHindrance_Time;
+        }
         State_turns.sprite = null;
         State_NodeHindrance.sprite = null;
+        Nodeselect = Random.Range(0, 19);
+        m_nowkazu_ran = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            hozonRan[i] = Random.Range(0, 5);
+        }
     }
 
     void Update()
     {
+        //GameObject.Find("Current").GetComponent<Sys_Current>().m_getpos = targetPosition;
         Image image_dousa = null;
         Image image_bougay = null;
         Image image_NodeHindrance = null;
-        // Image image_Festival = null;
+        //Image image_Festival = null;
         Image turns = null;
         Image NodeHindrance_turns = null;
 
-        if (image_dousa != null)
+        //Debug.Log(Nodeselect);
+        if (Nodeselect >= 6 && Nodeselect <= 9)//6
         {
-            image_dousa.transform.position = Camera.main.WorldToScreenPoint(new Vector3(0, 0, 0));
+            //Debug.Log("あああ");
+            m_nowkazu_ran = 1;
         }
-        if (image_bougay != null)
+        else if (Nodeselect >= 10 && Nodeselect <= 13)
         {
-            image_bougay.transform.position = Camera.main.WorldToScreenPoint(new Vector3(0, 0, 0));
+            //Debug.Log("あい");
+            m_nowkazu_ran = 2;
         }
-        if (image_NodeHindrance != null)
+        else if (Nodeselect >= 14 && Nodeselect <= 17)
         {
-            image_NodeHindrance.transform.position = Camera.main.WorldToScreenPoint(new Vector3(0, 0, 0));
+            //Debug.Log("あう");
+            m_nowkazu_ran = 3;
         }
-        if (turns != null)
+        else if (Nodeselect >= 18)
         {
-            turns.transform.position = Camera.main.WorldToScreenPoint(new Vector3(0, 0, 0));
+            //Debug.Log("あえ");
+            m_nowkazu_ran = 4;
         }
-        if (NodeHindrance_turns != null)
+        if (FF == false)
         {
-            NodeHindrance_turns.transform.position = Camera.main.WorldToScreenPoint(new Vector3(0, 0, 0));
+            for (int i = 0; i <= 4; i++)
+            {
+                for (int j = 4; j > i; j--)
+                {
+                    if (hozonRan[i] == hozonRan[j])
+                    {
+                        hozonRan[j] = Random.Range(0, 6);
+                    }
+                    else
+                    {
+                        if (i == 4 && j == 4)
+                        {
+                            Debug.Log("いいいいいいいいい");
+                            FF = true;
+                        }
+                    }
+                }
+            }
         }
 
         if (TimeOk == true)//実行
@@ -111,8 +151,7 @@ public class Sys_Instance : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        //Debug.Log(m_get_kazu);
-        if (!TimeOk && m_get_kazu == 0 && (m_Seisei[0] == 0 || m_Seisei[1] == 0 || m_Seisei[2] == 0 || m_Seisei[3] == 0 || m_Seisei[4] == 0))
+        if (!TimeOk && m_get_kazu == 0 && (m_Seisei[0]== 0 || m_Seisei[1] == 0 || m_Seisei[2] == 0 || m_Seisei[3] == 0 || m_Seisei[4] == 0))
         {
             //Debug.Log(m_get_kazu);
             if (GameObject.Find("Poison(Clone)") != null) Destroy(GameObject.Find("Poison(Clone)"));
@@ -120,41 +159,45 @@ public class Sys_Instance : MonoBehaviour
             if (GameObject.Find("Interference(Clone)") != null) Destroy(GameObject.Find("Interference(Clone)"));
             if (GameObject.Find("Smoke(Clone)") != null) Destroy(GameObject.Find("Smoke(Clone)"));
             if (GameObject.Find("Festival(Clone)") != null) Destroy(GameObject.Find("Festival(Clone)"));
-            if (GameObject.Find("TurnBangou(Clone)") != null) Destroy(GameObject.Find("TurnBangou(Clone)"));
+            if (GameObject.Find("turn(Clone)") != null) Destroy(GameObject.Find("turn(Clone)"));
             if (GameObject.Find("NodeHindranceBangou(Clone)") != null) Destroy(GameObject.Find("NodeHindranceBangou(Clone)"));
             TimeOk = true;
             isEnd = true;
-
-            if (image_dousa == null)
+            for (int i = 0; i < 2; i++)
             {
-                switch (Sys_Status.Action_UI.State_Tern)
+                if (image_dousa == null)
                 {
-                    case 0:
-                        m_Seisei[0] = 1;
-                        break;
-                    case 1:
-                        image_dousa = Instantiate(Poison, Poison.transform.position, Poison.transform.rotation) as Image;
-                        image_dousa.transform.SetParent(canvas.transform, false);
-                        m_Seisei[0] = 1;
-                        break;
-                    case 2:
-                        image_dousa = Instantiate(Parasite, Parasite.transform.position, Parasite.transform.rotation) as Image;
-                        image_dousa.transform.SetParent(canvas.transform, false);
-                        m_Seisei[0] = 1;
-                        break;
+                    switch (Sys_Status.Player[i].State_Tern)
+                    //switch (Sys_Status.Action_UI.State_Tern)
+                    {
+                        case 0:
+                            m_Seisei[0] = 1;
+                            break;
+                        case 1:
+                            image_dousa = Instantiate(Poison, new Vector3(-100, 130, 0), Poison.transform.rotation) as Image;
+                            image_dousa.transform.SetParent(canvas.transform, false);
+                            m_Seisei[0] = 1;
+                            break;
+                        case 2:
+                            image_dousa = Instantiate(Parasite, new Vector3(-100, 130, 0), Parasite.transform.rotation) as Image;
+                            image_dousa.transform.SetParent(canvas.transform, false);
+                            m_Seisei[0] = 1;
+                            break;
+                    }
+                    if (Sys_Status.Player[i].State_NodeKey != 0 && Sys_Status.Player[i].State_NodeEditor != 0 && image_bougay == null)
+                    //if (Sys_Status.Action_UI.State_Etc == true && image_bougay == null) //妨害が発生するかどうか（UIで「ノード妨害追加！」と出る）
+                    {
+                        image_bougay = Instantiate(Interference, new Vector3(0, 270, 0), Interference.transform.rotation) as Image;//Interference.transform.position
+                        image_bougay.transform.SetParent(canvas.transform, false);
+                        m_Seisei[1] = 1;
+                    }
+                    else
+                    {
+                        m_Seisei[1] = 1;
+                    }
+
                 }
             }
-            if (Sys_Status.Action_UI.State_Etc == true && image_bougay == null) //妨害が発生するかどうか（UIで「ノード妨害追加！」と出る）
-            {
-                image_bougay = Instantiate(Interference, Interference.transform.position, Interference.transform.rotation) as Image;
-                image_bougay.transform.SetParent(canvas.transform, false);
-                m_Seisei[1] = 1;
-            }
-            else
-            {
-                m_Seisei[1] = 1;
-            }
-
             if (image_NodeHindrance == null)
             {
                 switch (Sys_Status.Action_Object.State_NodeHindrance)//1:スモーク　2:フェスティバル
@@ -163,12 +206,12 @@ public class Sys_Instance : MonoBehaviour
                         m_Seisei[2] = 1;
                         break;
                     case 1:
-                        image_NodeHindrance = Instantiate(Smoke, Smoke.transform.position, Smoke.transform.rotation) as Image;
+                        image_NodeHindrance = Instantiate(Smoke, new Vector3(-100, 180, 0), Smoke.transform.rotation) as Image;
                         image_NodeHindrance.transform.SetParent(canvas.transform, false);
                         m_Seisei[2] = 1;
                         break;
                     case 2:
-                        image_NodeHindrance = Instantiate(Festival, Festival.transform.position, Festival.transform.rotation) as Image;
+                        image_NodeHindrance = Instantiate(Festival, new Vector3(-100, 180, 0), Festival.transform.rotation) as Image;
                         image_NodeHindrance.transform.SetParent(canvas.transform, false);
                         m_Seisei[2] = 1;
                         break;
@@ -189,7 +232,7 @@ public class Sys_Instance : MonoBehaviour
             }
             if (State_turns.sprite != null && turns == null)//ターン数
             {
-                turns = Instantiate(State_turns, State_turns.transform.position, State_turns.transform.rotation) as Image;
+                turns = Instantiate(State_turns, new Vector3(100, 130, 0), State_turns.transform.rotation) as Image;
                 turns.transform.SetParent(canvas.transform, false);
                 m_Seisei[3] = 1;
             }
@@ -207,12 +250,11 @@ public class Sys_Instance : MonoBehaviour
             }
             if (State_NodeHindrance.sprite != null && NodeHindrance_turns == null)
             {
-                NodeHindrance_turns = Instantiate(State_NodeHindrance, State_NodeHindrance.transform.position, State_NodeHindrance.transform.rotation) as Image;
+                NodeHindrance_turns = Instantiate(State_NodeHindrance, new Vector3(100, 180, 0), State_NodeHindrance.transform.rotation) as Image;
                 NodeHindrance_turns.transform.SetParent(canvas.transform, false);
                 m_Seisei[4] = 1;
             }
         }
-
         switch (Sys_Status.Action_Object.Type)
         {
             case "ファイヤー":
@@ -326,6 +368,7 @@ public class Sys_Instance : MonoBehaviour
             {
                 GameObject createTama = null;
                 GameObject createType = null;
+                GameObject AddEfect = null;
 
 
                 switch (m_MoveType)//バラバラに発射するようにする
@@ -364,6 +407,12 @@ public class Sys_Instance : MonoBehaviour
                 createTama.GetComponent<Obj_Skill_Firing>().instance_data = this.gameObject;
                 createTama.GetComponent<Obj_Skill_Firing>().attack = Sys_Status.Action_UI.Damage[m_now_kazu];
 
+                //Debug.Log(Nodeselect);
+                AddEfect = Instantiate(AddEfectList[hozonRan[Random.Range(0, m_nowkazu_ran)]], new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+
+                AddEfect.transform.SetParent(createTama.transform, false);
+
+
                 ++m_now_kazu;
             }
         }
@@ -375,6 +424,7 @@ public class Sys_Instance : MonoBehaviour
             images.transform.SetParent(canvas.transform, false); //こちらのほうが安全で、警告が出ない
             if (images != null)
             {
+                //Debug.Log("ああ");
                 images.transform.position = Camera.main.WorldToScreenPoint(m_getpos + new Vector3(Random.Range(-10.0f, 10.0f), Random.Range(-10.0f, 10.0f), 0));
             }
             m_TextFlag = false;

@@ -376,6 +376,71 @@ Prefab:
     - {fileID: 11466996, guid: 5957d98bb37c7c4479cb45d8bc1da5e5, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 5957d98bb37c7c4479cb45d8bc1da5e5, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &881796197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 881796199}
+  - 114: {fileID: 881796198}
+  m_Layer: 0
+  m_Name: Current
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &881796198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 881796197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7ffd712868dddc459b30a3f24993579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  count: 0000000000000000
+  m_Ok: 0
+  m_getpos:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  Poisons:
+  - {fileID: 0}
+  - {fileID: 0}
+  Parasites:
+  - {fileID: 0}
+  - {fileID: 0}
+  Interferences:
+  - {fileID: 0}
+  - {fileID: 0}
+  turns:
+  - {fileID: 0}
+  - {fileID: 0}
+  Smokes:
+  - {fileID: 0}
+  - {fileID: 0}
+  Festivals:
+  - {fileID: 0}
+  - {fileID: 0}
+  NodeHindranceBangous:
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!4 &881796199
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 881796197}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
 --- !u!1 &882303319 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 107098, guid: 5957d98bb37c7c4479cb45d8bc1da5e5, type: 2}
@@ -637,6 +702,7 @@ MonoBehaviour:
   attackEngineBase: {fileID: 103406, guid: 152ea69843e9dcb4b82247b761e45ae9, type: 2}
   winBGM: {fileID: 166826, guid: 9ab0aee5d3fbfd14dbb1165f044e4bb0, type: 2}
   fadeIn: {fileID: 189568, guid: 1661db9da2db05c42834126ad20b7422, type: 2}
+  cameraBase: {fileID: 881796197}
   thumbnailMove: {fileID: 8300000, guid: 3c2b798e5a9b2b84fad53ffba62a6406, type: 3}
   changeSound: {fileID: 8300000, guid: 8f0103dd74dc2de40aebd46dc916d0ed, type: 3}
   winSound: {fileID: 8300000, guid: d4b4081434d17534d8a6b141c2715496, type: 3}
