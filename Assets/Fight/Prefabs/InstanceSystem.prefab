@@ -73,6 +73,13 @@ MonoBehaviour:
   - {fileID: 169470, guid: 62af285ee1c5f2641980b38d70904805, type: 2}
   - {fileID: 115388, guid: 704f1a8777e9e5845ba990de51630ae3, type: 2}
   - {fileID: 132326, guid: 36369b04265b6514dbfd9e37dcb5a2d5, type: 2}
+  AddEfectList:
+  - {fileID: 120556, guid: 152f656eb563ef1499321b454c481bf3, type: 2}
+  - {fileID: 139864, guid: e611112e89147cb4ebb8520eb91678ba, type: 2}
+  - {fileID: 195050, guid: c1d9794f293e8864e8d396edce8e1f9d, type: 2}
+  - {fileID: 123392, guid: 257da908d15ecc04b9fc7af9a3f8e6f2, type: 2}
+  - {fileID: 181186, guid: 57203e8ce9116364d97c701b01cccc1c, type: 2}
+  - {fileID: 182890, guid: 65e94d0fc04d31a4fa7cf3c268295afa, type: 2}
   canvas: {fileID: 0}
   text: {fileID: 11452774, guid: eab8599a22fb54f42b29ea1f4e0269b5, type: 2}
   image: {fileID: 11424460, guid: c165ef8c42489d04e9178da13424873c, type: 2}
@@ -112,6 +119,10 @@ MonoBehaviour:
   m_count: 0
   isEnd: 0
   targetPosition: {x: 0, y: 0, z: 0}
+  Nodeselect: 0
+  hozonRan: 000000000000000000000000000000000000000000000000
+  m_nowkazu_ran: 0
+  FF: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

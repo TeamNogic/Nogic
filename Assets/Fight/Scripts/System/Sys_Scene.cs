@@ -120,6 +120,7 @@ public class Sys_Scene : MonoBehaviour
     public GameObject attackEngineBase;                 //攻撃生成オブジェクト
     public GameObject winBGM;                           //勝利BGM
     public GameObject fadeIn;                           //終了時フェードイン
+    public GameObject cameraBase;                       //戦闘用
 
     public AudioClip thumbnailMove;                     //サムネイル移動音
     public AudioClip changeSound;                       //チェンジ音
@@ -310,6 +311,9 @@ public class Sys_Scene : MonoBehaviour
                 thumbnailSingle.GetComponent<Image>().sprite = player[Sys_Status.activePlayer].prefab.GetComponent<Obj_PlayerAsset>().thumbnail;
                 thumbnailSingle.transform.SetParent(nodeEditor.transform, false);
 
+                //NisioEdit
+                cameraBase.GetComponent<Sys_Current>().count[Sys_Status.targetPlayer] += 1;
+
                 Destroy(stateTern);
 
                 startWait = 4.0f;
@@ -459,6 +463,19 @@ public class Sys_Scene : MonoBehaviour
                 mapHide.AddComponent<Obj_Alpha>();
                 mapHide.GetComponent<Obj_Alpha>().mat = mapMaterial;
                 mapHide.GetComponent<Obj_Alpha>().Setup(0.0f, 2.0f, false);
+
+                //NisioEdit
+                if (Sys_Status.Player[Sys_Status.targetPlayer].State_Tern == 0 
+                    && Sys_Status.Player[Sys_Status.targetPlayer].State_Tern_Time == 0 
+                    && Sys_Status.Player[Sys_Status.targetPlayer].State_NodeHindrance == 0 
+                    && Sys_Status.Player[Sys_Status.targetPlayer].State_NodeHindrance_Time == 0 
+                    && Sys_Status.Player[Sys_Status.targetPlayer].State_NodeKey != 0 
+                    && Sys_Status.Player[Sys_Status.targetPlayer].State_NodeEditor != 0)
+                {
+                    cameraBase.GetComponent<Sys_Current>().m_Ok = 0;
+                }
+                else cameraBase.GetComponent<Sys_Current>().m_Ok = 1;
+
                 ++sceneState;
                 break;
 
@@ -487,6 +504,12 @@ public class Sys_Scene : MonoBehaviour
                 Sys_Sound.Play(player[Sys_Status.activePlayer].prefab.GetComponent<Obj_PlayerAsset>().attackSound);
 
                 player[Sys_Status.activePlayer].prefab.GetComponent<Animator>().SetBool("Attack", true);
+
+                //NisioEdit
+                if (cameraBase.GetComponent<Sys_Current>().count[Sys_Status.targetPlayer] == 2)
+                {
+                    cameraBase.GetComponent<Sys_Current>().count[Sys_Status.targetPlayer] = 1;
+                }
 
                 //次のシーンへ
                 ++sceneState;
@@ -744,6 +767,13 @@ public class Sys_Scene : MonoBehaviour
             default:
                 Debug.Log("Sys_Scene -> StateError");
                 break;
+        }
+
+        //NisioEdit
+        for (int i = 0; i < 2; i++)
+        {
+            cameraBase.GetComponent<Sys_Current>().m_getpos[i]
+                = new Vector3(player[i].prefab.transform.position.x, 6, player[i].prefab.transform.position.z);
         }
     }
 }
