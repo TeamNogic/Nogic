@@ -12,6 +12,7 @@ GameObject:
   - 114: {fileID: 11482330}
   - 82: {fileID: 8223994}
   - 114: {fileID: 11490156}
+  - 114: {fileID: 11454802}
   m_Layer: 5
   m_Name: Interference
   m_TagString: Untagged
@@ -93,6 +94,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &11454802
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb60cb8be2e3214481596aab3a8a749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 0
 --- !u!114 &11482330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -148,7 +161,7 @@ RectTransform:
   m_GameObject: {fileID: 135416}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8, y: 0.8, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0

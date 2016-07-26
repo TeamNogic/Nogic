@@ -11,6 +11,7 @@ GameObject:
   - 222: {fileID: 22221722}
   - 114: {fileID: 11497254}
   - 114: {fileID: 11464678}
+  - 114: {fileID: 11483008}
   m_Layer: 5
   m_Name: Festival
   m_TagString: Untagged
@@ -32,6 +33,18 @@ MonoBehaviour:
   Target: {x: 1.8, y: 0.6}
   Speed: 2.5
   DestroyObjectFlag: 0
+--- !u!114 &11483008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 123522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb60cb8be2e3214481596aab3a8a749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 0
 --- !u!114 &11497254
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,7 +86,7 @@ RectTransform:
   m_GameObject: {fileID: 123522}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8, y: 0.4, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
