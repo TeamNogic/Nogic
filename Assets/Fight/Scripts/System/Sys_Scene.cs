@@ -79,6 +79,9 @@ public class Sys_Scene : MonoBehaviour
     private Image nodeName;                             //ノード名とコメント名を表示
     private int nodeNamePos;                            //表示位置
 
+    public List<Image> nodeInfo
+    = new List<Image>();                                //ノード情報
+
     //===================================================================================================//
 
     private GameObject stateTern;                       //状態異常オブジェクト
@@ -110,6 +113,7 @@ public class Sys_Scene : MonoBehaviour
     public Image Change;                                //チェンジUI
     public Image timeupBase;                            //時間切れオブジェクト
     public Image perfectBase;                           //完璧終了オブジェクト
+    public Image nodeInfoBase;                          //ノード情報
 
     public List<GameObject> playerState
     = new List<GameObject>();                           //プレイヤーの状態異常
@@ -422,6 +426,12 @@ public class Sys_Scene : MonoBehaviour
                 nodeName.transform.FindChild("Name").gameObject.GetComponent<Text>().text = Sys_Status.Attack_Name[nodeNamePos];
                 nodeName.transform.FindChild("Comment").gameObject.GetComponent<Text>().text = Sys_Status.Attack_Comment[nodeNamePos];
 
+                //ノード情報の生成
+                nodeInfo.Add(Instantiate(nodeInfoBase, nodeInfoBase.transform.localPosition, Quaternion.identity) as Image);
+                nodeInfo[nodeNamePos].transform.SetParent(nodeEditor.transform, false);
+                nodeInfo[nodeNamePos].transform.FindChild("Text").gameObject.GetComponent<Text>().text = Sys_Status.Attack_Comment[nodeNamePos];
+                nodeInfo[nodeNamePos].GetComponent<UI_Move>().Setup_Target(new Vector2(0.0f, 285.0f - 30.0f * nodeNamePos));
+
                 ++sceneState;
                 break;
 
@@ -447,12 +457,12 @@ public class Sys_Scene : MonoBehaviour
                 //縮小しきって消滅したら
                 if (nodeName == null)
                 {
-                    //まだノードが残っている場合は繰り返す　そうでない場合は次のシーンへ
-                    if (Sys_Status.Attack_Name.Count <= ++nodeNamePos) ++sceneState;
-                    else sceneState = Sys_SceneState.CreateAttackName;
+                    //まだノードが残っている場合は繰り返す
+                    if (++nodeNamePos < Sys_Status.Attack_Name.Count) sceneState = Sys_SceneState.CreateAttackName;
                 }
-                //何かのキーが押されたら　強制的に次のシーンへ
-                else if (Input.anyKey) ++sceneState;
+
+                //何かのキーが押されたら次のシーンへ
+                if (Input.anyKey) ++sceneState;
                 break;
 
             //======================================================================================================================================================================================================//
@@ -464,12 +474,20 @@ public class Sys_Scene : MonoBehaviour
                 mapHide.GetComponent<Obj_Alpha>().mat = mapMaterial;
                 mapHide.GetComponent<Obj_Alpha>().Setup(0.0f, 2.0f, false);
 
+                for (int i = 0; i < nodeInfo.Count; ++i)
+                {
+                    nodeInfo[i].gameObject.AddComponent<UI_Scale>();
+                    nodeInfo[i].GetComponent<UI_Scale>().Setup(Vector2.zero, 3.0f, true);
+                }
+
+                nodeInfo.Clear();
+
                 //NisioEdit
-                if (Sys_Status.Player[Sys_Status.targetPlayer].State_Tern == 0 
-                    && Sys_Status.Player[Sys_Status.targetPlayer].State_Tern_Time == 0 
-                    && Sys_Status.Player[Sys_Status.targetPlayer].State_NodeHindrance == 0 
-                    && Sys_Status.Player[Sys_Status.targetPlayer].State_NodeHindrance_Time == 0 
-                    && Sys_Status.Player[Sys_Status.targetPlayer].State_NodeKey != 0 
+                if (Sys_Status.Player[Sys_Status.targetPlayer].State_Tern == 0
+                    && Sys_Status.Player[Sys_Status.targetPlayer].State_Tern_Time == 0
+                    && Sys_Status.Player[Sys_Status.targetPlayer].State_NodeHindrance == 0
+                    && Sys_Status.Player[Sys_Status.targetPlayer].State_NodeHindrance_Time == 0
+                    && Sys_Status.Player[Sys_Status.targetPlayer].State_NodeKey != 0
                     && Sys_Status.Player[Sys_Status.targetPlayer].State_NodeEditor != 0)
                 {
                     cameraBase.GetComponent<Sys_Current>().m_Ok = 0;
@@ -735,6 +753,15 @@ public class Sys_Scene : MonoBehaviour
 
             case Sys_SceneState.Result:
                 winBGM = Instantiate(winBGM, Vector3.zero, Quaternion.identity) as GameObject;
+
+                totalDamage.gameObject.AddComponent<UI_Move>();
+                totalDamage.GetComponent<UI_Move>().Setup_Target(new Vector2(0.0f, -100.0f));
+
+                totalDamage.gameObject.AddComponent<UI_Scale>();
+                totalDamage.GetComponent<UI_Scale>().Setup(new Vector2(2.0f, 2.0f), 2.0f, false);
+
+                Sys_Sound.Play(thumbnailMove);
+
                 ++sceneState;
                 break;
 

@@ -11,6 +11,7 @@ public class Sys_NodeEngine : MonoBehaviour
 
     private float selectTime;                           //残り選択時間
     private float soundTime;                            //超えると鳴るサウンド間隔
+    private float quickTime;                            //1ノード選択時間
 
     private GameObject nodeEditor;                      //キャッチしたノードエディタ
 
@@ -72,6 +73,23 @@ public class Sys_NodeEngine : MonoBehaviour
             Create[3] = Instantiate(baseNode, new Vector3(-100.0f, 40.0f), Quaternion.identity) as Image;
             Create[3].transform.SetParent(nodeEditor.transform, false);
         }
+
+        if (isStart && !(Input.GetKey(KeyCode.Q)))
+        {
+            if (quickTime < 0.5f) PenaltyPlus();
+            if (quickTime < 0.25f) PenaltyPlus();
+            if (quickTime < 0.125f) PenaltyPlus();
+
+            quickTime = 0.0f;
+        }
+    }
+
+    void PenaltyPlus()
+    {
+        int target = Random.Range(0, 4);
+
+        Create[target].GetComponent<Sys_Node>().Data.Penalty = true;
+        Create[target].GetComponent<Sys_Node>().DangerUpdate();
     }
 
     void DeleteUI(Image image, float speed)
@@ -116,6 +134,8 @@ public class Sys_NodeEngine : MonoBehaviour
             selectTime = 10.0f;
             soundTime = 9.0f;
         }
+
+        quickTime = 1.0f;
 
         updateFlag = true;
 
@@ -299,7 +319,7 @@ public class Sys_NodeEngine : MonoBehaviour
             //ダメージ追加
             Sys_Status.Action_UI.Damage.Add((int)damage);
             Sys_Status.Player[Sys_Status.activePlayer].TotalDamage += (int)damage;
-            
+
             //Debug.Log(Sys_Status.Action_UI.Damage[i] + "ダメージ");
         }
 
@@ -626,6 +646,7 @@ public class Sys_NodeEngine : MonoBehaviour
         {
             //時間を減らす
             selectTime -= Time.deltaTime;
+            quickTime += Time.deltaTime;
 
             //一定確率で煙妨害
             if (Sys_Status.Player[Sys_Status.activePlayer].State_NodeHindrance == 1 && Random.Range(0, 15) == 0)

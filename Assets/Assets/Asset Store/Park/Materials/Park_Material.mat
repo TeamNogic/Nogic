@@ -144,12 +144,12 @@ Material:
         second: 0
       data:
         first:
-          name: _OutlineSize
-        second: 0.01
-      data:
-        first:
           name: _AlphaValue
         second: 1
+      data:
+        first:
+          name: _OutlineSize
+        second: 0.01
     m_Colors:
       data:
         first:

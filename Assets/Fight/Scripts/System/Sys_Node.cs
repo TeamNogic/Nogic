@@ -82,15 +82,12 @@ public class Sys_Node : MonoBehaviour
 
     private bool startGuard = false;                                                    //Start呼び出し防止
     private int penaltyCount = 0;                                                       //ペナルティ番号
-
+    
     void Awake()
     {
-        nodeEditor = GameObject.Find("NodeEditor");
-    }
-
-    void Start()
-    {
         if (startGuard) return;
+
+        nodeEditor = GameObject.Find("NodeEditor");
 
         //全てのノード選択済み枠を見る
         for (Sys_NodeGroup i = 0; i != Sys_NodeGroup.__Size__; ++i)
@@ -165,11 +162,16 @@ public class Sys_Node : MonoBehaviour
         //ペナルティノード変化(状態異常：ヘル　の場合は出現率が２倍)
         Data.Penalty = Random.Range(0, Sys_Status.Player[Sys_Status.activePlayer].State_NodeEditor == 2 ? 5 : 10) == 0;
         Data.AddNode = false;
-        this.transform.FindChild("Danger").GetComponent<Image>().enabled = Data.Penalty;
+        this.DangerUpdate();
 
         //ランク変更と技名の設定
         this.GetComponent<Image>().sprite = nodeImage[Data.Rank - 1];
         this.transform.FindChild("Name").gameObject.GetComponent<Text>().text = Data.Name;
+    }
+
+    public void DangerUpdate()
+    {
+        this.transform.FindChild("Danger").GetComponent<Image>().enabled = Data.Penalty;
     }
 
     public void SelectEnter(int pos, int penaltyCount)
