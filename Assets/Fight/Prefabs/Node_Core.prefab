@@ -148,7 +148,7 @@ MonoBehaviour:
   nodeEditorName: NodeEditor
   baseNode: {fileID: 11415996, guid: a7374734a12790d4b98e5de785e07f13, type: 2}
   start: {fileID: 11478994, guid: 6ce54ff61ecb4454db0f24726c4e6521, type: 2}
-  decisionBad: {fileID: 11470902, guid: 83d92e90b70cf704d8c105f6aeb54916, type: 2}
+  decisionBad: {fileID: 11489124, guid: 83d92e90b70cf704d8c105f6aeb54916, type: 2}
   decisionGood: {fileID: 11437596, guid: 95dbcf8b476dbb844956e71fee51a3e2, type: 2}
   decisionGreat: {fileID: 11407498, guid: f01f4d3858fd4454490ecac3060e4f88, type: 2}
   decisionExcellent: {fileID: 11464932, guid: 4aba13c5e7d3a6f47ab75d964a3bb33e, type: 2}

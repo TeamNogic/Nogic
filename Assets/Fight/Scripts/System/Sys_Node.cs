@@ -146,6 +146,10 @@ public class Sys_Node : MonoBehaviour
                         //含まれていたら
                         if (NodeList[i].Group == NextNodeGroup[j])
                         {
+                            //ランクの高いノードを確率で遮断（状態異常：シールド　の場合）
+                            if (Sys_Status.Player[Sys_Status.activePlayer].State_NodeEditor == 1
+                                && 4 <= NodeList[i].Rank && Random.Range(0, 3) == 0) break;
+
                             //ノード確定
                             NodeList[i].This = this.gameObject;
                             Data = NodeList[i];

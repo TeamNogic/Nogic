@@ -189,17 +189,17 @@ public class Sys_NodeCreate : MonoBehaviour
         
         //--------------------------------------------------------------------------------------------------------------------------------//
 
-        AddNode("ブースト", 4, Sys_NodeGroup.TypePlus, 2, "ダメージ２倍");
+        AddNode("ブースト", 3, Sys_NodeGroup.TypePlus, 2, "ダメージ２倍");
         AddNode("バースト", 5, Sys_NodeGroup.TypePlus, 3, "ダメージ３倍");
 
         AddNode("スター", 3, Sys_NodeGroup.TypeCritical, 1, "弱点属性ダメージ２倍");
-        AddNode("ギャラクシー", 5, Sys_NodeGroup.TypeCritical, 2, "弱点属性ダメージ４倍");
-        AddNode("グレート", 3, Sys_NodeGroup.TypeCritical, 3, "弱点以外の属性ダメージ２倍");
+        AddNode("ギャラクシー", 4, Sys_NodeGroup.TypeCritical, 2, "弱点属性ダメージ４倍");
+        AddNode("グレート", 4, Sys_NodeGroup.TypeCritical, 3, "弱点以外の属性ダメージ２倍");
         AddNode("マーベラス", 5, Sys_NodeGroup.TypeCritical, 4, "弱点以外の属性ダメージ４倍");
 
         AddNode("ワールド", 2, Sys_NodeGroup.Critical, 2, "クリティカルダメージ２倍");
         AddNode("ノヴァ", 3, Sys_NodeGroup.Critical, 4, "クリティカルダメージ４倍");
-        AddNode("ヘヴン", 4, Sys_NodeGroup.Critical, 8, "クリティカルダメージ８倍");
+        AddNode("ヘヴン", 5, Sys_NodeGroup.Critical, 8, "クリティカルダメージ８倍");
 
         AddNode("ナイフ", 1, Sys_NodeGroup.Shape, 5, "ダメージボーナス＋５％");
         AddNode("カッター", 1, Sys_NodeGroup.Shape, 10, "ダメージボーナス＋１０％");
@@ -233,28 +233,28 @@ public class Sys_NodeCreate : MonoBehaviour
         AddNode("ハイパー", 3, Sys_NodeGroup.Scale, 4, "更にダメージ４倍");
         AddNode("アルティメット", 5, Sys_NodeGroup.Scale, 8, "更にダメージ８倍");
 
-        AddNode("ポイズン", 2, Sys_NodeGroup.Tern, 1, "ターンごとに定期ダメージ");
-        AddNode("パラサイト", 2, Sys_NodeGroup.Tern, 2, "ターンごとに定期ダメージ");
+        AddNode("ポイズン", 3, Sys_NodeGroup.Tern, 1, "ターンごとに定期ダメージ");
+        AddNode("パラサイト", 3, Sys_NodeGroup.Tern, 2, "ターンごとに定期ダメージ");
 
-        AddNode("ウィーク", 5, Sys_NodeGroup.Status, 1, "全てが弱点");
-        AddNode("ダウン", 4, Sys_NodeGroup.Status, 2, "弱点ダメージボーナス半減");
-        AddNode("アブソープション", 5, Sys_NodeGroup.Status, 3, "弱点ダメージボーナス無効");
+        AddNode("ウィーク", 4, Sys_NodeGroup.Status, 1, "全てが弱点");
+        AddNode("ダウン", 2, Sys_NodeGroup.Status, 2, "弱点ダメージボーナス半減");
+        AddNode("アブソープション", 4, Sys_NodeGroup.Status, 3, "弱点ダメージボーナス無効");
 
         AddNode("リバース", 3, Sys_NodeGroup.NodeKey, 1, "ノード選択のキーが反転する");
         AddNode("カオス", 4, Sys_NodeGroup.NodeKey, 2, "ノード選択のキーが時々移動する");
         AddNode("フリーズ", 2, Sys_NodeGroup.NodeKey, 3, "ノード選択の一部のキーが封印される");
-        AddNode("ホールド", 5, Sys_NodeGroup.NodeKey, 4, "ノード選択でキーを長押しする手間が増える");
+        AddNode("ホールド", 4, Sys_NodeGroup.NodeKey, 4, "ノード選択でキーを長押しする手間が増える");
 
         AddNode("スモーク", 4, Sys_NodeGroup.NodeHindrance, 1, "ノード選択画面を曇らせて妨害");
-        AddNode("フェスティバル", 3, Sys_NodeGroup.NodeHindrance, 2, "ノード選択画面を音符マークで妨害");
+        AddNode("フェスティバル", 4, Sys_NodeGroup.NodeHindrance, 2, "ノード選択画面を音符マークで妨害");
 
-        AddNode("シールド", 3, Sys_NodeGroup.NodeEditor, 1, "サポートノード禁止");
+        AddNode("シールド", 5, Sys_NodeGroup.NodeEditor, 1, "レア度の高いノードの出現率が減少する");
         AddNode("ヘル", 3, Sys_NodeGroup.NodeEditor, 2, "ペナルティノードの出現率が上昇");
         AddNode("ブレイク", 5, Sys_NodeGroup.NodeEditor, 3, "ノード選択時間が減る");
 
-        AddNode("エクストラ", 1, Sys_NodeGroup.Number, 2, "攻撃個数ボーナス×２");
-        AddNode("デラックス", 2, Sys_NodeGroup.Number, 3, "攻撃個数ボーナス×３");
-        AddNode("グランド", 3, Sys_NodeGroup.Number, 4, "攻撃個数ボーナス×４");
+        AddNode("エクストラ", 2, Sys_NodeGroup.Number, 2, "攻撃個数ボーナス×２");
+        AddNode("デラックス", 3, Sys_NodeGroup.Number, 3, "攻撃個数ボーナス×３");
+        AddNode("グランド", 4, Sys_NodeGroup.Number, 4, "攻撃個数ボーナス×４");
         AddNode("リッチ", 5, Sys_NodeGroup.Number, 5, "攻撃個数ボーナス×５");
 
         //--------------------------------------------------------------------------------------------------------------------------------//
@@ -262,15 +262,15 @@ public class Sys_NodeCreate : MonoBehaviour
         AddNode("フォール", 1, Sys_NodeGroup.Move, 5, "落下移動　ダメージボーナス＋５％");
         AddNode("ショット", 2, Sys_NodeGroup.Move, 10, "発射　ダメージボーナス＋１０％");
         AddNode("グラウンド", 3, Sys_NodeGroup.Move, 20, "地面から　ダメージボーナス＋２０％");
-        AddNode("ロックオン", 5, Sys_NodeGroup.Move, 40, "様々な方向から　ダメージボーナス＋４０％");
+        AddNode("ロックオン", 4, Sys_NodeGroup.Move, 40, "様々な方向から　ダメージボーナス＋４０％");
 
-        AddNode("ショート", 1, Sys_NodeGroup.TernTime, 2, "効果継続２ターン");
-        AddNode("ロング", 3, Sys_NodeGroup.TernTime, 3, "効果継続３ターン");
-        AddNode("インフィニティ", 5, Sys_NodeGroup.TernTime, 5, "効果継続５ターン");
+        AddNode("ショート", 1, Sys_NodeGroup.TernTime, 2, "定期ダメージの効果継続２ターン");
+        AddNode("ロング", 3, Sys_NodeGroup.TernTime, 3, "定期ダメージの効果継続３ターン");
+        AddNode("インフィニティ", 4, Sys_NodeGroup.TernTime, 5, "定期ダメージの効果継続５ターン");
 
         AddNode("ストレンジ", 1, Sys_NodeGroup.NodeHindranceTime, 2, "ノード選択画面妨害の効果継続２ターン");
         AddNode("イリュージョン", 3, Sys_NodeGroup.NodeHindranceTime, 3, "ノード選択画面妨害の効果継続３ターン");
-        AddNode("ファントム", 5, Sys_NodeGroup.NodeHindranceTime, 5, "ノード選択画面妨害の効果継続５ターン");
+        AddNode("ファントム", 4, Sys_NodeGroup.NodeHindranceTime, 5, "ノード選択画面妨害の効果継続５ターン");
 
         AddNode("プリンス", 2, Sys_NodeGroup.NumberScale, 2, "更に攻撃個数ボーナス×２");
         AddNode("ヴァイスロイ", 3, Sys_NodeGroup.NumberScale, 3, "更に攻撃個数ボーナス×３");
