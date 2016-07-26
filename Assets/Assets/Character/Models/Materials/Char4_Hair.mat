@@ -137,7 +137,11 @@ Material:
       data:
         first:
           name: _OutlineSize
-        second: 0.004
+        second: 0.048
+      data:
+        first:
+          name: _AlphaValue
+        second: 1
     m_Colors:
       data:
         first:

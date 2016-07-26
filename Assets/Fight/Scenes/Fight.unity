@@ -474,6 +474,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e31c9669c858074bb5f5d2925ed4a6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1034768355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1034768353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6bc38635b80ff141bc4e350c71b53d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Threshhold: 0.5
+  m_HightLuminance: {fileID: 1893134287}
+  m_BlurHightLuminance: {fileID: 1457341854}
 --- !u!1001 &1088049162
 Prefab:
   m_ObjectHideFlags: 0
@@ -731,6 +745,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffb21aebad116eb4fbdae0db3fd3f71e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!84 &1457341854
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_Width: 108
+  m_Height: 81
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 9
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_TextureSettings:
+    m_FilterMode: 1
+    m_Aniso: 0
+    m_MipBias: 0
+    m_WrapMode: 1
 --- !u!1001 &1545453491
 Prefab:
   m_ObjectHideFlags: 0
@@ -813,6 +849,28 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3f8658a6a6f229b4b970ecf86d108de4, type: 2}
   m_IsPrefabParent: 0
+--- !u!84 &1893134287
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_Width: 216
+  m_Height: 162
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 9
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_TextureSettings:
+    m_FilterMode: 1
+    m_Aniso: 0
+    m_MipBias: 0
+    m_WrapMode: 1
 --- !u!1001 &2138232096
 Prefab:
   m_ObjectHideFlags: 0
@@ -856,6 +914,11 @@ Prefab:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 11442662, guid: 5f4f479f8ad16d44593180b18d29bec9, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 11442662, guid: 5f4f479f8ad16d44593180b18d29bec9, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 5f4f479f8ad16d44593180b18d29bec9, type: 2}
   m_IsPrefabParent: 0

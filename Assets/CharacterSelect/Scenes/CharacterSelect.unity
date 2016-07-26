@@ -97,6 +97,7 @@ GameObject:
   - 92: {fileID: 82240112}
   - 124: {fileID: 82240111}
   - 81: {fileID: 82240110}
+  - 114: {fileID: 82240115}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -134,7 +135,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.1544118, g: 0.1544118, b: 0.1544118, a: 0.019607844}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0.019607844}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -171,6 +172,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &82240115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 82240109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6bc38635b80ff141bc4e350c71b53d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Threshhold: 0.5
+  m_HightLuminance: {fileID: 746732592}
+  m_BlurHightLuminance: {fileID: 1318492075}
 --- !u!1 &157688689
 GameObject:
   m_ObjectHideFlags: 0
@@ -1086,11 +1101,33 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11476730, guid: 1661db9da2db05c42834126ad20b7422, type: 2}
       propertyPath: m_SceneName
-      value: StageSelect
+      value: Fight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1661db9da2db05c42834126ad20b7422, type: 2}
   m_IsPrefabParent: 0
+--- !u!84 &746732592
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_Width: 216
+  m_Height: 162
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 9
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_TextureSettings:
+    m_FilterMode: 1
+    m_Aniso: 0
+    m_MipBias: 0
+    m_WrapMode: 1
 --- !u!224 &807489079 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 22474680, guid: 3c4749da86d25f6458a0e77c08488638,
@@ -1446,6 +1483,74 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 5
+--- !u!1001 &1302862880
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 438790, guid: 9a154cfd666a7b840842d8c90ec39d31, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438790, guid: 9a154cfd666a7b840842d8c90ec39d31, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438790, guid: 9a154cfd666a7b840842d8c90ec39d31, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438790, guid: 9a154cfd666a7b840842d8c90ec39d31, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 438790, guid: 9a154cfd666a7b840842d8c90ec39d31, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438790, guid: 9a154cfd666a7b840842d8c90ec39d31, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438790, guid: 9a154cfd666a7b840842d8c90ec39d31, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: 438790, guid: 9a154cfd666a7b840842d8c90ec39d31, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 161826, guid: 9a154cfd666a7b840842d8c90ec39d31, type: 2}
+      propertyPath: m_Name
+      value: Back Particle
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 9a154cfd666a7b840842d8c90ec39d31, type: 2}
+  m_IsPrefabParent: 0
+--- !u!84 &1318492075
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_Width: 108
+  m_Height: 81
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 9
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_TextureSettings:
+    m_FilterMode: 1
+    m_Aniso: 0
+    m_MipBias: 0
+    m_WrapMode: 1
 --- !u!224 &1333173443 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 22442996, guid: 3f8658a6a6f229b4b970ecf86d108de4,

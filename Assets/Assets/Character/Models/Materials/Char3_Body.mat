@@ -80,16 +80,16 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _ShadowAdjustmentTexture
+          name: _ToonShade
         second:
-          m_Texture: {fileID: 2800000, guid: 8cbe1d3f094193b4d92dd6063cebcd11, type: 3}
+          m_Texture: {fileID: 8900000, guid: b995d4bd9d11078d11005b9844295342, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _ToonShade
+          name: _ShadowAdjustmentTexture
         second:
-          m_Texture: {fileID: 8900000, guid: b995d4bd9d11078d11005b9844295342, type: 3}
+          m_Texture: {fileID: 2800000, guid: 8cbe1d3f094193b4d92dd6063cebcd11, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -144,7 +144,11 @@ Material:
       data:
         first:
           name: _OutlineSize
-        second: 0.004
+        second: 0.048
+      data:
+        first:
+          name: _AlphaValue
+        second: 1
     m_Colors:
       data:
         first:
