@@ -13,7 +13,6 @@ public class Bloom : MonoBehaviour
 
     void Start()
     {
-        m_Threshhold = 0.5f;
         m_ExtractionMaterial = new Material(Shader.Find("Custom/HightLuminanceExtraction"));
         m_AdditiveMaterial = new Material(Shader.Find("Custom/BloomAdditive"));
         m_BluerMaterial = new Material(Shader.Find("Custom/Blur"));
