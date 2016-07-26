@@ -28,6 +28,7 @@ public class FadeOut : MonoBehaviour
             m_StartCnt += Time.deltaTime;
         }
 
+
         if (m_IsFade)
         {
             if (m_FadeCnt < 0.0f)
@@ -38,5 +39,6 @@ public class FadeOut : MonoBehaviour
             m_FadeCnt -= m_FadeSpeed * Time.deltaTime;
             m_FadeOut.SetFloat("_AlphaValue", m_FadeCnt);
         }
+        m_FadeCnt = Mathf.Clamp(1.2f, 0f, m_FadeCnt);
     }
 }
