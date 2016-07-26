@@ -510,6 +510,7 @@ public class Sys_Scene : MonoBehaviour
 
                 attackEngine = Instantiate(attackEngineBase, attackEngineBase.transform.position, attackEngineBase.transform.rotation) as GameObject;
                 attackEngine.GetComponent<Sys_Instance>().targetPosition = player[Sys_Status.targetPlayer].prefab.transform.position;
+                attackEngine.GetComponent<Sys_Instance>().Nodeselect = Sys_Status.Attack_Name.Count;
 
                 Sys_Sound.Play(player[Sys_Status.activePlayer].prefab.GetComponent<Obj_PlayerAsset>().attackSound);
 

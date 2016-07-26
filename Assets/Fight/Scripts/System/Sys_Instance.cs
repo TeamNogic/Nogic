@@ -37,7 +37,6 @@ public class Sys_Instance : MonoBehaviour
     public float m_time;
     private float m_nuw_time;
     public int m_get_kazu;
-    public int[] Oldturn;
     public int turn;
     public int[] Old_NodeHindrance_turn;
     public int NodeHindrance_turn;
@@ -49,15 +48,11 @@ public class Sys_Instance : MonoBehaviour
     public Vector3 targetPosition;
 
     public int Nodeselect;
-    public int[] hozonRan = new int[6];
-    public int m_nowkazu_ran;
-    public bool FF;
     public int tagetP;
 
     Image images;
     void Start()
     {
-        FF = false;
         TimeOk = false;
         isEnd = false;
 
@@ -66,24 +61,16 @@ public class Sys_Instance : MonoBehaviour
         m_now_kazu = 0;
 
         m_nuw_time = 0.0f;
-        //Oldturn = 0;
-
         canvas = GameObject.Find("NodeEditor");
 
         m_kazu = Sys_Status.Action_Object.Number;
         m_get_kazu = Sys_Status.Action_Object.Number;
         m_MoveType = Sys_Status.Action_Object.Move;
-            turn = Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Tern_Time;
-            NodeHindrance_turn = Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeHindrance_Time;
-            //tagetP = Sys_Status.targetPlayer;
+        turn = Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Tern_Time;
+        NodeHindrance_turn = Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeHindrance_Time;
+        //tagetP = Sys_Status.targetPlayer;
         State_turns.sprite = null;
         State_NodeHindrance.sprite = null;
-        Nodeselect = Random.Range(0, 19);
-        m_nowkazu_ran = 0;
-        for (int i = 0; i < 4; i++)
-        {
-            hozonRan[i] = Random.Range(0, 5);
-        }
     }
 
     void Update()
@@ -96,49 +83,6 @@ public class Sys_Instance : MonoBehaviour
         Image turns = null;
         Image NodeHindrance_turns = null;
 
-        //Debug.Log(Nodeselect);
-        if (Nodeselect >= 6 && Nodeselect <= 9)//6
-        {
-            //Debug.Log("あああ");
-            m_nowkazu_ran = 1;
-        }
-        else if (Nodeselect >= 10 && Nodeselect <= 13)
-        {
-            //Debug.Log("あい");
-            m_nowkazu_ran = 2;
-        }
-        else if (Nodeselect >= 14 && Nodeselect <= 17)
-        {
-            //Debug.Log("あう");
-            m_nowkazu_ran = 3;
-        }
-        else if (Nodeselect >= 18)
-        {
-            //Debug.Log("あえ");
-            m_nowkazu_ran = 4;
-        }
-        if (FF == false)
-        {
-            for (int i = 0; i <= 4; i++)
-            {
-                for (int j = 4; j > i; j--)
-                {
-                    if (hozonRan[i] == hozonRan[j])
-                    {
-                        hozonRan[j] = Random.Range(0, 6);
-                    }
-                    else
-                    {
-                        if (i == 4 && j == 4)
-                        {
-                            Debug.Log("いいいいいいいいい");
-                            FF = true;
-                        }
-                    }
-                }
-            }
-        }
-
         if (TimeOk == true)//実行
         {
             TimeCount += Time.deltaTime;
@@ -148,7 +92,7 @@ public class Sys_Instance : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        if (!TimeOk && m_get_kazu == 0 && (m_Seisei[0]== 0 || m_Seisei[1] == 0 || m_Seisei[2] == 0 || m_Seisei[3] == 0 || m_Seisei[4] == 0))
+        if (!TimeOk && m_get_kazu == 0 && (m_Seisei[0] == 0 || m_Seisei[1] == 0 || m_Seisei[2] == 0 || m_Seisei[3] == 0 || m_Seisei[4] == 0))
         {
             //Debug.Log(m_get_kazu);
             /*if (GameObject.Find("Poison(Clone)") != null) Destroy(GameObject.Find("Poison(Clone)"));
@@ -162,75 +106,75 @@ public class Sys_Instance : MonoBehaviour
             isEnd = true;
             //for (int i = 0; i < 2; i++)
             //{
-                if (image_dousa == null)
-                {
-                    switch (Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Tern)
-                    //switch (Sys_Status.Action_UI.State_Tern)
-                    {
-                        case 0:
-                            //Debug.Log("ooo");
-                            m_Seisei[0] = 1;
-                            break;
-                        case 1:
-                            //Debug.Log("aaa");
-                            image_dousa = Instantiate(Poison, new Vector3(-100, 130, 0), Poison.transform.rotation) as Image;
-                            image_dousa.transform.SetParent(canvas.transform, false);
-                            m_Seisei[0] = 1;
-                            break;
-                        case 2:
-                            //Debug.Log("bbb");
-                            image_dousa = Instantiate(Parasite, new Vector3(-100, 130, 0), Parasite.transform.rotation) as Image;
-                            image_dousa.transform.SetParent(canvas.transform, false);
-                            m_Seisei[0] = 1;
-                            break;
-                    }
-                    if (Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeKey != 0 && Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeEditor != 0 && image_bougay == null)
-                    //if (Sys_Status.Action_UI.State_Etc == true && image_bougay == null) //妨害が発生するかどうか（UIで「ノード妨害追加！」と出る）
-                    {
-                        image_bougay = Instantiate(Interference, new Vector3(0, 270, 0), Interference.transform.rotation) as Image;//Interference.transform.position
-                        image_bougay.transform.SetParent(canvas.transform, false);
-                        m_Seisei[1] = 1;
-                    }
-                    else
-                    {
-                        m_Seisei[1] = 1;
-                    }
-
-                }
-                if (image_NodeHindrance == null)
-                {
-                    switch (Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeHindrance)//1:スモーク　2:フェスティバル
-                    {
-                        case 0:
-                            m_Seisei[2] = 1;
-                            break;
-                        case 1:
-                            image_NodeHindrance = Instantiate(Smoke, new Vector3(-100, 180, 0), Smoke.transform.rotation) as Image;
-                            image_NodeHindrance.transform.SetParent(canvas.transform, false);
-                            m_Seisei[2] = 1;
-                            break;
-                        case 2:
-                            image_NodeHindrance = Instantiate(Festival, new Vector3(-100, 180, 0), Festival.transform.rotation) as Image;
-                            image_NodeHindrance.transform.SetParent(canvas.transform, false);
-                            m_Seisei[2] = 1;
-                            break;
-                    }
-                }
-            //}
-            Debug.Log(turn);
-            if (Oldturn[Sys_Status.targetPlayer] != turn)
+            if (image_dousa == null)
             {
-                Oldturn[Sys_Status.targetPlayer] = turn;
-                if (Oldturn[Sys_Status.targetPlayer] != 0)
+                switch (Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Tern)
+                //switch (Sys_Status.Action_UI.State_Tern)
                 {
-                    State_turns.sprite = sprite[Oldturn[Sys_Status.targetPlayer]];
+                    case 0:
+                        //Debug.Log("ooo");
+                        m_Seisei[0] = 1;
+                        break;
+                    case 1:
+                        //Debug.Log("aaa");
+                        image_dousa = Instantiate(Poison, new Vector3(-100, 130, 0), Poison.transform.rotation) as Image;
+                        image_dousa.transform.SetParent(canvas.transform, false);
+                        m_Seisei[0] = 1;
+                        break;
+                    case 2:
+                        //Debug.Log("bbb");
+                        image_dousa = Instantiate(Parasite, new Vector3(-100, 130, 0), Parasite.transform.rotation) as Image;
+                        image_dousa.transform.SetParent(canvas.transform, false);
+                        m_Seisei[0] = 1;
+                        break;
+                }
+                if (Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeKey != 0 && Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeEditor != 0 && image_bougay == null)
+                //if (Sys_Status.Action_UI.State_Etc == true && image_bougay == null) //妨害が発生するかどうか（UIで「ノード妨害追加！」と出る）
+                {
+                    image_bougay = Instantiate(Interference, new Vector3(0, 270, 0), Interference.transform.rotation) as Image;//Interference.transform.position
+                    image_bougay.transform.SetParent(canvas.transform, false);
+                    m_Seisei[1] = 1;
                 }
                 else
                 {
-                    Debug.Log("www");
-                    m_Seisei[3] = 1;
+                    m_Seisei[1] = 1;
+                }
+
+            }
+            if (image_NodeHindrance == null)
+            {
+                switch (Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeHindrance)//1:スモーク　2:フェスティバル
+                {
+                    case 0:
+                        m_Seisei[2] = 1;
+                        break;
+                    case 1:
+                        image_NodeHindrance = Instantiate(Smoke, new Vector3(-100, 180, 0), Smoke.transform.rotation) as Image;
+                        image_NodeHindrance.transform.SetParent(canvas.transform, false);
+                        m_Seisei[2] = 1;
+                        break;
+                    case 2:
+                        image_NodeHindrance = Instantiate(Festival, new Vector3(-100, 180, 0), Festival.transform.rotation) as Image;
+                        image_NodeHindrance.transform.SetParent(canvas.transform, false);
+                        m_Seisei[2] = 1;
+                        break;
                 }
             }
+            //}
+            Debug.Log(turn);
+            //if (Oldturn[Sys_Status.targetPlayer] != turn)
+            //{
+            //    Oldturn[Sys_Status.targetPlayer] = turn;
+            //    if (Oldturn[Sys_Status.targetPlayer] != 0)
+            //    {
+            //        State_turns.sprite = sprite[Oldturn[Sys_Status.targetPlayer]];
+            //    }
+            //    else
+            //    {
+            //        Debug.Log("www");
+            //        m_Seisei[3] = 1;
+            //    }
+            //}
             if (State_turns.sprite != null && turns == null)//ターン数
             {
                 turns = Instantiate(State_turns, new Vector3(100, 130, 0), State_turns.transform.rotation) as Image;
@@ -373,27 +317,26 @@ public class Sys_Instance : MonoBehaviour
                 GameObject createType = null;
                 GameObject AddEfect = null;
 
-
                 switch (m_MoveType)//バラバラに発射するようにする
                 {
                     case 5://落下移動
                         createTama = Instantiate(tama1[m_Shape], new Vector3(Random.Range(-20.0f, 20.0f), 20, Random.Range(-20.0f, 20.0f)), tama1[m_Shape].transform.rotation) as GameObject;
-                        createType = Instantiate(EfectTypes[m_Type], new Vector3(0, 0, 0), createTama.transform.rotation) as GameObject;
+                        createType = Instantiate(EfectTypes[m_Type], new Vector3(0, 0, 0), Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f)) as GameObject;
                         break;
 
                     case 10://自身から発射
                         createTama = Instantiate(tama1[m_Shape], new Vector3(-20, 0, 0), tama1[m_Shape].transform.rotation) as GameObject;//球生成
-                        createType = Instantiate(EfectTypes[m_Type], new Vector3(0, 0, 0), createTama.transform.rotation) as GameObject;
+                        createType = Instantiate(EfectTypes[m_Type], new Vector3(0, 0, 0), Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f)) as GameObject;
                         break;
 
                     case 20://地面から攻撃
                         createTama = Instantiate(tama1[m_Shape], new Vector3(Random.Range(-20.0f, 20.0f), -10, Random.Range(-20.0f, 20.0f)), tama1[m_Shape].transform.rotation) as GameObject;//球生成
-                        createType = Instantiate(EfectTypes[m_Type], new Vector3(0, 0, 0), createTama.transform.rotation) as GameObject;
+                        createType = Instantiate(EfectTypes[m_Type], new Vector3(0, 0, 0), Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f)) as GameObject;
                         break;
 
                     case 40://様々な方向から
                         createTama = Instantiate(tama1[m_Shape], new Vector3(Random.Range(-20.0f, 20.0f), Random.Range(-20.0f, 20.0f), Random.Range(-20.0f, 20.0f)), tama1[m_Shape].transform.rotation) as GameObject;//球生成
-                        createType = Instantiate(EfectTypes[m_Type], new Vector3(0, 0, 0), createTama.transform.rotation) as GameObject;
+                        createType = Instantiate(EfectTypes[m_Type], new Vector3(0, 0, 0), Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f)) as GameObject;
                         break;
 
                     default:
@@ -410,11 +353,13 @@ public class Sys_Instance : MonoBehaviour
                 createTama.GetComponent<Obj_Skill_Firing>().instance_data = this.gameObject;
                 createTama.GetComponent<Obj_Skill_Firing>().attack = Sys_Status.Action_UI.Damage[m_now_kazu];
 
-                //Debug.Log(Nodeselect);
-                AddEfect = Instantiate(AddEfectList[hozonRan[Random.Range(0, m_nowkazu_ran)]], new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-
-                AddEfect.transform.SetParent(createTama.transform, false);
-
+                for (int i = 0; i < Nodeselect / 4; ++i)
+                {
+                    AddEfect = Instantiate(AddEfectList[Random.Range(0, 8)],
+                        targetPosition + new Vector3(Random.Range(-5.0f, 5.0f), 0.0f, Random.Range(-5.0f, 5.0f)), Quaternion.identity) as GameObject;
+                    
+                    AddEfect.transform.localScale = createTama.transform.localScale;
+                }
 
                 ++m_now_kazu;
             }

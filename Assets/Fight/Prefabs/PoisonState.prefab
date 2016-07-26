@@ -44,7 +44,6 @@ GameObject:
   - 4: {fileID: 484510}
   - 198: {fileID: 19894016}
   - 199: {fileID: 19918682}
-  - 114: {fileID: 11495672}
   - 82: {fileID: 8241348}
   m_Layer: 0
   m_Name: PoisonState
@@ -72,7 +71,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 178884}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 2.3672729, y: -0.4513507, z: -1.565187}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 496260}
@@ -165,17 +164,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &11495672
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 178884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8ce20446c90b474e84a7f19eb406704, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!198 &19811874
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -2050,7 +2038,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     type: 10
-    radius: 0.01
+    radius: 2
     angle: 58.6
     length: 5
     boxX: 1
@@ -2071,7 +2059,7 @@ ParticleSystem:
     serializedVersion: 2
     m_Type: 0
     rate:
-      scalar: 30
+      scalar: 200
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -3214,7 +3202,7 @@ ParticleSystem:
     minMaxState: 0
   speed: 1
   randomSeed: 0
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   moveWithTransform: 1
@@ -3535,7 +3523,7 @@ ParticleSystem:
     enabled: 1
     type: 4
     radius: 0.9
-    angle: 11.73
+    angle: 90
     length: 5
     boxX: 1
     boxY: 1

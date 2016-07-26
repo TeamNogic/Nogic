@@ -65,12 +65,12 @@ MonoBehaviour:
   - {fileID: 184088, guid: 0b9ad45f5df998f4fa4e3bb974273f9d, type: 2}
   - {fileID: 126780, guid: fdc56f33543a4184ebe6099652a5b37f, type: 2}
   - {fileID: 177212, guid: a8f8517676a9abf47b4873f5693535ea, type: 2}
-  - {fileID: 177212, guid: a8f8517676a9abf47b4873f5693535ea, type: 2}
+  - {fileID: 157600, guid: 30c942b13dbf268408176d58c40569fc, type: 2}
   - {fileID: 194084, guid: 3a7492fd56d3afb46a0ae974ab445e51, type: 2}
   - {fileID: 157600, guid: 30c942b13dbf268408176d58c40569fc, type: 2}
   - {fileID: 186708, guid: 409b8d24e8721064bae41bd7e081a61d, type: 2}
   - {fileID: 169470, guid: 62af285ee1c5f2641980b38d70904805, type: 2}
-  - {fileID: 169470, guid: 62af285ee1c5f2641980b38d70904805, type: 2}
+  - {fileID: 130906, guid: 436b53cffd2d5894c9795afe0dd7e29e, type: 2}
   - {fileID: 115388, guid: 704f1a8777e9e5845ba990de51630ae3, type: 2}
   - {fileID: 132326, guid: 36369b04265b6514dbfd9e37dcb5a2d5, type: 2}
   AddEfectList:
@@ -80,6 +80,8 @@ MonoBehaviour:
   - {fileID: 123392, guid: 257da908d15ecc04b9fc7af9a3f8e6f2, type: 2}
   - {fileID: 181186, guid: 57203e8ce9116364d97c701b01cccc1c, type: 2}
   - {fileID: 182890, guid: 65e94d0fc04d31a4fa7cf3c268295afa, type: 2}
+  - {fileID: 147312, guid: 18f041c82e7798949b1a2498a9d0ad26, type: 2}
+  - {fileID: 188572, guid: 88c537ab3599e624e946f130a1762bf4, type: 2}
   canvas: {fileID: 0}
   text: {fileID: 11452774, guid: eab8599a22fb54f42b29ea1f4e0269b5, type: 2}
   image: {fileID: 11424460, guid: c165ef8c42489d04e9178da13424873c, type: 2}
@@ -110,9 +112,9 @@ MonoBehaviour:
   m_TamaType: 
   m_time: 0.25
   m_get_kazu: 0
-  Oldturn: 0
+  Oldturn: 
   turn: 0
-  Old_NodeHindrance_turn: 0
+  Old_NodeHindrance_turn: 
   NodeHindrance_turn: 0
   TimeCount: 0
   TimeOk: 0
@@ -120,9 +122,7 @@ MonoBehaviour:
   isEnd: 0
   targetPosition: {x: 0, y: 0, z: 0}
   Nodeselect: 0
-  hozonRan: 000000000000000000000000000000000000000000000000
-  m_nowkazu_ran: 0
-  FF: 0
+  tagetP: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
