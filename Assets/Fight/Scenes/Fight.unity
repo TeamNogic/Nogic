@@ -403,8 +403,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7ffd712868dddc459b30a3f24993579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  count: 0000000000000000
   m_Ok: 0
+  m_StateAppear: 
   m_getpos:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}

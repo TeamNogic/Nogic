@@ -321,10 +321,7 @@ public class Sys_Scene : MonoBehaviour
                 thumbnailSingle = Instantiate(thumbnailBase, new Vector2(0.0f, -100.0f), Quaternion.identity) as Image;
                 thumbnailSingle.GetComponent<Image>().sprite = player[Sys_Status.activePlayer].prefab.GetComponent<Obj_PlayerAsset>().thumbnail;
                 thumbnailSingle.transform.SetParent(nodeEditor.transform, false);
-
-                //NisioEdit
-                cameraBase.GetComponent<Sys_Current>().count[Sys_Status.targetPlayer] += 1;
-
+                
                 Destroy(stateTern);
 
                 startWait = 4.0f;
@@ -488,19 +485,7 @@ public class Sys_Scene : MonoBehaviour
                 }
 
                 nodeInfo.Clear();
-
-                //NisioEdit
-                if (Sys_Status.Player[Sys_Status.targetPlayer].State_Tern == 0
-                    && Sys_Status.Player[Sys_Status.targetPlayer].State_Tern_Time == 0
-                    && Sys_Status.Player[Sys_Status.targetPlayer].State_NodeHindrance == 0
-                    && Sys_Status.Player[Sys_Status.targetPlayer].State_NodeHindrance_Time == 0
-                    && Sys_Status.Player[Sys_Status.targetPlayer].State_NodeKey != 0
-                    && Sys_Status.Player[Sys_Status.targetPlayer].State_NodeEditor != 0)
-                {
-                    cameraBase.GetComponent<Sys_Current>().m_Ok = 0;
-                }
-                else cameraBase.GetComponent<Sys_Current>().m_Ok = 1;
-
+                
                 ++sceneState;
                 break;
 
@@ -531,9 +516,16 @@ public class Sys_Scene : MonoBehaviour
                 player[Sys_Status.activePlayer].prefab.GetComponent<Animator>().SetBool("Attack", true);
 
                 //NisioEdit
-                if (cameraBase.GetComponent<Sys_Current>().count[Sys_Status.targetPlayer] == 2)
+                for (int i = 0; i < 7; i++)
                 {
-                    cameraBase.GetComponent<Sys_Current>().count[Sys_Status.targetPlayer] = 1;
+                    if (cameraBase.GetComponent<Sys_Current>().m_kazu[Sys_Status.targetPlayer, i] == 1)
+                    {
+                        cameraBase.GetComponent<Sys_Current>().count[Sys_Status.targetPlayer, i] = 1;
+                    }
+                    else
+                    {
+                        cameraBase.GetComponent<Sys_Current>().count[Sys_Status.targetPlayer, i] = 0;
+                    }
                 }
 
                 //次のシーンへ

@@ -37,9 +37,9 @@ public class Sys_Instance : MonoBehaviour
     public float m_time;
     private float m_nuw_time;
     public int m_get_kazu;
-    public int Oldturn;
+    public int[] Oldturn;
     public int turn;
-    public int Old_NodeHindrance_turn;
+    public int[] Old_NodeHindrance_turn;
     public int NodeHindrance_turn;
     public float TimeCount = 0.0f;//時間カウント
     public bool TimeOk;//時間計測
@@ -52,6 +52,7 @@ public class Sys_Instance : MonoBehaviour
     public int[] hozonRan = new int[6];
     public int m_nowkazu_ran;
     public bool FF;
+    public int tagetP;
 
     Image images;
     void Start()
@@ -65,20 +66,16 @@ public class Sys_Instance : MonoBehaviour
         m_now_kazu = 0;
 
         m_nuw_time = 0.0f;
-        Oldturn = 0;
+        //Oldturn = 0;
 
         canvas = GameObject.Find("NodeEditor");
 
         m_kazu = Sys_Status.Action_Object.Number;
         m_get_kazu = Sys_Status.Action_Object.Number;
         m_MoveType = Sys_Status.Action_Object.Move;
-        for (int pi = 0; pi < 2; pi++)
-        {
-            //turn = Sys_Status.Action_UI.State_Tern_Time;
-            turn = Sys_Status.Player[pi].State_Tern_Time;
-            NodeHindrance_turn = Sys_Status.Player[pi].State_NodeHindrance_Time;
-            //NodeHindrance_turn = Sys_Status.Action_UI.State_NodeHindrance_Time;
-        }
+            turn = Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Tern_Time;
+            NodeHindrance_turn = Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeHindrance_Time;
+            //tagetP = Sys_Status.targetPlayer;
         State_turns.sprite = null;
         State_NodeHindrance.sprite = null;
         Nodeselect = Random.Range(0, 19);
@@ -154,37 +151,40 @@ public class Sys_Instance : MonoBehaviour
         if (!TimeOk && m_get_kazu == 0 && (m_Seisei[0]== 0 || m_Seisei[1] == 0 || m_Seisei[2] == 0 || m_Seisei[3] == 0 || m_Seisei[4] == 0))
         {
             //Debug.Log(m_get_kazu);
-            if (GameObject.Find("Poison(Clone)") != null) Destroy(GameObject.Find("Poison(Clone)"));
+            /*if (GameObject.Find("Poison(Clone)") != null) Destroy(GameObject.Find("Poison(Clone)"));
             if (GameObject.Find("Parasite(Clone)") != null) Destroy(GameObject.Find("Parasite(Clone)"));
             if (GameObject.Find("Interference(Clone)") != null) Destroy(GameObject.Find("Interference(Clone)"));
             if (GameObject.Find("Smoke(Clone)") != null) Destroy(GameObject.Find("Smoke(Clone)"));
             if (GameObject.Find("Festival(Clone)") != null) Destroy(GameObject.Find("Festival(Clone)"));
             if (GameObject.Find("turn(Clone)") != null) Destroy(GameObject.Find("turn(Clone)"));
-            if (GameObject.Find("NodeHindranceBangou(Clone)") != null) Destroy(GameObject.Find("NodeHindranceBangou(Clone)"));
+            if (GameObject.Find("NodeHindranceBangou(Clone)") != null) Destroy(GameObject.Find("NodeHindranceBangou(Clone)"));*/
             TimeOk = true;
             isEnd = true;
-            for (int i = 0; i < 2; i++)
-            {
+            //for (int i = 0; i < 2; i++)
+            //{
                 if (image_dousa == null)
                 {
-                    switch (Sys_Status.Player[i].State_Tern)
+                    switch (Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Tern)
                     //switch (Sys_Status.Action_UI.State_Tern)
                     {
                         case 0:
+                            //Debug.Log("ooo");
                             m_Seisei[0] = 1;
                             break;
                         case 1:
+                            //Debug.Log("aaa");
                             image_dousa = Instantiate(Poison, new Vector3(-100, 130, 0), Poison.transform.rotation) as Image;
                             image_dousa.transform.SetParent(canvas.transform, false);
                             m_Seisei[0] = 1;
                             break;
                         case 2:
+                            //Debug.Log("bbb");
                             image_dousa = Instantiate(Parasite, new Vector3(-100, 130, 0), Parasite.transform.rotation) as Image;
                             image_dousa.transform.SetParent(canvas.transform, false);
                             m_Seisei[0] = 1;
                             break;
                     }
-                    if (Sys_Status.Player[i].State_NodeKey != 0 && Sys_Status.Player[i].State_NodeEditor != 0 && image_bougay == null)
+                    if (Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeKey != 0 && Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeEditor != 0 && image_bougay == null)
                     //if (Sys_Status.Action_UI.State_Etc == true && image_bougay == null) //妨害が発生するかどうか（UIで「ノード妨害追加！」と出る）
                     {
                         image_bougay = Instantiate(Interference, new Vector3(0, 270, 0), Interference.transform.rotation) as Image;//Interference.transform.position
@@ -197,36 +197,37 @@ public class Sys_Instance : MonoBehaviour
                     }
 
                 }
-            }
-            if (image_NodeHindrance == null)
-            {
-                switch (Sys_Status.Action_Object.State_NodeHindrance)//1:スモーク　2:フェスティバル
+                if (image_NodeHindrance == null)
                 {
-                    case 0:
-                        m_Seisei[2] = 1;
-                        break;
-                    case 1:
-                        image_NodeHindrance = Instantiate(Smoke, new Vector3(-100, 180, 0), Smoke.transform.rotation) as Image;
-                        image_NodeHindrance.transform.SetParent(canvas.transform, false);
-                        m_Seisei[2] = 1;
-                        break;
-                    case 2:
-                        image_NodeHindrance = Instantiate(Festival, new Vector3(-100, 180, 0), Festival.transform.rotation) as Image;
-                        image_NodeHindrance.transform.SetParent(canvas.transform, false);
-                        m_Seisei[2] = 1;
-                        break;
+                    switch (Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeHindrance)//1:スモーク　2:フェスティバル
+                    {
+                        case 0:
+                            m_Seisei[2] = 1;
+                            break;
+                        case 1:
+                            image_NodeHindrance = Instantiate(Smoke, new Vector3(-100, 180, 0), Smoke.transform.rotation) as Image;
+                            image_NodeHindrance.transform.SetParent(canvas.transform, false);
+                            m_Seisei[2] = 1;
+                            break;
+                        case 2:
+                            image_NodeHindrance = Instantiate(Festival, new Vector3(-100, 180, 0), Festival.transform.rotation) as Image;
+                            image_NodeHindrance.transform.SetParent(canvas.transform, false);
+                            m_Seisei[2] = 1;
+                            break;
+                    }
                 }
-            }
-
-            if (Oldturn != turn)
+            //}
+            Debug.Log(turn);
+            if (Oldturn[Sys_Status.targetPlayer] != turn)
             {
-                Oldturn = turn;
-                if (Oldturn != 0)
+                Oldturn[Sys_Status.targetPlayer] = turn;
+                if (Oldturn[Sys_Status.targetPlayer] != 0)
                 {
-                    State_turns.sprite = sprite[Oldturn];
+                    State_turns.sprite = sprite[Oldturn[Sys_Status.targetPlayer]];
                 }
                 else
                 {
+                    Debug.Log("www");
                     m_Seisei[3] = 1;
                 }
             }
@@ -236,15 +237,16 @@ public class Sys_Instance : MonoBehaviour
                 turns.transform.SetParent(canvas.transform, false);
                 m_Seisei[3] = 1;
             }
-            if (Old_NodeHindrance_turn != NodeHindrance_turn)
+            if (Old_NodeHindrance_turn[Sys_Status.targetPlayer] != NodeHindrance_turn)
             {
-                Old_NodeHindrance_turn = NodeHindrance_turn;
-                if (Old_NodeHindrance_turn != 0)
+                Old_NodeHindrance_turn[Sys_Status.targetPlayer] = NodeHindrance_turn;
+                if (Old_NodeHindrance_turn[Sys_Status.targetPlayer] != 0)
                 {
-                    State_NodeHindrance.sprite = sprite[Old_NodeHindrance_turn];//スモーク or フェスティバルの効果ターン数
+                    State_NodeHindrance.sprite = sprite[Old_NodeHindrance_turn[Sys_Status.targetPlayer]];//スモーク or フェスティバルの効果ターン数
                 }
                 else
                 {
+                    Debug.Log("zzz");
                     m_Seisei[4] = 1;
                 }
             }
@@ -254,6 +256,7 @@ public class Sys_Instance : MonoBehaviour
                 NodeHindrance_turns.transform.SetParent(canvas.transform, false);
                 m_Seisei[4] = 1;
             }
+
         }
         switch (Sys_Status.Action_Object.Type)
         {
