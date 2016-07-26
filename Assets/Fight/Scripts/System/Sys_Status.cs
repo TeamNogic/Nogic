@@ -101,4 +101,21 @@ public class Sys_Status : MonoBehaviour
 
     public static List<string> Attack_Name = new List<string>();                //選択されたノード名
     public static List<string> Attack_Comment = new List<string>();             //選択されたノードコメント
+
+    public static void ForcedReset()
+    {
+        stageName = "Map_1";
+
+        activePlayer = 0;
+        targetPlayer = 1;
+
+        Player.Clear();
+        Player_Wait.Clear();
+
+        Attack_Name.Clear();
+        Attack_Comment.Clear();
+
+        Sys_Node.NodeList.Clear();
+        Sys_Node.Select.Clear();
+    }
 }

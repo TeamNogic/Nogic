@@ -713,7 +713,7 @@ MonoBehaviour:
   - {fileID: 178884, guid: 24676c1553233ae45bdf2141b7515e7f, type: 2}
   - {fileID: 190672, guid: f90b698df1babcc4cb4d70fd010bb6a7, type: 2}
   stateNodeHindranceBase:
-  - {fileID: 168122, guid: b569c561d377c73489c242dff6616ae6, type: 2}
+  - {fileID: 130256, guid: bfcd07b9544ca434eb0266c437f4e0b9, type: 2}
   - {fileID: 168122, guid: b569c561d377c73489c242dff6616ae6, type: 2}
   attackEngineBase: {fileID: 103406, guid: 152ea69843e9dcb4b82247b761e45ae9, type: 2}
   winBGM: {fileID: 166826, guid: 9ab0aee5d3fbfd14dbb1165f044e4bb0, type: 2}
