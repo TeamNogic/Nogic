@@ -101,7 +101,7 @@ Material:
       data:
         first:
           name: _AlphaValue
-        second: 1.0054325
+        second: 0
       data:
         first:
           name: _Parallax
