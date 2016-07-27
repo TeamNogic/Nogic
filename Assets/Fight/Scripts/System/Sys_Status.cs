@@ -72,16 +72,6 @@ public class Sys_Action_UI
     public bool isTypeWeak = false;                //弱点であるかどうか
 
     public List<int> Damage = new List<int>();     //１つの物体が与えるダメージ（計算済み）
-
-    //消去予定
-
-    public int State_Tern = 0;                     //0:無し　1:ポイズン　2:パラサイト（UIで毒や寄生虫と表示）
-    public int State_Tern_Time = 1;                //ポイズン or パラサイトの効果ターン数（UIでターン数表示）
-
-    public int State_Status = 0;                   //0:無し　1:ウィーク　2:ダウン　3:アブソープション（UIで状態異常内容を表示）
-    public int State_NodeHindrance_Time = 1;       //スモーク or フェスティバルの効果ターン数（UIでターン数だけ表示）
-
-    public bool State_Etc = false;                 //妨害が発生するかどうか（UIで「ノード妨害追加！」と出る）
 }
 
 [System.Serializable]

@@ -84,7 +84,7 @@ public class Sys_Scene : MonoBehaviour
 
     //===================================================================================================//
 
-    private GameObject stateTern;                       //状態異常オブジェクト
+    private GameObject[] stateTern = new GameObject[2]; //状態異常オブジェクト
 
     private GameObject attackEngine;                    //攻撃生成オブジェクト
     private GameObject cameraMove;                      //移動演出オブジェクト
@@ -321,8 +321,8 @@ public class Sys_Scene : MonoBehaviour
                 thumbnailSingle = Instantiate(thumbnailBase, new Vector2(0.0f, -100.0f), Quaternion.identity) as Image;
                 thumbnailSingle.GetComponent<Image>().sprite = player[Sys_Status.activePlayer].prefab.GetComponent<Obj_PlayerAsset>().thumbnail;
                 thumbnailSingle.transform.SetParent(nodeEditor.transform, false);
-                
-                Destroy(stateTern);
+
+                Destroy(stateTern[Sys_Status.activePlayer]);
 
                 startWait = 4.0f;
                 ++sceneState;
@@ -349,7 +349,7 @@ public class Sys_Scene : MonoBehaviour
                 //カメラ移動が完了して、自身がポイズン or パラサイトであれば
                 if (!Sys_Camera.isMove() && Sys_Status.Player[Sys_Status.activePlayer].State_Tern != 0 && stateTern == null)
                 {
-                    stateTern = Instantiate(stateTernBase[Sys_Status.Player[Sys_Status.activePlayer].State_Tern - 1]
+                    stateTern[Sys_Status.activePlayer] = Instantiate(stateTernBase[Sys_Status.Player[Sys_Status.activePlayer].State_Tern - 1]
                         , player[Sys_Status.activePlayer].position + new Vector3(0.0f, 2.0f), Quaternion.identity) as GameObject;
 
                     if (Sys_Status.activePlayer == 0) Sys_Status.Player[1].TotalDamage += Sys_Status.Player[1].TotalDamage / 10;
@@ -485,7 +485,7 @@ public class Sys_Scene : MonoBehaviour
                 }
 
                 nodeInfo.Clear();
-                
+
                 ++sceneState;
                 break;
 
@@ -515,19 +515,6 @@ public class Sys_Scene : MonoBehaviour
                 Sys_Sound.Play(player[Sys_Status.activePlayer].prefab.GetComponent<Obj_PlayerAsset>().attackSound);
 
                 player[Sys_Status.activePlayer].prefab.GetComponent<Animator>().SetBool("Attack", true);
-
-                //NisioEdit
-                for (int i = 0; i < 7; i++)
-                {
-                    if (cameraBase.GetComponent<Sys_Current>().m_kazu[Sys_Status.targetPlayer, i] == 1)
-                    {
-                        cameraBase.GetComponent<Sys_Current>().count[Sys_Status.targetPlayer, i] = 1;
-                    }
-                    else
-                    {
-                        cameraBase.GetComponent<Sys_Current>().count[Sys_Status.targetPlayer, i] = 0;
-                    }
-                }
 
                 //次のシーンへ
                 ++sceneState;
@@ -641,6 +628,8 @@ public class Sys_Scene : MonoBehaviour
                     }
                 }
 
+                Sys_Instance.StateUpdate();
+
                 prevTotalDamage = Sys_Status.Player[0].TotalDamage;
 
                 --tern;
@@ -672,6 +661,16 @@ public class Sys_Scene : MonoBehaviour
 
                 Destroy(playerState[0]);
                 Destroy(playerState[1]);
+
+                for (int i = 0; i < 2; ++i)
+                {
+                    Destroy(Sys_Instance.createTernState[i]);
+                    Destroy(Sys_Instance.createTernStateTern[i]);
+                    Destroy(Sys_Instance.createNodePenalty[i]);
+                    Destroy(Sys_Instance.createNodeHindrance[i]);
+                    Destroy(Sys_Instance.createNodeHindranceTern[i]);
+                    Destroy(stateTern[i]);
+                }
 
                 ++sceneState;
                 break;
@@ -796,11 +795,24 @@ public class Sys_Scene : MonoBehaviour
                 break;
         }
 
-        //NisioEdit
-        for (int i = 0; i < 2; i++)
+        //座標追尾
+        for (int i = 0; i < 2; ++i)
         {
-            cameraBase.GetComponent<Sys_Current>().m_getpos[i]
-                = new Vector3(player[i].prefab.transform.position.x, 6, player[i].prefab.transform.position.z);
+            Vector3 pos = Camera.main.WorldToScreenPoint(GameObject.Find("Character_" + (i + 1).ToString() + "(Clone)").transform.position + new Vector3(0.0f, 5.0f, 0.0f));
+
+            if (Sys_Instance.createTernState[i] != null) Sys_Instance.createTernState[i].transform.position = pos + new Vector3(-60, 50, 0);
+            if (Sys_Instance.createTernStateTern[i] != null) Sys_Instance.createTernStateTern[i].transform.position = pos + new Vector3(60, 50, 0);
+
+            if (Sys_Instance.createNodePenalty[i] != null) Sys_Instance.createNodePenalty[i].transform.position = pos + new Vector3(0, 150, 0);
+
+            if (Sys_Instance.createNodeHindrance[i] != null) Sys_Instance.createNodeHindrance[i].transform.position = pos + new Vector3(-60, 100, 0);
+            if (Sys_Instance.createNodeHindranceTern[i] != null) Sys_Instance.createNodeHindranceTern[i].transform.position = pos + new Vector3(60, 100, 0);
+        }
+
+        //デバッグ
+        if (Input.GetKey(KeyCode.T))
+        {
+            tern = 1;
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+using System.Collections.Generic;
+
 public class Sys_Instance : MonoBehaviour
 {
     public GameObject[] tama1 = new GameObject[20];//形状
@@ -18,14 +20,9 @@ public class Sys_Instance : MonoBehaviour
     public Image Smoke;//スモーク
     public Image Festival;//フェスティバル
 
-    public Sprite[] sprite = new Sprite[6];
-    public Image State_turns;//パラサイトとポイズンターン数
-    public Image State_NodeHindrance;//スモークとフェスティバルターン数
-
     public AudioClip shotSound;
 
     public int Seisei;
-    public int[] m_Seisei = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
     public bool m_TextFlag;
     public int m_Type;
@@ -51,6 +48,51 @@ public class Sys_Instance : MonoBehaviour
     public int tagetP;
 
     Image images;
+    //===================================================================//
+
+    static public Image[] createTernState = new Image[2];
+    static public Image[] createTernStateTern = new Image[2];
+
+    static public Image[] createNodePenalty = new Image[2];
+
+    static public Image[] createNodeHindrance = new Image[2];
+    static public Image[] createNodeHindranceTern = new Image[2];
+
+    static public void StateUpdate()
+    {
+        Sprite[] TernSprite = GameObject.Find("TernImage").GetComponent<Sys_TernImage>().TernSprite;
+
+        for (int i = 0; i < 2; ++i)
+        {
+            Sys_PlayerData data = Sys_Status.Player[i];
+
+            //ポイズン or パラサイトの状態異常が切れていたら消す
+            if (data.State_Tern == 0)
+            {
+                Destroy(createTernState[i]);
+                Destroy(createTernStateTern[i]);
+            }
+            //ターンを更新
+            else createTernStateTern[i].GetComponent<Image>().sprite = TernSprite[data.State_Tern_Time];
+
+
+            //ノード妨害の状態異常が切れていたら消す
+            if (data.State_NodeKey == 0 && data.State_NodeEditor == 0)
+            {
+                Destroy(createNodePenalty[i]);
+            }
+
+            //スモーク or フェスティバルの状態異常が切れていたら消す
+            if (data.State_NodeHindrance == 0)
+            {
+                Destroy(createNodeHindrance[i]);
+                Destroy(createNodeHindranceTern[i]);
+            }
+            //ターンを更新
+            else createNodeHindranceTern[i].GetComponent<Image>().sprite = TernSprite[data.State_NodeHindrance_Time];
+        }
+    }
+
     void Start()
     {
         TimeOk = false;
@@ -61,28 +103,18 @@ public class Sys_Instance : MonoBehaviour
         m_now_kazu = 0;
 
         m_nuw_time = 0.0f;
-        canvas = GameObject.Find("NodeEditor");
+        canvas = GameObject.Find("StateCanvas");
 
         m_kazu = Sys_Status.Action_Object.Number;
         m_get_kazu = Sys_Status.Action_Object.Number;
         m_MoveType = Sys_Status.Action_Object.Move;
+
         turn = Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Tern_Time;
         NodeHindrance_turn = Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeHindrance_Time;
-        //tagetP = Sys_Status.targetPlayer;
-        State_turns.sprite = null;
-        State_NodeHindrance.sprite = null;
     }
 
     void Update()
     {
-        //GameObject.Find("Current").GetComponent<Sys_Current>().m_getpos = targetPosition;
-        Image image_dousa = null;
-        Image image_bougay = null;
-        Image image_NodeHindrance = null;
-        //Image image_Festival = null;
-        Image turns = null;
-        Image NodeHindrance_turns = null;
-
         if (TimeOk == true)//実行
         {
             TimeCount += Time.deltaTime;
@@ -92,218 +124,99 @@ public class Sys_Instance : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        if (!TimeOk && m_get_kazu == 0 && (m_Seisei[0] == 0 || m_Seisei[1] == 0 || m_Seisei[2] == 0 || m_Seisei[3] == 0 || m_Seisei[4] == 0))
+
+        //攻撃が全ヒット　1回だけ
+        if (!TimeOk && m_get_kazu == 0)
         {
-            //Debug.Log(m_get_kazu);
-            /*if (GameObject.Find("Poison(Clone)") != null) Destroy(GameObject.Find("Poison(Clone)"));
-            if (GameObject.Find("Parasite(Clone)") != null) Destroy(GameObject.Find("Parasite(Clone)"));
-            if (GameObject.Find("Interference(Clone)") != null) Destroy(GameObject.Find("Interference(Clone)"));
-            if (GameObject.Find("Smoke(Clone)") != null) Destroy(GameObject.Find("Smoke(Clone)"));
-            if (GameObject.Find("Festival(Clone)") != null) Destroy(GameObject.Find("Festival(Clone)"));
-            if (GameObject.Find("turn(Clone)") != null) Destroy(GameObject.Find("turn(Clone)"));
-            if (GameObject.Find("NodeHindranceBangou(Clone)") != null) Destroy(GameObject.Find("NodeHindranceBangou(Clone)"));*/
             TimeOk = true;
             isEnd = true;
-            //for (int i = 0; i < 2; i++)
-            //{
-            if (image_dousa == null)
-            {
-                switch (Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_Tern)
-                //switch (Sys_Status.Action_UI.State_Tern)
-                {
-                    case 0:
-                        //Debug.Log("ooo");
-                        m_Seisei[0] = 1;
-                        break;
-                    case 1:
-                        //Debug.Log("aaa");
-                        image_dousa = Instantiate(Poison, new Vector3(-100, 130, 0), Poison.transform.rotation) as Image;
-                        image_dousa.transform.SetParent(canvas.transform, false);
-                        m_Seisei[0] = 1;
-                        break;
-                    case 2:
-                        //Debug.Log("bbb");
-                        image_dousa = Instantiate(Parasite, new Vector3(-100, 130, 0), Parasite.transform.rotation) as Image;
-                        image_dousa.transform.SetParent(canvas.transform, false);
-                        m_Seisei[0] = 1;
-                        break;
-                }
-                if (Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeKey != 0 && Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeEditor != 0 && image_bougay == null)
-                //if (Sys_Status.Action_UI.State_Etc == true && image_bougay == null) //妨害が発生するかどうか（UIで「ノード妨害追加！」と出る）
-                {
-                    image_bougay = Instantiate(Interference, new Vector3(0, 270, 0), Interference.transform.rotation) as Image;//Interference.transform.position
-                    image_bougay.transform.SetParent(canvas.transform, false);
-                    m_Seisei[1] = 1;
-                }
-                else
-                {
-                    m_Seisei[1] = 1;
-                }
 
-            }
-            if (image_NodeHindrance == null)
+            int target = Sys_Status.targetPlayer;
+
+            Sprite[] TernSprite = GameObject.Find("TernImage").GetComponent<Sys_TernImage>().TernSprite;
+            Image TernImage = GameObject.Find("TernImage").GetComponent<Sys_TernImage>().TernImage;
+
+            //定期ターン状態異常が有効であれば
+            int stateTern = Sys_Status.Player_Wait[target].State_Tern; //一時的に保管
+            if (stateTern != 0)
             {
-                switch (Sys_Status.Player_Wait[Sys_Status.targetPlayer].State_NodeHindrance)//1:スモーク　2:フェスティバル
-                {
-                    case 0:
-                        m_Seisei[2] = 1;
-                        break;
-                    case 1:
-                        image_NodeHindrance = Instantiate(Smoke, new Vector3(-100, 180, 0), Smoke.transform.rotation) as Image;
-                        image_NodeHindrance.transform.SetParent(canvas.transform, false);
-                        m_Seisei[2] = 1;
-                        break;
-                    case 2:
-                        image_NodeHindrance = Instantiate(Festival, new Vector3(-100, 180, 0), Festival.transform.rotation) as Image;
-                        image_NodeHindrance.transform.SetParent(canvas.transform, false);
-                        m_Seisei[2] = 1;
-                        break;
-                }
-            }
-            //}
-            Debug.Log(turn);
-            //if (Oldturn[Sys_Status.targetPlayer] != turn)
-            //{
-            //    Oldturn[Sys_Status.targetPlayer] = turn;
-            //    if (Oldturn[Sys_Status.targetPlayer] != 0)
-            //    {
-            //        State_turns.sprite = sprite[Oldturn[Sys_Status.targetPlayer]];
-            //    }
-            //    else
-            //    {
-            //        Debug.Log("www");
-            //        m_Seisei[3] = 1;
-            //    }
-            //}
-            if (State_turns.sprite != null && turns == null)//ターン数
-            {
-                turns = Instantiate(State_turns, new Vector3(100, 130, 0), State_turns.transform.rotation) as Image;
-                turns.transform.SetParent(canvas.transform, false);
-                m_Seisei[3] = 1;
-            }
-            if (Old_NodeHindrance_turn[Sys_Status.targetPlayer] != NodeHindrance_turn)
-            {
-                Old_NodeHindrance_turn[Sys_Status.targetPlayer] = NodeHindrance_turn;
-                if (Old_NodeHindrance_turn[Sys_Status.targetPlayer] != 0)
-                {
-                    State_NodeHindrance.sprite = sprite[Old_NodeHindrance_turn[Sys_Status.targetPlayer]];//スモーク or フェスティバルの効果ターン数
-                }
-                else
-                {
-                    Debug.Log("zzz");
-                    m_Seisei[4] = 1;
-                }
-            }
-            if (State_NodeHindrance.sprite != null && NodeHindrance_turns == null)
-            {
-                NodeHindrance_turns = Instantiate(State_NodeHindrance, new Vector3(100, 180, 0), State_NodeHindrance.transform.rotation) as Image;
-                NodeHindrance_turns.transform.SetParent(canvas.transform, false);
-                m_Seisei[4] = 1;
+                //相手のポイズンorパラサイトの情報で分岐して生成
+                Destroy(createTernState[target]);
+                createTernState[target] = Instantiate(stateTern == 1 ? Poison : Parasite, new Vector3(-100, 130, 0), Poison.transform.rotation) as Image;
+                createTernState[target].transform.SetParent(canvas.transform, false);
+
+                Destroy(createTernStateTern[target]);
+                createTernStateTern[target] = Instantiate(TernImage, new Vector3(100, 130, 0), TernImage.transform.rotation) as Image;
+                createTernStateTern[target].transform.SetParent(canvas.transform, false);
+                createTernStateTern[target].GetComponent<Image>().sprite = TernSprite[Sys_Status.Player_Wait[target].State_Tern_Time - 1];
             }
 
+            //ノードキー妨害とノードエディタ妨害のどちらかが有効であれば「ノード妨害」を生成
+            if (Sys_Status.Player_Wait[target].State_NodeKey != 0
+                || Sys_Status.Player_Wait[target].State_NodeEditor != 0)
+            {
+                Destroy(createNodePenalty[target]);
+                createNodePenalty[target] = Instantiate(Interference, new Vector3(0, 270, 0), Interference.transform.rotation) as Image;
+                createNodePenalty[target].transform.SetParent(canvas.transform, false);
+            }
+
+            //相手のスモークorフェスティバルの情報で分岐して生成
+            int state_NodeHindrance = Sys_Status.Player_Wait[target].State_NodeHindrance;
+            if (state_NodeHindrance != 0)
+            {
+                Destroy(createNodeHindrance[target]);
+                createNodeHindrance[target] = Instantiate(state_NodeHindrance == 1 ? Smoke : Festival
+                    , new Vector3(-100, 180, 0)
+                    , Smoke.transform.rotation) as Image;
+
+                createNodeHindrance[target].transform.SetParent(canvas.transform, false);
+
+                Destroy(createNodeHindranceTern[target]);
+                createNodeHindranceTern[target] = Instantiate(TernImage, new Vector3(100, 180, 0)
+                    , TernImage.transform.rotation) as Image;
+
+                createNodeHindranceTern[target].transform.SetParent(canvas.transform, false);
+                createNodeHindranceTern[target].GetComponent<Image>().sprite = TernSprite[Sys_Status.Player_Wait[target].State_NodeHindrance_Time - 1];
+            }
         }
-        switch (Sys_Status.Action_Object.Type)
-        {
-            case "ファイヤー":
-                m_Type = 0;
-                break;
-            case "ウォーター":
-                m_Type = 1;
-                break;
-            case "アイス":
-                m_Type = 2;
-                break;
-            case "サンダー":
-                m_Type = 3;
-                break;
-            case "グラス":
-                m_Type = 4;
-                break;
-            case "ウィンド":
-                m_Type = 5;
-                break;
-            case "ライト":
-                m_Type = 6;
-                break;
-            case "ダークネス":
-                m_Type = 7;
-                break;
-            case "ソイル":
-                m_Type = 8;
-                break;
-            case "ドラゴン":
-                m_Type = 9;
-                break;
-            case "ゴッド":
-                m_Type = 10;
-                break;
-            case "フィジックス":
-                m_Type = 11;
-                break;
-        }
-        switch (Sys_Status.Action_Object.Shape)
-        {
-            case "ナイフ":
-                m_Shape = 0;
-                break;
-            case "カッター":
-                m_Shape = 1;
-                break;
-            case "ソード":
-                m_Shape = 2;
-                break;
-            case "ニードル":
-                m_Shape = 3;
-                break;
-            case "メイス":
-                m_Shape = 4;
-                break;
-            case "ハンマー":
-                m_Shape = 5;
-                break;
-            case "シックル":
-                m_Shape = 6;
-                break;
-            case "アロー":
-                m_Shape = 7;
-                break;
-            case "ランス":
-                m_Shape = 8;
-                break;
-            case "スピアー":
-                m_Shape = 9;
-                break;
-            case "アックス":
-                m_Shape = 10;
-                break;
-            case "バルディッシュ":
-                m_Shape = 11;
-                break;
-            case "バレット":
-                m_Shape = 12;
-                break;
-            case "スローイングスター":
-                m_Shape = 13;
-                break;
-            case "ハルバード":
-                m_Shape = 14;
-                break;
-            case "フラッシュ":
-                m_Shape = 15;
-                break;
-            case "ソニック":
-                m_Shape = 16;
-                break;
-            case "レーザー":
-                m_Shape = 17;
-                break;
-            case "ボム":
-                m_Shape = 18;
-                break;
-            case "メテオ":
-                m_Shape = 19;
-                break;
-        }
+
+        Dictionary<string, int> typeList = new Dictionary<string, int>();
+        typeList["ファイヤー"] = 0;
+        typeList["ウォーター"] = 1;
+        typeList["アイス"] = 2;
+        typeList["サンダー"] = 3;
+        typeList["グラス"] = 4;
+        typeList["ウィンド"] = 5;
+        typeList["ライト"] = 6;
+        typeList["ダークネス"] = 7;
+        typeList["ソイル"] = 8;
+        typeList["ドラゴン"] = 9;
+        typeList["ゴッド"] = 10;
+        typeList["フィジックス"] = 11;
+        m_Type = typeList[Sys_Status.Action_Object.Type];
+
+        typeList["ナイフ"] = 0;
+        typeList["カッター"] = 1;
+        typeList["ソード"] = 2;
+        typeList["ニードル"] = 3;
+        typeList["メイス"] = 4;
+        typeList["ハンマー"] = 5;
+        typeList["シックル"] = 6;
+        typeList["アロー"] = 7;
+        typeList["ランス"] = 8;
+        typeList["スピアー"] = 9;
+        typeList["アックス"] = 10;
+        typeList["バルディッシュ"] = 11;
+        typeList["バレット"] = 12;
+        typeList["スローイングスター"] = 13;
+        typeList["ハルバード"] = 14;
+        typeList["フラッシュ"] = 15;
+        typeList["ソニック"] = 16;
+        typeList["レーザー"] = 17;
+        typeList["ボム"] = 18;
+        typeList["メテオ"] = 19;
+        m_Shape = typeList[Sys_Status.Action_Object.Shape];
+
         if (m_MoveType != 0)
         {
             m_nuw_time += Time.deltaTime;
@@ -321,22 +234,22 @@ public class Sys_Instance : MonoBehaviour
                 {
                     case 5://落下移動
                         createTama = Instantiate(tama1[m_Shape], new Vector3(Random.Range(-20.0f, 20.0f), 20, Random.Range(-20.0f, 20.0f)), tama1[m_Shape].transform.rotation) as GameObject;
-                        createType = Instantiate(EfectTypes[m_Type], new Vector3(0, 0, 0), Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f)) as GameObject;
+                        createType = Instantiate(EfectTypes[m_Type], Vector3.zero, Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f)) as GameObject;
                         break;
 
                     case 10://自身から発射
                         createTama = Instantiate(tama1[m_Shape], new Vector3(-20, 0, 0), tama1[m_Shape].transform.rotation) as GameObject;//球生成
-                        createType = Instantiate(EfectTypes[m_Type], new Vector3(0, 0, 0), Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f)) as GameObject;
+                        createType = Instantiate(EfectTypes[m_Type], Vector3.zero, Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f)) as GameObject;
                         break;
 
                     case 20://地面から攻撃
                         createTama = Instantiate(tama1[m_Shape], new Vector3(Random.Range(-20.0f, 20.0f), -10, Random.Range(-20.0f, 20.0f)), tama1[m_Shape].transform.rotation) as GameObject;//球生成
-                        createType = Instantiate(EfectTypes[m_Type], new Vector3(0, 0, 0), Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f)) as GameObject;
+                        createType = Instantiate(EfectTypes[m_Type], Vector3.zero, Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f)) as GameObject;
                         break;
 
                     case 40://様々な方向から
                         createTama = Instantiate(tama1[m_Shape], new Vector3(Random.Range(-20.0f, 20.0f), Random.Range(-20.0f, 20.0f), Random.Range(-20.0f, 20.0f)), tama1[m_Shape].transform.rotation) as GameObject;//球生成
-                        createType = Instantiate(EfectTypes[m_Type], new Vector3(0, 0, 0), Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f)) as GameObject;
+                        createType = Instantiate(EfectTypes[m_Type], Vector3.zero, Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f)) as GameObject;
                         break;
 
                     default:
@@ -357,7 +270,7 @@ public class Sys_Instance : MonoBehaviour
                 {
                     AddEfect = Instantiate(AddEfectList[Random.Range(0, 8)],
                         targetPosition + new Vector3(Random.Range(-5.0f, 5.0f), 0.0f, Random.Range(-5.0f, 5.0f)), Quaternion.identity) as GameObject;
-                    
+
                     AddEfect.transform.localScale = createTama.transform.localScale;
                 }
 

@@ -178,6 +178,8 @@ public class Sys_NodeEngine : MonoBehaviour
         Sys_Status.Action_Object = new Sys_Action_Object();
         Sys_Status.Action_UI = new Sys_Action_UI();
 
+        Sys_Status.Player_Wait[Sys_Status.targetPlayer] = new Sys_PlayerData_TernWait();
+
         //ペナルティノードを相手側に送信して自身からは削除する
         //全てのノード選択済み枠を見る
         for (Sys_NodeGroup i = 0; i != Sys_NodeGroup.__Size__; ++i)
