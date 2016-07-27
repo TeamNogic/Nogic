@@ -27,8 +27,7 @@ public class FadeOut : MonoBehaviour
         {
             m_StartCnt += Time.deltaTime;
         }
-
-
+        
         if (m_IsFade)
         {
             if (m_FadeCnt < 0.0f)

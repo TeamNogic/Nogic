@@ -11,6 +11,7 @@ GameObject:
   - 222: {fileID: 22235074}
   - 114: {fileID: 11429928}
   - 114: {fileID: 11476730}
+  - 114: {fileID: 11494960}
   m_Layer: 5
   m_Name: FadeIn Panel
   m_TagString: Untagged
@@ -58,8 +59,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_FadeIn: {fileID: 2100000, guid: 032dd002111e8644ca2053f40402bb7d, type: 2}
   m_FadeSpeed: 1
-  m_SceneName: Fight
+  m_SceneName: CharacterSelect
   m_IsFade: 0
+--- !u!114 &11494960
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb60cb8be2e3214481596aab3a8a749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 50
 --- !u!222 &22235074
 CanvasRenderer:
   m_ObjectHideFlags: 1

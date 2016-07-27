@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class CursorImg : MonoBehaviour
+public class Cursor : MonoBehaviour
 {
     [SerializeField]
     private Canvas m_Canvas;
