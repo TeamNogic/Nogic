@@ -416,7 +416,9 @@ public class Sys_Scene : MonoBehaviour
                 if (nodeCore == null)
                 {
                     nodeNamePos = 0;
-                    ++sceneState;
+
+                    if (Sys_Status.Attack_Name.Count <= 0) sceneState = Sys_SceneState.MapAlpha_Hide;
+                    else ++sceneState;
                 }
                 break;
 
