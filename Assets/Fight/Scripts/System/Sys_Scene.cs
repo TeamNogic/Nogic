@@ -806,15 +806,15 @@ public class Sys_Scene : MonoBehaviour
         //座標追尾
         for (int i = 0; i < 2; ++i)
         {
-            Vector3 pos = Camera.main.WorldToScreenPoint(GameObject.Find("Character_" + (i + 1).ToString() + "(Clone)").transform.position + new Vector3(0.0f, 5.0f, 0.0f));
+            Vector3 pos = GameObject.Find("Character_" + (i + 1).ToString() + "(Clone)").transform.position + new Vector3(0.0f, 5.0f, 0.0f);
 
-            if (Sys_Instance.createTernState[i] != null) Sys_Instance.createTernState[i].transform.position = pos + new Vector3(-80, 70, 0);
-            if (Sys_Instance.createTernStateTern[i] != null) Sys_Instance.createTernStateTern[i].transform.position = pos + new Vector3(80, 70, 0);
+            if (Sys_Instance.createTernState[i] != null) Sys_Instance.createTernState[i].transform.position = pos;
+            if (Sys_Instance.createTernStateTern[i] != null) Sys_Instance.createTernStateTern[i].transform.position = pos;
 
-            if (Sys_Instance.createNodePenalty[i] != null) Sys_Instance.createNodePenalty[i].transform.position = pos + new Vector3(0, 190, 0);
+            if (Sys_Instance.createNodePenalty[i] != null) Sys_Instance.createNodePenalty[i].transform.position = pos;
 
-            if (Sys_Instance.createNodeHindrance[i] != null) Sys_Instance.createNodeHindrance[i].transform.position = pos + new Vector3(-80, 120, 0);
-            if (Sys_Instance.createNodeHindranceTern[i] != null) Sys_Instance.createNodeHindranceTern[i].transform.position = pos + new Vector3(80, 120, 0);
+            if (Sys_Instance.createNodeHindrance[i] != null) Sys_Instance.createNodeHindrance[i].transform.position = pos;
+            if (Sys_Instance.createNodeHindranceTern[i] != null) Sys_Instance.createNodeHindranceTern[i].transform.position = pos;
         }
 
         //デバッグ

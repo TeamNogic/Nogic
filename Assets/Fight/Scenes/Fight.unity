@@ -114,12 +114,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TernSprite:
   - {fileID: 0}
-  - {fileID: 21300000, guid: ac0cf6414662af441902806e09923e4c, type: 3}
-  - {fileID: 21300000, guid: 902f3a00b93b0954bbd46a2a8a916b45, type: 3}
-  - {fileID: 21300000, guid: efe0a073fbfbed442bc5d36761c687fa, type: 3}
-  - {fileID: 21300000, guid: 8716299f6eba99749819dcad84c011e1, type: 3}
-  - {fileID: 21300000, guid: e23cd0673a6cd3045b82433c8d16ef91, type: 3}
-  TernImage: {fileID: 11498620, guid: 6258905c6bb125b49a34b95c1c8b431a, type: 2}
+  - {fileID: 198706, guid: 55c4eaf279f893c419469b0d2f02975c, type: 2}
+  - {fileID: 115212, guid: f8e378ab624527644b718aaa2c494825, type: 2}
+  - {fileID: 168234, guid: 25f62d5c17aa1044d8f32465987ea06c, type: 2}
+  - {fileID: 147590, guid: 7443e896d20cec741b84bd9bb5b5c5a2, type: 2}
+  - {fileID: 163846, guid: ce54c19992c91ae498e0c158407cf348, type: 2}
 --- !u!4 &133601126
 Transform:
   m_ObjectHideFlags: 0
@@ -707,7 +706,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 476160, guid: 1f4e1910d4a7bcb44b1db12ff5ba4905, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11476604, guid: 1f4e1910d4a7bcb44b1db12ff5ba4905, type: 2}

@@ -50,17 +50,17 @@ public class Sys_Instance : MonoBehaviour
     Image images;
     //===================================================================//
 
-    static public Image[] createTernState = new Image[2];
-    static public Image[] createTernStateTern = new Image[2];
+    static public GameObject[] createTernState = new GameObject[2];
+    static public GameObject[] createTernStateTern = new GameObject[2];
 
-    static public Image[] createNodePenalty = new Image[2];
+    static public GameObject[] createNodePenalty = new GameObject[2];
 
-    static public Image[] createNodeHindrance = new Image[2];
-    static public Image[] createNodeHindranceTern = new Image[2];
+    static public GameObject[] createNodeHindrance = new GameObject[2];
+    static public GameObject[] createNodeHindranceTern = new GameObject[2];
 
     static public void StateUpdate()
     {
-        Sprite[] TernSprite = GameObject.Find("TernImage").GetComponent<Sys_TernImage>().TernSprite;
+        GameObject[] TernSprite = GameObject.Find("TernImage").GetComponent<Sys_TernImage>().TernSprite;
 
         for (int i = 0; i < 2; ++i)
         {
@@ -73,7 +73,11 @@ public class Sys_Instance : MonoBehaviour
                 Destroy(createTernStateTern[i]);
             }
             //ターンを更新
-            else createTernStateTern[i].GetComponent<Image>().sprite = TernSprite[data.State_Tern_Time];
+            else
+            {
+                Destroy(createTernStateTern[i]);
+                createTernStateTern[i] = Instantiate(TernSprite[data.State_Tern_Time], Vector3.zero, Quaternion.identity) as GameObject;
+            }
 
 
             //ノード妨害の状態異常が切れていたら消す
@@ -89,7 +93,11 @@ public class Sys_Instance : MonoBehaviour
                 Destroy(createNodeHindranceTern[i]);
             }
             //ターンを更新
-            else createNodeHindranceTern[i].GetComponent<Image>().sprite = TernSprite[data.State_NodeHindrance_Time];
+            else
+            {
+                Destroy(createNodeHindranceTern[i]);
+                createNodeHindranceTern[i] = Instantiate(TernSprite[data.State_NodeHindrance_Time], Vector3.zero, Quaternion.identity) as GameObject;
+            }
         }
     }
 
@@ -133,8 +141,7 @@ public class Sys_Instance : MonoBehaviour
 
             int target = Sys_Status.targetPlayer;
 
-            Sprite[] TernSprite = GameObject.Find("TernImage").GetComponent<Sys_TernImage>().TernSprite;
-            Image TernImage = GameObject.Find("TernImage").GetComponent<Sys_TernImage>().TernImage;
+            GameObject[] TernSprite = GameObject.Find("TernImage").GetComponent<Sys_TernImage>().TernSprite;
 
             //定期ターン状態異常が有効であれば
             int stateTern = Sys_Status.Player_Wait[target].State_Tern; //一時的に保管
@@ -142,13 +149,13 @@ public class Sys_Instance : MonoBehaviour
             {
                 //相手のポイズンorパラサイトの情報で分岐して生成
                 Destroy(createTernState[target]);
-                createTernState[target] = Instantiate(stateTern == 1 ? Poison : Parasite, Vector2.zero, Poison.transform.rotation) as Image;
-                createTernState[target].transform.SetParent(canvas.transform, false);
+                createTernState[target] = Instantiate(stateTern == 1 ? Poison : Parasite, Vector3.zero, Quaternion.identity) as GameObject;
+                //createTernState[target].transform.SetParent(canvas.transform, false);
 
                 Destroy(createTernStateTern[target]);
-                createTernStateTern[target] = Instantiate(TernImage, Vector2.zero, TernImage.transform.rotation) as Image;
-                createTernStateTern[target].transform.SetParent(canvas.transform, false);
-                createTernStateTern[target].GetComponent<Image>().sprite = TernSprite[Sys_Status.Player_Wait[target].State_Tern_Time - 1];
+                createTernStateTern[target] = Instantiate(TernSprite[Sys_Status.Player_Wait[target].State_Tern_Time - 1], Vector3.zero, Quaternion.identity) as GameObject;
+                //createTernStateTern[target].transform.SetParent(canvas.transform, false);
+                //createTernStateTern[target].GetComponent<SpriteRenderer>().sprite = TernSprite[Sys_Status.Player_Wait[target].State_Tern_Time - 1];
             }
 
             //ノードキー妨害とノードエディタ妨害のどちらかが有効であれば「ノード妨害」を生成
@@ -156,8 +163,8 @@ public class Sys_Instance : MonoBehaviour
                 || Sys_Status.Player_Wait[target].State_NodeEditor != 0)
             {
                 Destroy(createNodePenalty[target]);
-                createNodePenalty[target] = Instantiate(Interference, Vector2.zero, Interference.transform.rotation) as Image;
-                createNodePenalty[target].transform.SetParent(canvas.transform, false);
+                createNodePenalty[target] = Instantiate(Interference, Vector3.zero, Quaternion.identity) as GameObject;
+                //createNodePenalty[target].transform.SetParent(canvas.transform, false);
             }
 
             //相手のスモークorフェスティバルの情報で分岐して生成
@@ -166,17 +173,17 @@ public class Sys_Instance : MonoBehaviour
             {
                 Destroy(createNodeHindrance[target]);
                 createNodeHindrance[target] = Instantiate(state_NodeHindrance == 1 ? Smoke : Festival
-                    , Vector2.zero
-                    , Smoke.transform.rotation) as Image;
+                    , Vector3.zero
+                    , Quaternion.identity) as GameObject;
 
-                createNodeHindrance[target].transform.SetParent(canvas.transform, false);
+                //createNodeHindrance[target].transform.SetParent(canvas.transform, false);
 
                 Destroy(createNodeHindranceTern[target]);
-                createNodeHindranceTern[target] = Instantiate(TernImage, new Vector3(150, 180, 0)
-                    , TernImage.transform.rotation) as Image;
+                createNodeHindranceTern[target] = Instantiate(TernSprite[Sys_Status.Player_Wait[target].State_NodeHindrance_Time - 1], new Vector3(150, 180, 0)
+                    , Quaternion.identity) as GameObject;
 
-                createNodeHindranceTern[target].transform.SetParent(canvas.transform, false);
-                createNodeHindranceTern[target].GetComponent<Image>().sprite = TernSprite[Sys_Status.Player_Wait[target].State_NodeHindrance_Time - 1];
+                //createNodeHindranceTern[target].transform.SetParent(canvas.transform, false);
+                //createNodeHindranceTern[target].GetComponent<SpriteRenderer>().sprite = TernSprite[Sys_Status.Player_Wait[target].State_NodeHindrance_Time - 1];
             }
         }
 
