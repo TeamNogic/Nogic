@@ -15,6 +15,6 @@ public class Debug_Scene : MonoBehaviour
 
     void OnGUI()
     {
-        GUI.Label(new Rect(20, 20, 100, 50), "_AlphaValue: " + SceneManager.GetActiveScene().name, style);
+        GUI.Label(new Rect(20, 20, 100, 50), "ActiveScene Name: " + SceneManager.GetActiveScene().name, style);
     }
 }

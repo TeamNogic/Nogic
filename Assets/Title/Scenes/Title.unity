@@ -446,11 +446,11 @@ Prefab:
     - target: {fileID: 11429928, guid: 1661db9da2db05c42834126ad20b7422, type: 2}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 2100000, guid: 9d2cde82e965cb249953842c7296cf4b, type: 2}
+      objectReference: {fileID: 2100000, guid: 032dd002111e8644ca2053f40402bb7d, type: 2}
     - target: {fileID: 11476730, guid: 1661db9da2db05c42834126ad20b7422, type: 2}
       propertyPath: m_FadeIn
       value: 
-      objectReference: {fileID: 2100000, guid: 9d2cde82e965cb249953842c7296cf4b, type: 2}
+      objectReference: {fileID: 2100000, guid: 032dd002111e8644ca2053f40402bb7d, type: 2}
     m_RemovedComponents:
     - {fileID: 11494960, guid: 1661db9da2db05c42834126ad20b7422, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 1661db9da2db05c42834126ad20b7422, type: 2}
@@ -465,7 +465,7 @@ GameObject:
   - 4: {fileID: 776951268}
   - 114: {fileID: 776951269}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Debug_SceneName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
