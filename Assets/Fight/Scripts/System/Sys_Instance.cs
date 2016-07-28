@@ -142,11 +142,11 @@ public class Sys_Instance : MonoBehaviour
             {
                 //相手のポイズンorパラサイトの情報で分岐して生成
                 Destroy(createTernState[target]);
-                createTernState[target] = Instantiate(stateTern == 1 ? Poison : Parasite, new Vector3(-100, 130, 0), Poison.transform.rotation) as Image;
+                createTernState[target] = Instantiate(stateTern == 1 ? Poison : Parasite, Vector2.zero, Poison.transform.rotation) as Image;
                 createTernState[target].transform.SetParent(canvas.transform, false);
 
                 Destroy(createTernStateTern[target]);
-                createTernStateTern[target] = Instantiate(TernImage, new Vector3(100, 130, 0), TernImage.transform.rotation) as Image;
+                createTernStateTern[target] = Instantiate(TernImage, Vector2.zero, TernImage.transform.rotation) as Image;
                 createTernStateTern[target].transform.SetParent(canvas.transform, false);
                 createTernStateTern[target].GetComponent<Image>().sprite = TernSprite[Sys_Status.Player_Wait[target].State_Tern_Time - 1];
             }
@@ -156,7 +156,7 @@ public class Sys_Instance : MonoBehaviour
                 || Sys_Status.Player_Wait[target].State_NodeEditor != 0)
             {
                 Destroy(createNodePenalty[target]);
-                createNodePenalty[target] = Instantiate(Interference, new Vector3(0, 270, 0), Interference.transform.rotation) as Image;
+                createNodePenalty[target] = Instantiate(Interference, Vector2.zero, Interference.transform.rotation) as Image;
                 createNodePenalty[target].transform.SetParent(canvas.transform, false);
             }
 
@@ -166,13 +166,13 @@ public class Sys_Instance : MonoBehaviour
             {
                 Destroy(createNodeHindrance[target]);
                 createNodeHindrance[target] = Instantiate(state_NodeHindrance == 1 ? Smoke : Festival
-                    , new Vector3(-100, 180, 0)
+                    , Vector2.zero
                     , Smoke.transform.rotation) as Image;
 
                 createNodeHindrance[target].transform.SetParent(canvas.transform, false);
 
                 Destroy(createNodeHindranceTern[target]);
-                createNodeHindranceTern[target] = Instantiate(TernImage, new Vector3(100, 180, 0)
+                createNodeHindranceTern[target] = Instantiate(TernImage, new Vector3(150, 180, 0)
                     , TernImage.transform.rotation) as Image;
 
                 createNodeHindranceTern[target].transform.SetParent(canvas.transform, false);

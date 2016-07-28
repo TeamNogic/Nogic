@@ -142,6 +142,7 @@ public class Char_Scene : MonoBehaviour
                 //選択終了
                 if (m_SelectEnd)
                 {
+                    //Application.LoadLevel("Fight");
                     //SceneManager.LoadScene("Fight");
                     m_FadeIn.GetComponent<FadeIn>().m_IsFade = true;
                     m_State = Char_SceneState.End;

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f6bc38635b80ff141bc4e350c71b53d2
+timeCreated: 1469696591
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - m_HightLuminance: {fileID: 8400000, guid: b93258bc98373a64d982c12b86a327a8, type: 2}
+  - m_BlurHightLuminance: {fileID: 8400000, guid: 3c14e701707de43458d9bbcbe88fa3f5,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

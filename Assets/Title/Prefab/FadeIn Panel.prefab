@@ -29,7 +29,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 9d2cde82e965cb249953842c7296cf4b, type: 2}
+  m_Material: {fileID: 2100000, guid: 032dd002111e8644ca2053f40402bb7d, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 0.392}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -56,7 +56,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a14bfbd97b8535740b4b7ac4e92e842c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FadeIn: {fileID: 2100000, guid: 9d2cde82e965cb249953842c7296cf4b, type: 2}
+  m_FadeIn: {fileID: 2100000, guid: 032dd002111e8644ca2053f40402bb7d, type: 2}
   m_FadeSpeed: 1
   m_SceneName: 
   m_IsFade: 0

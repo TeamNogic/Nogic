@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 using UnityEngine.UI;
 
@@ -347,7 +348,7 @@ public class Sys_Scene : MonoBehaviour
                 }
 
                 //カメラ移動が完了して、自身がポイズン or パラサイトであれば
-                if (!Sys_Camera.isMove() && Sys_Status.Player[Sys_Status.activePlayer].State_Tern != 0 && stateTern == null)
+                if (!Sys_Camera.isMove() && Sys_Status.Player[Sys_Status.activePlayer].State_Tern != 0 && stateTern[Sys_Status.activePlayer] == null)
                 {
                     stateTern[Sys_Status.activePlayer] = Instantiate(stateTernBase[Sys_Status.Player[Sys_Status.activePlayer].State_Tern - 1]
                         , player[Sys_Status.activePlayer].position + new Vector3(0.0f, 2.0f), Quaternion.identity) as GameObject;
@@ -445,7 +446,7 @@ public class Sys_Scene : MonoBehaviour
 
             case Sys_SceneState.AttackName_Show_Wait:
                 //拡大しきったらシーンの切り替え
-                if (nodeName.GetComponent<UI_Scale>() == null) ++sceneState;
+                if (nodeName == null || nodeName.GetComponent<UI_Scale>() == null) ++sceneState;
                 break;
 
             //======================================================================================================================================================================================================//
@@ -628,6 +629,11 @@ public class Sys_Scene : MonoBehaviour
                     {
                         Destroy(playerState[i]);
                     }
+
+                    if (Sys_Status.Player[i].State_Tern == 0)
+                    {
+                        Destroy(stateTern[i]);
+                    }
                 }
 
                 Sys_Instance.StateUpdate();
@@ -802,13 +808,13 @@ public class Sys_Scene : MonoBehaviour
         {
             Vector3 pos = Camera.main.WorldToScreenPoint(GameObject.Find("Character_" + (i + 1).ToString() + "(Clone)").transform.position + new Vector3(0.0f, 5.0f, 0.0f));
 
-            if (Sys_Instance.createTernState[i] != null) Sys_Instance.createTernState[i].transform.position = pos + new Vector3(-60, 50, 0);
-            if (Sys_Instance.createTernStateTern[i] != null) Sys_Instance.createTernStateTern[i].transform.position = pos + new Vector3(60, 50, 0);
+            if (Sys_Instance.createTernState[i] != null) Sys_Instance.createTernState[i].transform.position = pos + new Vector3(-80, 70, 0);
+            if (Sys_Instance.createTernStateTern[i] != null) Sys_Instance.createTernStateTern[i].transform.position = pos + new Vector3(80, 70, 0);
 
-            if (Sys_Instance.createNodePenalty[i] != null) Sys_Instance.createNodePenalty[i].transform.position = pos + new Vector3(0, 150, 0);
+            if (Sys_Instance.createNodePenalty[i] != null) Sys_Instance.createNodePenalty[i].transform.position = pos + new Vector3(0, 190, 0);
 
-            if (Sys_Instance.createNodeHindrance[i] != null) Sys_Instance.createNodeHindrance[i].transform.position = pos + new Vector3(-60, 100, 0);
-            if (Sys_Instance.createNodeHindranceTern[i] != null) Sys_Instance.createNodeHindranceTern[i].transform.position = pos + new Vector3(60, 100, 0);
+            if (Sys_Instance.createNodeHindrance[i] != null) Sys_Instance.createNodeHindrance[i].transform.position = pos + new Vector3(-80, 120, 0);
+            if (Sys_Instance.createNodeHindranceTern[i] != null) Sys_Instance.createNodeHindranceTern[i].transform.position = pos + new Vector3(80, 120, 0);
         }
 
         //デバッグ

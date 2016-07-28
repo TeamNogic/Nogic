@@ -181,6 +181,10 @@ Prefab:
       propertyPath: m_FadeOut
       value: 
       objectReference: {fileID: 2100000, guid: 1a979ce174d8e464ab7f1ffd1f08bdae, type: 2}
+    - target: {fileID: 11489128, guid: 3f8658a6a6f229b4b970ecf86d108de4, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11474096, guid: 3f8658a6a6f229b4b970ecf86d108de4, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 3f8658a6a6f229b4b970ecf86d108de4, type: 2}
@@ -451,6 +455,10 @@ Prefab:
       propertyPath: m_FadeIn
       value: 
       objectReference: {fileID: 2100000, guid: 032dd002111e8644ca2053f40402bb7d, type: 2}
+    - target: {fileID: 11429928, guid: 1661db9da2db05c42834126ad20b7422, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11494960, guid: 1661db9da2db05c42834126ad20b7422, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 1661db9da2db05c42834126ad20b7422, type: 2}
@@ -470,7 +478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &776951268
 Transform:
   m_ObjectHideFlags: 0
