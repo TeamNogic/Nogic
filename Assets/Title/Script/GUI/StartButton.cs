@@ -13,19 +13,7 @@ public class StartButton : MonoBehaviour
     {
         m_AudioSource = this.GetComponent<AudioSource>();
     }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Return) && !isStart)
-        {
-            isStart = true;
-            m_FadeIn.GetComponent<FadeIn>().m_IsFade = true;
-            m_AudioSource.clip = m_ClickAudio;
-            m_AudioSource.Play();
-        }
-
-    }
-
+    
     public void OnClick()
     {
         if (!isStart)

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Char_Scene : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Char_Scene : MonoBehaviour
         WaitP2,         //プレイヤー2を選択中
         SelectP2,       //プレイヤー2を選択時に一度だけ
         SelectFinish,   //プレイヤー選択完了
+        End
     }
 
     [HideInInspector]
@@ -140,8 +142,13 @@ public class Char_Scene : MonoBehaviour
                 //選択終了
                 if (m_SelectEnd)
                 {
+                    //SceneManager.LoadScene("Fight");
                     m_FadeIn.GetComponent<FadeIn>().m_IsFade = true;
+                    m_State = Char_SceneState.End;
                 }
+                break;
+
+            case Char_SceneState.End:
                 break;
         }
     }
