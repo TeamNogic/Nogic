@@ -166,7 +166,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!33 &608624112
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -355,12 +355,11 @@ GameObject:
   - 92: {fileID: 1034768361}
   - 124: {fileID: 1034768360}
   - 81: {fileID: 1034768359}
-  - 114: {fileID: 1034768355}
+  - 114: {fileID: 1034768364}
   - 114: {fileID: 1034768358}
   - 114: {fileID: 1034768357}
   - 114: {fileID: 1034768356}
   - 114: {fileID: 1034768354}
-  - 114: {fileID: 1034768364}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -379,21 +378,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e31c9669c858074bb5f5d2925ed4a6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1034768355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1034768353}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6bc38635b80ff141bc4e350c71b53d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Threshhold: 0.5
-  m_HightLuminance: {fileID: 8400000, guid: 3c14e701707de43458d9bbcbe88fa3f5, type: 2}
-  m_BlurHightLuminance: {fileID: 8400000, guid: b93258bc98373a64d982c12b86a327a8,
-    type: 2}
 --- !u!114 &1034768356
 MonoBehaviour:
   m_ObjectHideFlags: 0
