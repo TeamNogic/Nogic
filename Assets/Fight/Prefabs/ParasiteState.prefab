@@ -10,8 +10,7 @@ GameObject:
   - 4: {fileID: 470726}
   - 198: {fileID: 19877776}
   - 199: {fileID: 19965980}
-  - 114: {fileID: 11406564}
-  - 82: {fileID: 8227344}
+  - 82: {fileID: 8272612}
   m_Layer: 0
   m_Name: ParasiteState
   m_TagString: Untagged
@@ -31,7 +30,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!82 &8227344
+--- !u!82 &8272612
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -40,7 +39,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 0d0e22d56de649d4fb36a4b31d63d989, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 31a6abab37d23dc47a2140b5835ee87e, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -93,7 +92,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 0
+    m_RotationOrder: 4
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -105,17 +104,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &11406564
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 190672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8ce20446c90b474e84a7f19eb406704, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!198 &19877776
 ParticleSystem:
   m_ObjectHideFlags: 1

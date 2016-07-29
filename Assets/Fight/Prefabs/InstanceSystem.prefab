@@ -86,11 +86,11 @@ MonoBehaviour:
   text: {fileID: 11452774, guid: eab8599a22fb54f42b29ea1f4e0269b5, type: 2}
   image: {fileID: 11424460, guid: c165ef8c42489d04e9178da13424873c, type: 2}
   m_getpos: {x: 0, y: 0, z: 0}
-  Poison: {fileID: 11412162, guid: 821b381d92d61c8429b7f72ce50b1996, type: 2}
-  Parasite: {fileID: 11426408, guid: 260eb4603b81bf84e95b9cbf779d6afc, type: 2}
-  Interference: {fileID: 11482330, guid: f354dc3cce1c77247912ff94c08dcc92, type: 2}
-  Smoke: {fileID: 11472720, guid: c4ce1325a93d2aa489ff2e21ab28d88d, type: 2}
-  Festival: {fileID: 11497254, guid: 533d64499089909448dc5ae030c27172, type: 2}
+  Poison: {fileID: 183550, guid: 8bd04d155b65e3243980d22a9c94a9a2, type: 2}
+  Parasite: {fileID: 138074, guid: 17a454de60a2ad841af6d49489374f36, type: 2}
+  Interference: {fileID: 111434, guid: d85a24daebe61ab408ff9d33e6c34ac9, type: 2}
+  Smoke: {fileID: 185462, guid: 95c897b50b8894b43bdf4c6b5e9a43cd, type: 2}
+  Festival: {fileID: 186428, guid: d84d292f7a90a2849b4f0eec97537321, type: 2}
   shotSound: {fileID: 8300000, guid: 261de188c97e1b643808ed1b72085727, type: 3}
   Seisei: 0
   m_TextFlag: 0

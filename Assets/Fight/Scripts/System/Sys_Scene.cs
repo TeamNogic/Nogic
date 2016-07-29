@@ -322,7 +322,7 @@ public class Sys_Scene : MonoBehaviour
                 thumbnailSingle = Instantiate(thumbnailBase, new Vector2(0.0f, -100.0f), Quaternion.identity) as Image;
                 thumbnailSingle.GetComponent<Image>().sprite = player[Sys_Status.activePlayer].prefab.GetComponent<Obj_PlayerAsset>().thumbnail;
                 thumbnailSingle.transform.SetParent(nodeEditor.transform, false);
-
+                
                 Destroy(stateTern[Sys_Status.activePlayer]);
 
                 startWait = 4.0f;
@@ -818,9 +818,14 @@ public class Sys_Scene : MonoBehaviour
         }
 
         //デバッグ
-        if (Input.GetKey(KeyCode.T))
-        {
-            tern = 1;
-        }
+        if (Input.GetKey(KeyCode.Keypad1)) tern = 1;
+        if (Input.GetKey(KeyCode.Keypad2)) tern = 2;
+        if (Input.GetKey(KeyCode.Keypad3)) tern = 3;
+        if (Input.GetKey(KeyCode.Keypad4)) tern = 4;
+        if (Input.GetKey(KeyCode.Keypad5)) tern = 5;
+        if (Input.GetKey(KeyCode.Keypad6)) tern = 6;
+        if (Input.GetKey(KeyCode.Keypad7)) tern = 7;
+        if (Input.GetKey(KeyCode.Keypad8)) tern = 8;
+        if (Input.GetKey(KeyCode.Keypad9)) tern = 9;
     }
 }
